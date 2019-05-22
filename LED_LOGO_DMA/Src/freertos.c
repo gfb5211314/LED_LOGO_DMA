@@ -62,6 +62,7 @@
 #include "bsp_usart.h"
 #include "cmsis_os.h"
 #include  "ws2812_app.h"
+#include "bsp_update.h"
 /* USER CODE END Includes */
 
 /* Variables -----------------------------------------------------------------*/
@@ -99,13 +100,16 @@
 /*******************************/
 #define DMA_WS2812_circulationopen 0
 /*********************************/
-#define DMA_WS2812_circulation_moreopen 1
+#define DMA_WS2812_circulation_moreopen 0
 /* USER CODE END Variables */
 
 /* Function prototypes -------------------------------------------------------*/
 
 /* USER CODE BEGIN FunctionPrototypes */
-
+uint8_t  ws2812_write_flag;  //数据区是否被写入
+uint8_t  select_area;  //选择片区的数据  1为就片区   2.为最新片区
+extern USART_RECEIVETYPE  UsartType3;
+extern system_mode_type system_mode;
 /* USER CODE END FunctionPrototypes */
 
 /* Hook prototypes */
@@ -116,45 +120,48 @@ void APP_TASK(void const * argument)
 {
 
   /* USER CODE BEGIN 5 */
-//DMA_USART_IDLE_INIT();
+   DMA_USART_IDLE_INIT();
+		#if  esp32_wifi_on
+	 esp32_wifi_init(1,50);
+	esp_check_state(50);
+   	#endif
+//	 for(uint16_t i=0;i<229;i++)
+//	{
+//		printf("00 00 ff");
+//		printf(" ");
+//	}
 //nrf24l01_init(115200,2000,"AT+RXA=0xb0,0x43,0x10,0x10,0x01","AT+TXA=0xb0,0x43,0x10,0x10,0x01","AT+FREQ=2.440",50);
   /* Infinite loop */
   for(;;)
   {  
-	
+	 
+Usart_Logo_data_(UsartType3.tem_RX_pData,UsartType3.RX_pData,UsartType3.RX_Size);
+		
 		osDelay(1);//只能间隔>50ms才能发送
   }
   /* USER CODE END 5 */ 
 }
-
+//SemaphoreHandle_t xSemaphore;
+ 
+uint8_t  a_1[1][3]={241,216,128};
+uint8_t  a_2[1][3]={249,5,86};
+uint8_t  a_3[1][3]={29,49,142};
+uint8_t  a_4[1][3]={109,249,253};	
+uint8_t  a_5[1][3]={249,5,86};
+uint8_t  a_6[1][3]={104,160,247};	
+uint8_t  a_7[1][3]={241,216,128};
+uint8_t  a_8[1][3]={52,204,204};	
 /* WS128_TASK function */
 void WS128_TASK(void const * argument)
 {
   /* USER CODE BEGIN WS128_TASK */
 	
 			reset_led_light(); 
+//	 xSemaphore = xSemaphoreCreateBinary();
   /* Infinite loop */
   for(;;)
   {
-// if(light_control_auto)
-//	 {
-//		 memset(ws28128_color_buf, 0, sizeof(ws28128_color_buf));
-//		 DMA_WS2812_Reset();
-//		  DMA_WS2812_Mie(190) ; 		  
-//	 }else
-//	 {
-//		  DMA_WS2812_Running_more(179, 10);
-//			DMA_WS2812_Run(180);
-//			DMA_WS2812_Rampping(180, 255, 2);
-//			DMA_WS2812_Rampping_1(180, 255, 1);
-//			DMA_WS2812_Running(189);
-//			arrange_display(180);
-//			arrange_display_two(180);
-//			arrange_display_two_run(180);
-//			ws2812_rand_light(180);
-//	 }
-	//  DMA_WS2812_Running_more(800, 10);
-		//	DMA_WS2812_Run(800);
+
 #if one_jianbian_open
   DMA_WS2812_Ramp(LED_MAX, 255, 1);
   DMA_WS2812_Ramp(LED_MAX, 255, 2);
@@ -192,17 +199,58 @@ void WS128_TASK(void const * argument)
   	ws2812_rand_light(LED_MAX);
 #endif
 #if  DMA_WS2812_circulationopen
- DMA_WS2812_circulation(229);
+    DMA_WS2812_circulation(229);
 #endif
 #if DMA_WS2812_circulation_moreopen
  DMA_WS2812_circulation_more(229,0);
  
-  DMA_WS2812_circulation_more(229,1);
+  DMA_WS2812_circulation_more(LED_MAX,1);
 	
-	DMA_WS2812_circulation_more(229,2);
+	DMA_WS2812_circulation_more(LED_MAX,2);
 	
 #endif
-    osDelay(50);
+//DMA_WS2812_shade_logo_rgb(LED_MAX,a_1,a_2);
+//  osDelay(2000);
+//DMA_WS2812_shade_logo_rgb(LED_MAX,a_3,a_4);
+//  osDelay(2000);
+//DMA_WS2812_shade_logo_rgb(LED_MAX,a_5,a_6);
+//  osDelay(2000);
+//DMA_WS2812_shade_logo_rgb(LED_MAX,a_7,a_8);
+//  osDelay(2000);
+//   if((ws2812_write_flag==1)||(select_area==1))
+//	 {
+//		 //从旧片区运行
+//		 ws2812_rand_light(LED_MAX);
+//   
+//	 }else if((ws2812_write_flag==2)&&(select_area==2)) //数据被写入
+//	 {
+//		 //从新片区运行
+//		 DMA_WS2812_shade_light(LED_MAX);
+//		 
+//	 }
+//	   DMA_WS2812_shade_light(LED_MAX);
+        if(system_mode.pattern_flay==1)
+				{
+	DMA_WS2812_Ramp(LED_MAX, 255, 1);
+  DMA_WS2812_Ramp(LED_MAX, 255, 2);
+  DMA_WS2812_Ramp(LED_MAX, 255, 3);
+	DMA_WS2812_Rampping(LED_MAX, 255, 2);				   
+	DMA_WS2812_Rampping_1(LED_MAX, 255, 1);
+//	DMA_WS2812_one_light_run(2, 2);	
+  DMA_WS2812_Run(LED_MAX );	
+	DMA_WS2812_Running(LED_MAX);
+  DMA_WS2812_Running_more(LED_MAX, 720);		
+  arrange_display(LED_MAX);	
+ 	arrange_display_two(LED_MAX);
+	ws2812_rand_light(LED_MAX);
+  DMA_WS2812_circulation(LED_MAX);
+	DMA_WS2812_circulation_more(LED_MAX,0);
+  DMA_WS2812_circulation_more(LED_MAX,1);
+	DMA_WS2812_circulation_more(LED_MAX,2);				
+				}     
+			
+	 osDelay(1);//只能间隔>50ms才能发送
+	 
   }
   /* USER CODE END WS128_TASK */
 }
@@ -212,13 +260,37 @@ void FFT_TASK(void const * argument)
 {
 	
   /* USER CODE BEGIN FFT_TASK */
-	
+
 //   fft_adc_tim_start();
   /* Infinite loop */
   for(;;)
   {
+//		  DMA_WS2812_shade_light(LED_MAX);
 //	send_fft_data();
-    osDelay(50);
+		 if(system_mode.pattern_flay==2)
+				{
+					
+					  
+					if(system_mode.set_shade==1)
+					{
+						DMA_WS2812_shade_light(LED_MAX);
+					}
+					
+				}
+			  else if(system_mode.pattern_flay==3)
+				{
+//					
+					   DMA_WS2812_shade_light(LED_MAX);
+					
+				}
+				else if(system_mode.pattern_flay==4)
+				{
+					
+//					   reset_led_light(); 
+					   DMA_WS2812_shade_light(LED_MAX);
+					
+				}
+    osDelay(1);
   }
   /* USER CODE END FFT_TASK */
 } 

@@ -52,7 +52,7 @@
           <OutputName>LED_LOGO_DMA</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>0</CreateHexFile>
+          <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath></ListingPath>
@@ -80,9 +80,9 @@
             <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
-            <RunUserProg1>0</RunUserProg1>
+            <RunUserProg1>1</RunUserProg1>
             <RunUserProg2>0</RunUserProg2>
-            <UserProg1Name>fromelf --bin --output .\LED_FFT\LED_FFT.BIN    .\LED_FFT\LED_FFT.AXF</UserProg1Name>
+            <UserProg1Name>fromelf --bin --output .\LED_LOGO_DEBUG\LED_LOGO_DMA.BIN    .\LED_LOGO_DEBUG\LED_LOGO_DMA.AXF</UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
@@ -134,11 +134,11 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4107</DriverSelection>
+            <DriverSelection>4096</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -338,7 +338,7 @@
               <MiscControls>--C99</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB,ARM_MATH_CM3</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;      ../Drivers/STM32F1xx_HAL_Driver/Inc;      ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;      ../Drivers/CMSIS/Device/ST/STM32F1xx/Include;      ../Drivers/CMSIS/Include;      ..\BSP;      ..\App; ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3; ../Middlewares/Third_Party/FreeRTOS/Source/include; ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS</IncludePath>
+              <IncludePath>../Inc;        ../Drivers/STM32F1xx_HAL_Driver/Inc;        ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;        ../Drivers/CMSIS/Device/ST/STM32F1xx/Include;        ../Drivers/CMSIS/Include;        ..\BSP;        ..\App;   ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;   ../Middlewares/Third_Party/FreeRTOS/Source/include;   ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -596,6 +596,11 @@
               <FileName>bsp_commun.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\bsp_commun.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_e61.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\bsp_e61.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -2,6 +2,8 @@
   ******************************************************************************
   * @file    stm32f1xx_hal_flash.c
   * @author  MCD Application Team
+  * @version V1.1.1
+  * @date    12-May-2017
   * @brief   FLASH HAL module driver.
   *          This file provides firmware functions to manage the following 
   *          functionalities of the internal FLASH memory:
@@ -672,36 +674,31 @@ __weak void HAL_FLASH_OperationErrorCallback(uint32_t ReturnValue)
   */
 HAL_StatusTypeDef HAL_FLASH_Unlock(void)
 {
-  HAL_StatusTypeDef status = HAL_OK;
-
-  if(READ_BIT(FLASH->CR, FLASH_CR_LOCK) != RESET)
+  if (HAL_IS_BIT_SET(FLASH->CR, FLASH_CR_LOCK))
   {
     /* Authorize the FLASH Registers access */
     WRITE_REG(FLASH->KEYR, FLASH_KEY1);
     WRITE_REG(FLASH->KEYR, FLASH_KEY2);
-
-    /* Verify Flash is unlocked */
-    if(READ_BIT(FLASH->CR, FLASH_CR_LOCK) != RESET)
-    {
-      status = HAL_ERROR;
-    }
   }
+  else
+  {
+    return HAL_ERROR;
+  }
+
 #if defined(FLASH_BANK2_END)
-  if(READ_BIT(FLASH->CR2, FLASH_CR2_LOCK) != RESET)
+  if (HAL_IS_BIT_SET(FLASH->CR2, FLASH_CR2_LOCK))
   {
     /* Authorize the FLASH BANK2 Registers access */
     WRITE_REG(FLASH->KEYR2, FLASH_KEY1);
     WRITE_REG(FLASH->KEYR2, FLASH_KEY2);
-    
-    /* Verify Flash BANK2 is unlocked */
-    if(READ_BIT(FLASH->CR2, FLASH_CR2_LOCK) != RESET)
-    {
-      status = HAL_ERROR;
-    }
   }
+  else
+  {
+    return HAL_ERROR;
+  }
+  
 #endif /* FLASH_BANK2_END */
-
-  return status;
+  return HAL_OK; 
 }
 
 /**

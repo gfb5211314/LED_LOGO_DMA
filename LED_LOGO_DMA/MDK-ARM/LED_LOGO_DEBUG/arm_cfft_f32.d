@@ -1,10 +1,10 @@
 .\led_logo_debug\arm_cfft_f32.o: ..\Drivers\CMSIS\DSP_Lib\Source\TransformFunctions\arm_cfft_f32.c
 .\led_logo_debug\arm_cfft_f32.o: ../Drivers/CMSIS/Include/arm_math.h
 .\led_logo_debug\arm_cfft_f32.o: ../Drivers/CMSIS/Include/core_cm3.h
-.\led_logo_debug\arm_cfft_f32.o: D:\ARM\ARMCC\Bin\..\include\stdint.h
+.\led_logo_debug\arm_cfft_f32.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\led_logo_debug\arm_cfft_f32.o: ../Drivers/CMSIS/Include/core_cmInstr.h
 .\led_logo_debug\arm_cfft_f32.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
 .\led_logo_debug\arm_cfft_f32.o: ../Drivers/CMSIS/Include/core_cmFunc.h
-.\led_logo_debug\arm_cfft_f32.o: D:\ARM\ARMCC\Bin\..\include\string.h
-.\led_logo_debug\arm_cfft_f32.o: D:\ARM\ARMCC\Bin\..\include\math.h
+.\led_logo_debug\arm_cfft_f32.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\led_logo_debug\arm_cfft_f32.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\led_logo_debug\arm_cfft_f32.o: ../Drivers/CMSIS/Include/arm_common_tables.h

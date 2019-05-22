@@ -1,7 +1,7 @@
 .\led_logo_debug\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/croutine.c
 .\led_logo_debug\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-.\led_logo_debug\croutine.o: D:\ARM\ARMCC\Bin\..\include\stddef.h
-.\led_logo_debug\croutine.o: D:\ARM\ARMCC\Bin\..\include\stdint.h
+.\led_logo_debug\croutine.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\led_logo_debug\croutine.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\led_logo_debug\croutine.o: ../Inc/FreeRTOSConfig.h
 .\led_logo_debug\croutine.o: ../Inc/main.h
 .\led_logo_debug\croutine.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h

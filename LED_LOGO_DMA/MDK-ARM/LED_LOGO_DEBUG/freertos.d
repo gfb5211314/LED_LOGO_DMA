@@ -1,7 +1,7 @@
 .\led_logo_debug\freertos.o: ../Src/freertos.c
 .\led_logo_debug\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-.\led_logo_debug\freertos.o: D:\ARM\ARMCC\Bin\..\include\stddef.h
-.\led_logo_debug\freertos.o: D:\ARM\ARMCC\Bin\..\include\stdint.h
+.\led_logo_debug\freertos.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\led_logo_debug\freertos.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\led_logo_debug\freertos.o: ../Inc/FreeRTOSConfig.h
 .\led_logo_debug\freertos.o: ../Inc/main.h
 .\led_logo_debug\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
@@ -25,7 +25,7 @@
 .\led_logo_debug\freertos.o: ../Drivers/CMSIS/Include/core_cmFunc.h
 .\led_logo_debug\freertos.o: ../Drivers/CMSIS/Device/ST/STM32F1xx/Include/system_stm32f1xx.h
 .\led_logo_debug\freertos.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h
-.\led_logo_debug\freertos.o: D:\ARM\ARMCC\Bin\..\include\stdio.h
+.\led_logo_debug\freertos.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 .\led_logo_debug\freertos.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h
 .\led_logo_debug\freertos.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h
 .\led_logo_debug\freertos.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio_ex.h
@@ -41,10 +41,10 @@
 .\led_logo_debug\freertos.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 .\led_logo_debug\freertos.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
 .\led_logo_debug\freertos.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
-.\led_logo_debug\freertos.o: D:\ARM\ARMCC\Bin\..\include\math.h
+.\led_logo_debug\freertos.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 .\led_logo_debug\freertos.o: ..\BSP\bsp_dma.h
-.\led_logo_debug\freertos.o: D:\ARM\ARMCC\Bin\..\include\string.h
-.\led_logo_debug\freertos.o: D:\ARM\ARMCC\Bin\..\include\stdlib.h
+.\led_logo_debug\freertos.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\led_logo_debug\freertos.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\led_logo_debug\freertos.o: ..\BSP\crc.h
 .\led_logo_debug\freertos.o: ..\BSP\bsp_usart.h
 .\led_logo_debug\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
@@ -53,3 +53,4 @@
 .\led_logo_debug\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 .\led_logo_debug\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
 .\led_logo_debug\freertos.o: ..\App\ws2812_app.h
+.\led_logo_debug\freertos.o: ..\BSP\bsp_update.h

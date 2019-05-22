@@ -41,9 +41,9 @@ uint8_t    ws2812_state = 0;
 uint16_t   ws28128_reset_buf[50] = {0}; //62.5us      大于50us低电平复位
 uint16_t   ws28128_end_reset_buf[50] = {0};
 uint16_t   ws28128_mie_buf[48] = {28};
-uint8_t   ws28128_color_buf[1000][3] =
+uint8_t   ws28128_color_buf[256][3] =
 {
-0
+    0
 };
 //接收colorbuf
 uint16_t   ws28128_color_data[48] = {0};   //PWM数据
@@ -76,67 +76,67 @@ void HLS_TO_RGB_ONE(uint8_t* r, uint8_t* g, uint8_t* b, double h, double l, doub
 extern uint8_t  tx_comple_flag;
 void DMA1_Channel5_IRQHandler(void)
 {
-  /* USER CODE BEGIN DMA1_Channel5_IRQn 0 */
-//	
-  			 if(reset_flag==1)
-	{
-		   reset_flag=0;
-			
-	  	HAL_TIM_PWM_Stop_DMA(&htim2, TIM_CHANNEL_1);
-	
-	
-	} 
+    /* USER CODE BEGIN DMA1_Channel5_IRQn 0 */
+//
+    if(reset_flag==1)
+    {
+        reset_flag=0;
 
-if(light_flag==1)
-	 {		 
-		 			 
-             light_led_count++; 
-		 		if(light_led_count>light_led_max)
-				{
+        HAL_TIM_PWM_Stop_DMA(&htim2, TIM_CHANNEL_1);
+
+
+    }
+
+    if(light_flag==1)
+    {
+
+        light_led_count++;
+        if(light_led_count>light_led_max)
+        {
 //				 memset(ws28128_color_buf, 0, sizeof(ws28128_color_buf));
 //	       memset(ws28128_color_data, 0, sizeof(ws28128_color_data));
-					light_flag=0;
-				 light_led_count=0;
-			    tx_comple_flag=1;
-					
-    HAL_TIM_PWM_Stop_DMA(&htim2, TIM_CHANNEL_1); 
-					
-			
-				}
-		   
-		       if((light_led_count%2)==0)
-					 {
-						shift_buf_to_data_one(light_led_count);
-						 
-					 }
-					 else
-					 {
-						shift_buf_to_data_two(light_led_count); 
-					 }
-      	
-		
-	}
+            light_flag=0;
+            light_led_count=0;
+            tx_comple_flag=1;
 
-		if((mie_flag==1)&&(light_flag==0))
-   {
-   	    
-	      	mie_led_count++;
-		  if(mie_led_count>(mie_led_max-1))
-			{
-				mie_flag=0;
-				mie_led_count=0;
-			
-		 HAL_TIM_PWM_Stop_DMA(&htim2, TIM_CHANNEL_1);
-			
-				
-			}
-			
-		} 
-  /* USER CODE END DMA1_Channel5_IRQn 0 */
-  HAL_DMA_IRQHandler(&hdma_tim2_ch1);
-  /* USER CODE BEGIN DMA1_Channel5_IRQn 1 */
+            HAL_TIM_PWM_Stop_DMA(&htim2, TIM_CHANNEL_1);
 
-  /* USER CODE END DMA1_Channel5_IRQn 1 */
+
+        }
+
+        if((light_led_count%2)==0)
+        {
+            shift_buf_to_data_one(light_led_count);
+
+        }
+        else
+        {
+            shift_buf_to_data_two(light_led_count);
+        }
+
+
+    }
+
+    if((mie_flag==1)&&(light_flag==0))
+    {
+
+        mie_led_count++;
+        if(mie_led_count>(mie_led_max-1))
+        {
+            mie_flag=0;
+            mie_led_count=0;
+
+            HAL_TIM_PWM_Stop_DMA(&htim2, TIM_CHANNEL_1);
+
+
+        }
+
+    }
+    /* USER CODE END DMA1_Channel5_IRQn 0 */
+    HAL_DMA_IRQHandler(&hdma_tim2_ch1);
+    /* USER CODE BEGIN DMA1_Channel5_IRQn 1 */
+
+    /* USER CODE END DMA1_Channel5_IRQn 1 */
 }
 /******注册完成回调不行************/
 /*DMA传输一半回调*/
@@ -488,7 +488,7 @@ void DMA_WS2812_Reset()
 }
 void DMA_WS2812_light(uint16_t led_n)
 {
-	
+
 
     light_led_max = led_n;
 //    __HAL_RCC_DMA1_CLK_DISABLE();
@@ -526,7 +526,7 @@ void DMA_WS2812_SIN(uint16_t amount, uint8_t pwm, colors_kind color)
     float sin_x;  //弧度
     float sin_jiao;//角度 分度角
     sin_jiao = 360.000 / 255;
-   
+
 
     sin_x = sin_jiao * pwm; //得到角度值
     sin_x = sin_x * 0.01744; //角度转弧度 ?弧度=角度*（π/180）
@@ -572,7 +572,7 @@ void DMA_WS2812_SIN_More(uint16_t amount, uint8_t pwm, uint8_t color_ty)
     float sin_x;  //弧度
     float sin_jiao;//角度 分度角
     sin_jiao = 360.000 / 255;
- 
+
 
     sin_x = sin_jiao * pwm; //得到角度值
     sin_x = sin_x * 0.01744; //角度转弧度 ?弧度=角度*（π/180）
@@ -615,7 +615,7 @@ void DMA_WS2812_SIN_More(uint16_t amount, uint8_t pwm, uint8_t color_ty)
 }
 void DMA_WS2812_one_light(uint16_t amount, colors_kind color)
 {
-  
+
     for(uint16_t j = 0; j < amount; j++)
     {
 
@@ -1084,9 +1084,9 @@ void HLS_TO_RGB_ONE(uint8_t* r, uint8_t* g, uint8_t* b, double h, double l, doub
 }
 void reset_led_light()
 {
-     memset(ws28128_color_buf, 0, sizeof(ws28128_color_buf));
-	      DMA_WS2812_Reset();
-          osDelay(1);
-        DMA_WS2812_light(LED_MAX);
-			osDelay((uint32_t)(LED_MAX*30/1000)+1);
+    memset(ws28128_color_buf, 0, sizeof(ws28128_color_buf));
+    DMA_WS2812_Reset();
+    osDelay(1);
+    DMA_WS2812_light(LED_MAX);
+    osDelay((uint32_t)(LED_MAX*30/1000)+1);
 }

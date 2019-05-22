@@ -11,7 +11,7 @@ extern DMA_HandleTypeDef hdma_adc1;
 
 
 /* ADC1 init function */
- void MX_ADC1_Init(void)
+void MX_ADC1_Init(void)
 {
 
     ADC_ChannelConfTypeDef sConfig;

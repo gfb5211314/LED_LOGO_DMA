@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
-<ProjectName>C:\Users\Fubiao.Guo\Desktop\&#29748;&#24358;&#39033;&#30446;\&#26080;&#32447;&#20805;&#30005;&#39033;&#30446;\&#36719;&#20214;\QX\LED_LOGO - DMA\\LED_LOGO_DMA</ProjectName>
+<ProjectName>C:\Users\Fubiao.Guo\Desktop\BESTBEW\LED_LOGO_DMA\LED_LOGO_DMA\\LED_LOGO_DMA</ProjectName>
 <CMSIS>..\Drivers\CMSIS</CMSIS>
-<HAL_Driver>C:\Users\Fubiao.Guo\STM32Cube\Repository\STM32Cube_FW_F1_V1.6.1\Drivers\CMSIS</HAL_Driver>
+<HAL_Driver>C:\Users\Fubiao.Guo\STM32Cube\Repository\STM32Cube_FW_F1_V1.6.0\Drivers\CMSIS</HAL_Driver>
 
 <Toolchain>MDK-ARM</Toolchain>
 	<Toolversion>5</Toolversion>

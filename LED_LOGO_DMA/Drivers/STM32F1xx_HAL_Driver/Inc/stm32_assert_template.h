@@ -2,6 +2,8 @@
   ******************************************************************************
   * @file    stm32_assert.h
   * @author  MCD Application Team
+  * @version V1.1.1
+  * @date    12-May-2017
   * @brief   STM32 assert template file.
   *          This file should be copied to the application folder and renamed
   *          to stm32_assert.h.
@@ -40,7 +42,7 @@
 #define __STM32_ASSERT_H
 
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
 /* Exported types ------------------------------------------------------------*/
@@ -56,11 +58,11 @@ extern "C" {
   *         If expr is true, it returns no value.
   * @retval None
   */
-#define assert_param(expr) ((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
+  #define assert_param(expr) ((expr) ? (void)0U : assert_failed((uint8_t *)__FILE__, __LINE__))
 /* Exported functions ------------------------------------------------------- */
-void assert_failed(uint8_t *file, uint32_t line);
+  void assert_failed(uint8_t* file, uint32_t line);
 #else
-#define assert_param(expr) ((void)0U)
+  #define assert_param(expr) ((void)0U)
 #endif /* USE_FULL_ASSERT */
 
 #ifdef __cplusplus

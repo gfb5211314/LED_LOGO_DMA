@@ -1,8 +1,8 @@
 .\led_logo_debug\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
-.\led_logo_debug\event_groups.o: D:\ARM\ARMCC\Bin\..\include\stdlib.h
+.\led_logo_debug\event_groups.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\led_logo_debug\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-.\led_logo_debug\event_groups.o: D:\ARM\ARMCC\Bin\..\include\stddef.h
-.\led_logo_debug\event_groups.o: D:\ARM\ARMCC\Bin\..\include\stdint.h
+.\led_logo_debug\event_groups.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\led_logo_debug\event_groups.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\led_logo_debug\event_groups.o: ../Inc/FreeRTOSConfig.h
 .\led_logo_debug\event_groups.o: ../Inc/main.h
 .\led_logo_debug\event_groups.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h

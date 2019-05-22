@@ -37,7 +37,7 @@
 #include "cmsis_os.h"
 
 /* USER CODE BEGIN 0 */
-
+#include "bsp_usart.h"
 #include <stdlib.h>
 #include    "bsp_usart.h"
 extern uint16_t light_led_max;
@@ -284,7 +284,7 @@ void TIM3_IRQHandler(void)
 void USART3_IRQHandler(void)
 {
   /* USER CODE BEGIN USART3_IRQn 0 */
-UsartReceive_IDLE(&huart3,&UsartType3);
+  UsartReceive_IDLE(&huart3,&UsartType3);
   /* USER CODE END USART3_IRQn 0 */
   HAL_UART_IRQHandler(&huart3);
   /* USER CODE BEGIN USART3_IRQn 1 */

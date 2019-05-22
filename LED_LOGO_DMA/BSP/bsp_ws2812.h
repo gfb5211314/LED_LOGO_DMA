@@ -4,7 +4,7 @@
 
 #include "stm32f1xx_hal.h"
 
-#define  ledmax          66  
+#define  ledmax          66
 #define lamp_bead_amount           15          //lamp bead amount 
 typedef  struct
 {
@@ -15,20 +15,20 @@ typedef  struct
 
 
 typedef enum
-{  
-	  w28_idle=0,
+{
+    w28_idle=0,
     w28_start_reset=1,
     w28_reset_check=2,
-	  w28_data_update=3,
-	  w28_end_reset=4,
-	 
-	 
+    w28_data_update=3,
+    w28_end_reset=4,
+
+
 } ws128_state_type;
 typedef enum
-{  
-      w28_start=5,
-	    w28_check_state=6
-	 
+{
+    w28_start=5,
+    w28_check_state=6
+
 } ws128_ctrl_type;
 
 
@@ -48,7 +48,7 @@ typedef enum
 } colors_kind;
 
 
-extern void reset_led_light();
+extern void reset_led_light(void);
 
 
 void  led_run(volatile uint16_t  amount, colors_kind  color, volatile uint8_t pwm);
@@ -78,13 +78,13 @@ void  led_runing(volatile uint16_t  amount, colors_kind  color, volatile uint8_t
 
 void  led_open(volatile uint16_t  amount, colors_kind  color, volatile uint8_t pwm);
 
-    
 
 
 
 
 
-   
+
+
 
 
 /**

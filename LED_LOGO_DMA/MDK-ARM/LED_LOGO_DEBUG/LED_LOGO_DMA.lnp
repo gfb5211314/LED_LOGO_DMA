@@ -37,6 +37,7 @@
 ".\led_logo_debug\bsp_esp32.o"
 ".\led_logo_debug\bsp_nrf24l01.o"
 ".\led_logo_debug\bsp_commun.o"
+".\led_logo_debug\bsp_e61.o"
 ".\led_logo_debug\ws2812_app.o"
 ".\led_logo_debug\esp32_app.o"
 ".\led_logo_debug\at_nrf24l01_app.o"
@@ -50,7 +51,7 @@
 ".\led_logo_debug\heap_4.o"
 ".\led_logo_debug\list.o"
 ".\led_logo_debug\queue.o"
-"D:\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Lib\ARM\arm_cortexM3l_math.lib"
+"D:\Users\Fubiao.Guo\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\DSP\Lib\ARM\arm_cortexM3l_math.lib"
 --library_type=microlib --strict --scatter ".\LED_LOGO_DEBUG\LED_LOGO_DMA.sct"
 --diag_suppress=L6329 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

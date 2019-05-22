@@ -1,8 +1,8 @@
 .\led_logo_debug\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/timers.c
-.\led_logo_debug\timers.o: D:\ARM\ARMCC\Bin\..\include\stdlib.h
+.\led_logo_debug\timers.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\led_logo_debug\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-.\led_logo_debug\timers.o: D:\ARM\ARMCC\Bin\..\include\stddef.h
-.\led_logo_debug\timers.o: D:\ARM\ARMCC\Bin\..\include\stdint.h
+.\led_logo_debug\timers.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\led_logo_debug\timers.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\led_logo_debug\timers.o: ../Inc/FreeRTOSConfig.h
 .\led_logo_debug\timers.o: ../Inc/main.h
 .\led_logo_debug\timers.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h

@@ -1,8 +1,8 @@
 .\led_logo_debug\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
-.\led_logo_debug\heap_4.o: D:\ARM\ARMCC\Bin\..\include\stdlib.h
+.\led_logo_debug\heap_4.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\led_logo_debug\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-.\led_logo_debug\heap_4.o: D:\ARM\ARMCC\Bin\..\include\stddef.h
-.\led_logo_debug\heap_4.o: D:\ARM\ARMCC\Bin\..\include\stdint.h
+.\led_logo_debug\heap_4.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\led_logo_debug\heap_4.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\led_logo_debug\heap_4.o: ../Inc/FreeRTOSConfig.h
 .\led_logo_debug\heap_4.o: ../Inc/main.h
 .\led_logo_debug\heap_4.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h

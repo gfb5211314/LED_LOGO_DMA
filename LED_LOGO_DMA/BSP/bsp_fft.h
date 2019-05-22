@@ -10,7 +10,7 @@
 
 
 
-extern void one_y_dspaly(uint16_t x_location ,colors_kind color, uint8_t pwm,uint8_t led_n,uint16_t y_ledmax);
+extern void one_y_dspaly(uint16_t x_location,colors_kind color, uint8_t pwm,uint8_t led_n,uint16_t y_ledmax);
 
 
 
@@ -21,3 +21,4 @@ extern void one_y_dspaly(uint16_t x_location ,colors_kind color, uint8_t pwm,uin
 
 
 #endif
+

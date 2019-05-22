@@ -3,7 +3,7 @@
 #include "stm32f1xx_hal.h"
 #include   "bsp_ws2812.h"
 
-#define LED_MAX                228   //项目最大灯数
+#define LED_MAX                229   //项目最大灯数
 extern void ws2812_rand_light(volatile uint16_t  amount);
 
 /**
@@ -46,6 +46,10 @@ extern void DMA_WS2812_Ramp(volatile uint16_t  amount, uint8_t pwm, colors_kind 
 /***********多条灯跑起来****************/
 extern void DMA_WS2812_Running_more(volatile uint16_t  amount, volatile uint16_t run_number);
 
+extern void DMA_WS2812_shade_logo(uint8_t group_num,uint8_t (*start_buf)[3],uint8_t (*terminus_buf)[3]);
+extern void DMA_WS2812_shade_light(uint16_t amount);
+extern void DMA_WS2812_data_refresh(uint8_t (*sta)[3],uint8_t *pbuf,uint16_t lendata);
+extern void DMA_WS2812_shade_logo_one(uint8_t group_num,uint8_t (*def_buf)[6]);
 
 #endif
 

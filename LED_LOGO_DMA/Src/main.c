@@ -92,6 +92,7 @@ osThreadId myTask03Handle;
 
 /* Private function prototypes -----------------------------------------------*/
 
+                                
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -122,7 +123,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-    uint8_t a;
 //	 SCB->VTOR = 0x8000000 | (0x1800 & (uint32_t)0x1FFFFF80);
   /* USER CODE END 1 */
 
@@ -190,7 +190,7 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, APP_TASK, osPriorityNormal, 0, 128);
+  osThreadDef(defaultTask, APP_TASK, osPriorityNormal, 0, 512);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of WS12TASK */
@@ -335,6 +335,10 @@ static void MX_NVIC_Init(void)
   HAL_NVIC_SetPriority(USART3_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(USART3_IRQn);
 }
+
+
+
+
 
 
 /**

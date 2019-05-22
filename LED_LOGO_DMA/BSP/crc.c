@@ -1,6 +1,6 @@
- #include "crc.h"
+#include "crc.h"
 
- uint16_t CRCTable16[] =
+uint16_t CRCTable16[] =
 {
     0x0000, 0x1189, 0x2312, 0x329b, 0x4624, 0x57ad, 0x6536, 0x74bf,
     0x8c48, 0x9dc1, 0xaf5a, 0xbed3, 0xca6c, 0xdbe5, 0xe97e, 0xf8f7,
@@ -37,11 +37,11 @@
 };
 
 /*
- *  ======== calculate_CRC16 ========
+ *  ======== calculate_CRC16 X25 ========
  *  Calculate crc16.
  */
 uint16_t Calc_CRC16( uint8_t *pData, long nLength)
-{   
+{
     uint16_t FCS;    // FCS: Frame Check Sequence
 
     FCS = 0xFFFF;
@@ -55,3 +55,26 @@ uint16_t Calc_CRC16( uint8_t *pData, long nLength)
 
     return ~FCS;
 }
+/***********MODBUS***************/
+//uint16_t CRC16(uint8_t *ptr, uint16_t len)
+//{
+//    unsigned char i;
+//    unsigned short crc = 0xFFFF;
+//    if (len == 0) {
+//        len = 1;
+//    }
+//    while (len--) {
+//        crc ^= *ptr;
+//        for (i = 0; i<8; i++)
+//        {
+//            if (crc & 1) {
+//                crc >>= 1;
+//                crc ^= 0xA001;
+//            } else {
+//                crc >>= 1;
+//            }
+//        }
+//        ptr++;
+//    }
+//    return(crc);
+//}

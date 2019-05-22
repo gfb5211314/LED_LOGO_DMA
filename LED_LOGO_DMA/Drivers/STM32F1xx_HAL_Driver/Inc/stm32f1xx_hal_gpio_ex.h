@@ -2,6 +2,8 @@
   ******************************************************************************
   * @file    stm32f1xx_hal_gpio_ex.h
   * @author  MCD Application Team
+  * @version V1.1.1
+  * @date    12-May-2017
   * @brief   Header file of GPIO HAL Extension module.
   ******************************************************************************
   * @attention
@@ -31,14 +33,14 @@
   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
   ******************************************************************************
-  */
+  */ 
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32F1xx_HAL_GPIO_EX_H
 #define __STM32F1xx_HAL_GPIO_EX_H
 
 #ifdef __cplusplus
-extern "C" {
+ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -50,23 +52,25 @@ extern "C" {
 
 /** @defgroup GPIOEx GPIOEx
   * @{
-  */
+  */ 
+
 /* Exported types ------------------------------------------------------------*/
+
 /* Exported constants --------------------------------------------------------*/
 
 /** @defgroup GPIOEx_Exported_Constants GPIOEx Exported Constants
   * @{
-  */
-
+  */ 
+  
 /** @defgroup GPIOEx_EVENTOUT EVENTOUT Cortex Configuration
   * @brief This section propose definition to use the Cortex EVENTOUT signal.
   * @{
   */
-
-/** @defgroup GPIOEx_EVENTOUT_PIN EVENTOUT Pin
+  
+/** @defgroup GPIOEx_EVENTOUT_PIN EVENTOUT Pin 
   * @{
   */
-
+  
 #define AFIO_EVENTOUT_PIN_0  AFIO_EVCR_PIN_PX0 /*!< EVENTOUT on pin 0 */
 #define AFIO_EVENTOUT_PIN_1  AFIO_EVCR_PIN_PX1 /*!< EVENTOUT on pin 1 */
 #define AFIO_EVENTOUT_PIN_2  AFIO_EVCR_PIN_PX2 /*!< EVENTOUT on pin 2 */
@@ -102,12 +106,12 @@ extern "C" {
                                        ((__PIN__) == AFIO_EVENTOUT_PIN_15))
 /**
   * @}
-  */
-
+  */ 
+  
 /** @defgroup GPIOEx_EVENTOUT_PORT EVENTOUT Port
   * @{
   */
-
+  
 #define AFIO_EVENTOUT_PORT_A AFIO_EVCR_PORT_PA /*!< EVENTOUT on port A */
 #define AFIO_EVENTOUT_PORT_B AFIO_EVCR_PORT_PB /*!< EVENTOUT on port B */
 #define AFIO_EVENTOUT_PORT_C AFIO_EVCR_PORT_PC /*!< EVENTOUT on port C */
@@ -122,7 +126,7 @@ extern "C" {
 /**
   * @}
   */
-
+  
 /**
   * @}
   */
@@ -131,132 +135,151 @@ extern "C" {
   * @brief This section propose definition to remap the alternate function to some other port/pins.
   * @{
   */
-
+  
 /**
   * @brief Enable the remapping of SPI1 alternate function NSS, SCK, MISO and MOSI.
   * @note  ENABLE: Remap     (NSS/PA15, SCK/PB3, MISO/PB4, MOSI/PB5)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_SPI1_ENABLE()  AFIO_REMAP_ENABLE(AFIO_MAPR_SPI1_REMAP)
+#define __HAL_AFIO_REMAP_SPI1_ENABLE()  SET_BIT(AFIO->MAPR, AFIO_MAPR_SPI1_REMAP)
 
 /**
   * @brief Disable the remapping of SPI1 alternate function NSS, SCK, MISO and MOSI.
   * @note  DISABLE: No remap (NSS/PA4,  SCK/PA5, MISO/PA6, MOSI/PA7)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_SPI1_DISABLE()  AFIO_REMAP_DISABLE(AFIO_MAPR_SPI1_REMAP)
+#define __HAL_AFIO_REMAP_SPI1_DISABLE() CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_SPI1_REMAP)
 
 /**
   * @brief Enable the remapping of I2C1 alternate function SCL and SDA.
   * @note  ENABLE: Remap     (SCL/PB8, SDA/PB9)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_I2C1_ENABLE()  AFIO_REMAP_ENABLE(AFIO_MAPR_I2C1_REMAP)
+#define __HAL_AFIO_REMAP_I2C1_ENABLE()  SET_BIT(AFIO->MAPR, AFIO_MAPR_I2C1_REMAP)
 
 /**
   * @brief Disable the remapping of I2C1 alternate function SCL and SDA.
   * @note  DISABLE: No remap (SCL/PB6, SDA/PB7)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_I2C1_DISABLE() AFIO_REMAP_DISABLE(AFIO_MAPR_I2C1_REMAP)
+#define __HAL_AFIO_REMAP_I2C1_DISABLE() CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_I2C1_REMAP)
 
 /**
   * @brief Enable the remapping of USART1 alternate function TX and RX.
   * @note  ENABLE: Remap     (TX/PB6, RX/PB7)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_USART1_ENABLE()  AFIO_REMAP_ENABLE(AFIO_MAPR_USART1_REMAP)
+#define __HAL_AFIO_REMAP_USART1_ENABLE()  SET_BIT(AFIO->MAPR, AFIO_MAPR_USART1_REMAP)
 
 /**
   * @brief Disable the remapping of USART1 alternate function TX and RX.
   * @note  DISABLE: No remap (TX/PA9, RX/PA10)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_USART1_DISABLE() AFIO_REMAP_DISABLE(AFIO_MAPR_USART1_REMAP)
+#define __HAL_AFIO_REMAP_USART1_DISABLE() CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_USART1_REMAP)
 
 /**
   * @brief Enable the remapping of USART2 alternate function CTS, RTS, CK, TX and RX.
   * @note  ENABLE: Remap     (CTS/PD3, RTS/PD4, TX/PD5, RX/PD6, CK/PD7)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_USART2_ENABLE()  AFIO_REMAP_ENABLE(AFIO_MAPR_USART2_REMAP)
+#define __HAL_AFIO_REMAP_USART2_ENABLE()  SET_BIT(AFIO->MAPR, AFIO_MAPR_USART2_REMAP)
 
 /**
   * @brief Disable the remapping of USART2 alternate function CTS, RTS, CK, TX and RX.
   * @note  DISABLE: No remap (CTS/PA0, RTS/PA1, TX/PA2, RX/PA3, CK/PA4)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_USART2_DISABLE() AFIO_REMAP_DISABLE(AFIO_MAPR_USART2_REMAP)
+#define __HAL_AFIO_REMAP_USART2_DISABLE() CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_USART2_REMAP)
 
 /**
   * @brief Enable the remapping of USART3 alternate function CTS, RTS, CK, TX and RX.
   * @note  ENABLE: Full remap     (TX/PD8,  RX/PD9,  CK/PD10, CTS/PD11, RTS/PD12)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_USART3_ENABLE()  AFIO_REMAP_PARTIAL(AFIO_MAPR_USART3_REMAP_FULLREMAP, AFIO_MAPR_USART3_REMAP_FULLREMAP)
-
+#define __HAL_AFIO_REMAP_USART3_ENABLE()  do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_USART3_REMAP);            \
+                                              SET_BIT(AFIO->MAPR, AFIO_MAPR_USART3_REMAP_FULLREMAP);    \
+                                            }while(0U)
 /**
   * @brief Enable the remapping of USART3 alternate function CTS, RTS, CK, TX and RX.
   * @note  PARTIAL: Partial remap (TX/PC10, RX/PC11, CK/PC12, CTS/PB13, RTS/PB14)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_USART3_PARTIAL()  AFIO_REMAP_PARTIAL(AFIO_MAPR_USART3_REMAP_PARTIALREMAP, AFIO_MAPR_USART3_REMAP_FULLREMAP)
+#define __HAL_AFIO_REMAP_USART3_PARTIAL() do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_USART3_REMAP);            \
+                                              SET_BIT(AFIO->MAPR, AFIO_MAPR_USART3_REMAP_PARTIALREMAP); \
+                                            }while(0U)
 
 /**
   * @brief Disable the remapping of USART3 alternate function CTS, RTS, CK, TX and RX.
   * @note  DISABLE: No remap      (TX/PB10, RX/PB11, CK/PB12, CTS/PB13, RTS/PB14)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_USART3_DISABLE()  AFIO_REMAP_PARTIAL(AFIO_MAPR_USART3_REMAP_NOREMAP, AFIO_MAPR_USART3_REMAP_FULLREMAP)
+#define __HAL_AFIO_REMAP_USART3_DISABLE() do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_USART3_REMAP);       \
+                                              SET_BIT(AFIO->MAPR, AFIO_MAPR_USART3_REMAP_NOREMAP); \
+                                            }while(0U)
 
 /**
   * @brief Enable the remapping of TIM1 alternate function channels 1 to 4, 1N to 3N, external trigger (ETR) and Break input (BKIN)
   * @note  ENABLE: Full remap     (ETR/PE7,  CH1/PE9, CH2/PE11, CH3/PE13, CH4/PE14, BKIN/PE15, CH1N/PE8,  CH2N/PE10, CH3N/PE12)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_TIM1_ENABLE()  AFIO_REMAP_PARTIAL(AFIO_MAPR_TIM1_REMAP_FULLREMAP, AFIO_MAPR_TIM1_REMAP_FULLREMAP)
+#define __HAL_AFIO_REMAP_TIM1_ENABLE()  do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_TIM1_REMAP);         \
+                                            SET_BIT(AFIO->MAPR, AFIO_MAPR_TIM1_REMAP_FULLREMAP); \
+                                          }while(0U)
 
 /**
   * @brief Enable the remapping of TIM1 alternate function channels 1 to 4, 1N to 3N, external trigger (ETR) and Break input (BKIN)
   * @note  PARTIAL: Partial remap (ETR/PA12, CH1/PA8, CH2/PA9,  CH3/PA10, CH4/PA11, BKIN/PA6,  CH1N/PA7,  CH2N/PB0,  CH3N/PB1)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_TIM1_PARTIAL()  AFIO_REMAP_PARTIAL(AFIO_MAPR_TIM1_REMAP_PARTIALREMAP, AFIO_MAPR_TIM1_REMAP_FULLREMAP)
+#define __HAL_AFIO_REMAP_TIM1_PARTIAL()  do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_TIM1_REMAP);            \
+                                             SET_BIT(AFIO->MAPR, AFIO_MAPR_TIM1_REMAP_PARTIALREMAP); \
+                                           }while(0U)
 
 /**
   * @brief Disable the remapping of TIM1 alternate function channels 1 to 4, 1N to 3N, external trigger (ETR) and Break input (BKIN)
   * @note  DISABLE: No remap      (ETR/PA12, CH1/PA8, CH2/PA9,  CH3/PA10, CH4/PA11, BKIN/PB12, CH1N/PB13, CH2N/PB14, CH3N/PB15)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_TIM1_DISABLE()  AFIO_REMAP_PARTIAL(AFIO_MAPR_TIM1_REMAP_NOREMAP, AFIO_MAPR_TIM1_REMAP_FULLREMAP)
+#define __HAL_AFIO_REMAP_TIM1_DISABLE() do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_TIM1_REMAP);       \
+                                            SET_BIT(AFIO->MAPR, AFIO_MAPR_TIM1_REMAP_NOREMAP); \
+                                          }while(0U)
 
 /**
   * @brief Enable the remapping of TIM2 alternate function channels 1 to 4 and external trigger (ETR)
   * @note  ENABLE: Full remap       (CH1/ETR/PA15, CH2/PB3, CH3/PB10, CH4/PB11)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_TIM2_ENABLE()  AFIO_REMAP_PARTIAL(AFIO_MAPR_TIM2_REMAP_FULLREMAP, AFIO_MAPR_TIM2_REMAP_FULLREMAP)
+#define __HAL_AFIO_REMAP_TIM2_ENABLE()  do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_TIM2_REMAP);         \
+                                            SET_BIT(AFIO->MAPR, AFIO_MAPR_TIM2_REMAP_FULLREMAP); \
+                                          }while(0U)
 
 /**
   * @brief Enable the remapping of TIM2 alternate function channels 1 to 4 and external trigger (ETR)
   * @note  PARTIAL_2: Partial remap (CH1/ETR/PA0,  CH2/PA1, CH3/PB10, CH4/PB11)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_TIM2_PARTIAL_2()  AFIO_REMAP_PARTIAL(AFIO_MAPR_TIM2_REMAP_PARTIALREMAP2, AFIO_MAPR_TIM2_REMAP_FULLREMAP)
+#define __HAL_AFIO_REMAP_TIM2_PARTIAL_2()  do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_TIM2_REMAP);             \
+                                               SET_BIT(AFIO->MAPR, AFIO_MAPR_TIM2_REMAP_PARTIALREMAP2); \
+                                             }while(0U)
 
 /**
   * @brief Enable the remapping of TIM2 alternate function channels 1 to 4 and external trigger (ETR)
   * @note  PARTIAL_1: Partial remap (CH1/ETR/PA15, CH2/PB3, CH3/PA2,  CH4/PA3)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_TIM2_PARTIAL_1()  AFIO_REMAP_PARTIAL(AFIO_MAPR_TIM2_REMAP_PARTIALREMAP1, AFIO_MAPR_TIM2_REMAP_FULLREMAP)
+#define __HAL_AFIO_REMAP_TIM2_PARTIAL_1()  do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_TIM2_REMAP);             \
+                                               SET_BIT(AFIO->MAPR, AFIO_MAPR_TIM2_REMAP_PARTIALREMAP1); \
+                                             }while(0U)
 
 /**
   * @brief Disable the remapping of TIM2 alternate function channels 1 to 4 and external trigger (ETR)
   * @note  DISABLE: No remap        (CH1/ETR/PA0,  CH2/PA1, CH3/PA2,  CH4/PA3)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_TIM2_DISABLE()  AFIO_REMAP_PARTIAL(AFIO_MAPR_TIM2_REMAP_NOREMAP, AFIO_MAPR_TIM2_REMAP_FULLREMAP)
+#define __HAL_AFIO_REMAP_TIM2_DISABLE() do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_TIM2_REMAP);         \
+                                            SET_BIT(AFIO->MAPR, AFIO_MAPR_TIM2_REMAP_NOREMAP);   \
+                                          }while(0U)
 
 /**
   * @brief Enable the remapping of TIM3 alternate function channels 1 to 4
@@ -264,7 +287,9 @@ extern "C" {
   * @note  TIM3_ETR on PE0 is not re-mapped.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_TIM3_ENABLE()  AFIO_REMAP_PARTIAL(AFIO_MAPR_TIM3_REMAP_FULLREMAP, AFIO_MAPR_TIM3_REMAP_FULLREMAP)
+#define __HAL_AFIO_REMAP_TIM3_ENABLE()  do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_TIM3_REMAP);         \
+                                            SET_BIT(AFIO->MAPR, AFIO_MAPR_TIM3_REMAP_FULLREMAP); \
+                                          }while(0U)
 
 /**
   * @brief Enable the remapping of TIM3 alternate function channels 1 to 4
@@ -272,7 +297,9 @@ extern "C" {
   * @note  TIM3_ETR on PE0 is not re-mapped.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_TIM3_PARTIAL()  AFIO_REMAP_PARTIAL(AFIO_MAPR_TIM3_REMAP_PARTIALREMAP, AFIO_MAPR_TIM3_REMAP_FULLREMAP)
+#define __HAL_AFIO_REMAP_TIM3_PARTIAL()    do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_TIM3_REMAP);            \
+                                               SET_BIT(AFIO->MAPR, AFIO_MAPR_TIM3_REMAP_PARTIALREMAP); \
+                                             }while(0U)
 
 /**
   * @brief Disable the remapping of TIM3 alternate function channels 1 to 4
@@ -280,7 +307,9 @@ extern "C" {
   * @note  TIM3_ETR on PE0 is not re-mapped.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_TIM3_DISABLE()  AFIO_REMAP_PARTIAL(AFIO_MAPR_TIM3_REMAP_NOREMAP, AFIO_MAPR_TIM3_REMAP_FULLREMAP)
+#define __HAL_AFIO_REMAP_TIM3_DISABLE()   do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_TIM3_REMAP);           \
+                                              SET_BIT(AFIO->MAPR, AFIO_MAPR_TIM3_REMAP_NOREMAP);     \
+                                            }while(0U)
 
 /**
   * @brief Enable the remapping of TIM4 alternate function channels 1 to 4.
@@ -288,7 +317,7 @@ extern "C" {
   * @note  TIM4_ETR on PE0 is not re-mapped.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_TIM4_ENABLE()  AFIO_REMAP_ENABLE(AFIO_MAPR_TIM4_REMAP)
+#define __HAL_AFIO_REMAP_TIM4_ENABLE()  SET_BIT(AFIO->MAPR, AFIO_MAPR_TIM4_REMAP)
 
 /**
   * @brief Disable the remapping of TIM4 alternate function channels 1 to 4.
@@ -296,7 +325,7 @@ extern "C" {
   * @note  TIM4_ETR on PE0 is not re-mapped.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_TIM4_DISABLE() AFIO_REMAP_DISABLE(AFIO_MAPR_TIM4_REMAP)
+#define __HAL_AFIO_REMAP_TIM4_DISABLE() CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_TIM4_REMAP)
 
 #if defined(AFIO_MAPR_CAN_REMAP_REMAP1)
 
@@ -305,43 +334,48 @@ extern "C" {
   * @note  CASE 1: CAN_RX mapped to PA11, CAN_TX mapped to PA12
   * @retval None
   */
-#define __HAL_AFIO_REMAP_CAN1_1()  AFIO_REMAP_PARTIAL(AFIO_MAPR_CAN_REMAP_REMAP1, AFIO_MAPR_CAN_REMAP)
+#define __HAL_AFIO_REMAP_CAN1_1()   do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_CAN_REMAP);         \
+                                        SET_BIT(AFIO->MAPR, AFIO_MAPR_CAN_REMAP_REMAP1);    \
+                                      }while(0U)
 
 /**
   * @brief Enable or disable the remapping of CAN alternate function CAN_RX and CAN_TX in devices with a single CAN interface.
   * @note  CASE 2: CAN_RX mapped to PB8,  CAN_TX mapped to PB9 (not available on 36-pin package)
   * @retval None
   */
-#define __HAL_AFIO_REMAP_CAN1_2()  AFIO_REMAP_PARTIAL(AFIO_MAPR_CAN_REMAP_REMAP2, AFIO_MAPR_CAN_REMAP)
+#define __HAL_AFIO_REMAP_CAN1_2()   do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_CAN_REMAP);         \
+                                        SET_BIT(AFIO->MAPR, AFIO_MAPR_CAN_REMAP_REMAP2);    \
+                                      }while(0U)
 
 /**
   * @brief Enable or disable the remapping of CAN alternate function CAN_RX and CAN_TX in devices with a single CAN interface.
   * @note  CASE 3: CAN_RX mapped to PD0,  CAN_TX mapped to PD1
   * @retval None
   */
-#define __HAL_AFIO_REMAP_CAN1_3()  AFIO_REMAP_PARTIAL(AFIO_MAPR_CAN_REMAP_REMAP3, AFIO_MAPR_CAN_REMAP)
-
+#define __HAL_AFIO_REMAP_CAN1_3()  do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_CAN_REMAP);                 \
+                                       SET_BIT(AFIO->MAPR, AFIO_MAPR_CAN_REMAP_REMAP3);       \
+                                     }while(0U)
 #endif
 
 /**
-  * @brief Enable the remapping of PD0 and PD1. When the HSE oscillator is not used
-  *        (application running on internal 8 MHz RC) PD0 and PD1 can be mapped on OSC_IN and
-  *        OSC_OUT. This is available only on 36, 48 and 64 pins packages (PD0 and PD1 are available
+  * @brief Enable the remapping of PD0 and PD1. When the HSE oscillator is not used 
+  *        (application running on internal 8 MHz RC) PD0 and PD1 can be mapped on OSC_IN and 
+  *        OSC_OUT. This is available only on 36, 48 and 64 pins packages (PD0 and PD1 are available 
   *        on 100-pin and 144-pin packages, no need for remapping).
   * @note  ENABLE: PD0 remapped on OSC_IN, PD1 remapped on OSC_OUT.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_PD01_ENABLE()  AFIO_REMAP_ENABLE(AFIO_MAPR_PD01_REMAP)
+#define __HAL_AFIO_REMAP_PD01_ENABLE()  SET_BIT(AFIO->MAPR, AFIO_MAPR_PD01_REMAP)
 
 /**
-  * @brief Disable the remapping of PD0 and PD1. When the HSE oscillator is not used
-  *        (application running on internal 8 MHz RC) PD0 and PD1 can be mapped on OSC_IN and
-  *        OSC_OUT. This is available only on 36, 48 and 64 pins packages (PD0 and PD1 are available
+  * @brief Disable the remapping of PD0 and PD1. When the HSE oscillator is not used 
+  *        (application running on internal 8 MHz RC) PD0 and PD1 can be mapped on OSC_IN and 
+  *        OSC_OUT. This is available only on 36, 48 and 64 pins packages (PD0 and PD1 are available 
   *        on 100-pin and 144-pin packages, no need for remapping).
   * @note  DISABLE: No remapping of PD0 and PD1
   * @retval None
   */
-#define __HAL_AFIO_REMAP_PD01_DISABLE() AFIO_REMAP_DISABLE(AFIO_MAPR_PD01_REMAP)
+#define __HAL_AFIO_REMAP_PD01_DISABLE() CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_PD01_REMAP)
 
 #if defined(AFIO_MAPR_TIM5CH4_IREMAP)
 /**
@@ -350,7 +384,7 @@ extern "C" {
   * @note  This function is available only in high density value line devices.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_TIM5CH4_ENABLE()  AFIO_REMAP_ENABLE(AFIO_MAPR_TIM5CH4_IREMAP)
+#define __HAL_AFIO_REMAP_TIM5CH4_ENABLE()  SET_BIT(AFIO->MAPR, AFIO_MAPR_TIM5CH4_IREMAP)
 
 /**
   * @brief Disable the remapping of TIM5CH4.
@@ -358,7 +392,7 @@ extern "C" {
   * @note  This function is available only in high density value line devices.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_TIM5CH4_DISABLE() AFIO_REMAP_DISABLE(AFIO_MAPR_TIM5CH4_IREMAP)
+#define __HAL_AFIO_REMAP_TIM5CH4_DISABLE() CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_TIM5CH4_IREMAP)
 #endif
 
 #if defined(AFIO_MAPR_ETH_REMAP)
@@ -368,7 +402,7 @@ extern "C" {
   * @note  This bit is available only in connectivity line devices and is reserved otherwise.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_ETH_ENABLE()  AFIO_REMAP_ENABLE(AFIO_MAPR_ETH_REMAP)
+#define __HAL_AFIO_REMAP_ETH_ENABLE()  SET_BIT(AFIO->MAPR, AFIO_MAPR_ETH_REMAP)
 
 /**
   * @brief Disable the remapping of Ethernet MAC connections with the PHY.
@@ -376,7 +410,7 @@ extern "C" {
   * @note  This bit is available only in connectivity line devices and is reserved otherwise.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_ETH_DISABLE() AFIO_REMAP_DISABLE(AFIO_MAPR_ETH_REMAP)
+#define __HAL_AFIO_REMAP_ETH_DISABLE() CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_ETH_REMAP)
 #endif
 
 #if defined(AFIO_MAPR_CAN2_REMAP)
@@ -387,7 +421,7 @@ extern "C" {
   * @note  This bit is available only in connectivity line devices and is reserved otherwise.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_CAN2_ENABLE()  AFIO_REMAP_ENABLE(AFIO_MAPR_CAN2_REMAP)
+#define __HAL_AFIO_REMAP_CAN2_ENABLE()  SET_BIT(AFIO->MAPR, AFIO_MAPR_CAN2_REMAP)
 
 /**
   * @brief Disable the remapping of CAN2 alternate function CAN2_RX and CAN2_TX.
@@ -395,7 +429,7 @@ extern "C" {
   * @note  This bit is available only in connectivity line devices and is reserved otherwise.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_CAN2_DISABLE() AFIO_REMAP_DISABLE(AFIO_MAPR_CAN2_REMAP)
+#define __HAL_AFIO_REMAP_CAN2_DISABLE() CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_CAN2_REMAP)
 #endif
 
 #if defined(AFIO_MAPR_MII_RMII_SEL)
@@ -405,7 +439,7 @@ extern "C" {
   * @note  This bit is available only in connectivity line devices and is reserved otherwise.
   * @retval None
   */
-#define __HAL_AFIO_ETH_RMII() AFIO_REMAP_ENABLE(AFIO_MAPR_MII_RMII_SEL)
+#define __HAL_AFIO_ETH_RMII() SET_BIT(AFIO->MAPR, AFIO_MAPR_MII_RMII_SEL)
 
 /**
   * @brief Configures the Ethernet MAC internally for use with an external MII or RMII PHY.
@@ -413,7 +447,7 @@ extern "C" {
   * @note  This bit is available only in connectivity line devices and is reserved otherwise.
   * @retval None
   */
-#define __HAL_AFIO_ETH_MII()  AFIO_REMAP_DISABLE(AFIO_MAPR_MII_RMII_SEL)
+#define __HAL_AFIO_ETH_MII()  CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_MII_RMII_SEL)
 #endif
 
 /**
@@ -421,28 +455,28 @@ extern "C" {
   * @note  ENABLE: ADC1 External Event injected conversion is connected to TIM8 Channel4.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_ADC1_ETRGINJ_ENABLE()  AFIO_REMAP_ENABLE(AFIO_MAPR_ADC1_ETRGINJ_REMAP)
+#define __HAL_AFIO_REMAP_ADC1_ETRGINJ_ENABLE()  SET_BIT(AFIO->MAPR, AFIO_MAPR_ADC1_ETRGINJ_REMAP)
 
 /**
   * @brief Disable the remapping of ADC1_ETRGINJ (ADC 1 External trigger injected conversion).
   * @note  DISABLE: ADC1 External trigger injected conversion is connected to EXTI15
   * @retval None
   */
-#define __HAL_AFIO_REMAP_ADC1_ETRGINJ_DISABLE() AFIO_REMAP_DISABLE(AFIO_MAPR_ADC1_ETRGINJ_REMAP)
+#define __HAL_AFIO_REMAP_ADC1_ETRGINJ_DISABLE() CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_ADC1_ETRGINJ_REMAP)
 
 /**
   * @brief Enable the remapping of ADC1_ETRGREG (ADC 1 External trigger regular conversion).
   * @note  ENABLE: ADC1 External Event regular conversion is connected to TIM8 TRG0.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_ADC1_ETRGREG_ENABLE()  AFIO_REMAP_ENABLE(AFIO_MAPR_ADC1_ETRGREG_REMAP)
+#define __HAL_AFIO_REMAP_ADC1_ETRGREG_ENABLE()  SET_BIT(AFIO->MAPR, AFIO_MAPR_ADC1_ETRGREG_REMAP)
 
 /**
   * @brief Disable the remapping of ADC1_ETRGREG (ADC 1 External trigger regular conversion).
   * @note  DISABLE: ADC1 External trigger regular conversion is connected to EXTI11
   * @retval None
   */
-#define __HAL_AFIO_REMAP_ADC1_ETRGREG_DISABLE() AFIO_REMAP_DISABLE(AFIO_MAPR_ADC1_ETRGREG_REMAP)
+#define __HAL_AFIO_REMAP_ADC1_ETRGREG_DISABLE() CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_ADC1_ETRGREG_REMAP)
 
 #if defined(AFIO_MAPR_ADC2_ETRGINJ_REMAP)
 
@@ -451,14 +485,14 @@ extern "C" {
   * @note  ENABLE: ADC2 External Event injected conversion is connected to TIM8 Channel4.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_ADC2_ETRGINJ_ENABLE()  AFIO_REMAP_ENABLE(AFIO_MAPR_ADC2_ETRGINJ_REMAP)
+#define __HAL_AFIO_REMAP_ADC2_ETRGINJ_ENABLE()  SET_BIT(AFIO->MAPR, AFIO_MAPR_ADC2_ETRGINJ_REMAP)
 
 /**
   * @brief Disable the remapping of ADC2_ETRGREG (ADC 2 External trigger injected conversion).
   * @note  DISABLE: ADC2 External trigger injected conversion is connected to EXTI15
   * @retval None
   */
-#define __HAL_AFIO_REMAP_ADC2_ETRGINJ_DISABLE() AFIO_REMAP_DISABLE(AFIO_MAPR_ADC2_ETRGINJ_REMAP)
+#define __HAL_AFIO_REMAP_ADC2_ETRGINJ_DISABLE() CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_ADC2_ETRGINJ_REMAP)
 #endif
 
 #if defined (AFIO_MAPR_ADC2_ETRGREG_REMAP)
@@ -468,14 +502,14 @@ extern "C" {
   * @note  ENABLE: ADC2 External Event regular conversion is connected to TIM8 TRG0.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_ADC2_ETRGREG_ENABLE()  AFIO_REMAP_ENABLE(AFIO_MAPR_ADC2_ETRGREG_REMAP)
+#define __HAL_AFIO_REMAP_ADC2_ETRGREG_ENABLE()  SET_BIT(AFIO->MAPR, AFIO_MAPR_ADC2_ETRGREG_REMAP)
 
 /**
   * @brief Disable the remapping of ADC2_ETRGREG (ADC 2 External trigger regular conversion).
   * @note  DISABLE: ADC2 External trigger regular conversion is connected to EXTI11
   * @retval None
   */
-#define __HAL_AFIO_REMAP_ADC2_ETRGREG_DISABLE() AFIO_REMAP_DISABLE(AFIO_MAPR_ADC2_ETRGREG_REMAP)
+#define __HAL_AFIO_REMAP_ADC2_ETRGREG_DISABLE() CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_ADC2_ETRGREG_REMAP)
 #endif
 
 /**
@@ -483,29 +517,36 @@ extern "C" {
   * @note  ENABLE: Full SWJ (JTAG-DP + SW-DP): Reset State
   * @retval None
   */
-#define __HAL_AFIO_REMAP_SWJ_ENABLE()  AFIO_DBGAFR_CONFIG(AFIO_MAPR_SWJ_CFG_RESET)
+#define __HAL_AFIO_REMAP_SWJ_ENABLE()  do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_SWJ_CFG);         \
+                                           SET_BIT(AFIO->MAPR, AFIO_MAPR_SWJ_CFG_RESET);     \
+                                         }while(0U)
 
 /**
   * @brief Enable the Serial wire JTAG configuration
   * @note  NONJTRST: Full SWJ (JTAG-DP + SW-DP) but without NJTRST
   * @retval None
   */
-#define __HAL_AFIO_REMAP_SWJ_NONJTRST()  AFIO_DBGAFR_CONFIG(AFIO_MAPR_SWJ_CFG_NOJNTRST)
+#define __HAL_AFIO_REMAP_SWJ_NONJTRST()   do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_SWJ_CFG);         \
+                                              SET_BIT(AFIO->MAPR, AFIO_MAPR_SWJ_CFG_NOJNTRST);  \
+                                            }while(0U)
 
 /**
   * @brief Enable the Serial wire JTAG configuration
   * @note  NOJTAG: JTAG-DP Disabled and SW-DP Enabled
   * @retval None
   */
-
-#define __HAL_AFIO_REMAP_SWJ_NOJTAG()  AFIO_DBGAFR_CONFIG(AFIO_MAPR_SWJ_CFG_JTAGDISABLE)
+#define __HAL_AFIO_REMAP_SWJ_NOJTAG()   do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_SWJ_CFG);           \
+                                            SET_BIT(AFIO->MAPR, AFIO_MAPR_SWJ_CFG_JTAGDISABLE); \
+                                          }while(0U)
 
 /**
   * @brief Disable the Serial wire JTAG configuration
   * @note  DISABLE: JTAG-DP Disabled and SW-DP Disabled
   * @retval None
   */
-#define __HAL_AFIO_REMAP_SWJ_DISABLE()  AFIO_DBGAFR_CONFIG(AFIO_MAPR_SWJ_CFG_DISABLE)
+#define __HAL_AFIO_REMAP_SWJ_DISABLE()  do{ CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_SWJ_CFG);         \
+                                            SET_BIT(AFIO->MAPR, AFIO_MAPR_SWJ_CFG_DISABLE);   \
+                                          }while(0U)
 
 #if defined(AFIO_MAPR_SPI3_REMAP)
 
@@ -515,7 +556,7 @@ extern "C" {
   * @note  This bit is available only in connectivity line devices and is reserved otherwise.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_SPI3_ENABLE()  AFIO_REMAP_ENABLE(AFIO_MAPR_SPI3_REMAP)
+#define __HAL_AFIO_REMAP_SPI3_ENABLE()  SET_BIT(AFIO->MAPR, AFIO_MAPR_SPI3_REMAP)
 
 /**
   * @brief Disable the remapping of SPI3 alternate functions SPI3_NSS/I2S3_WS, SPI3_SCK/I2S3_CK, SPI3_MISO, SPI3_MOSI/I2S3_SD.
@@ -523,7 +564,7 @@ extern "C" {
   * @note  This bit is available only in connectivity line devices and is reserved otherwise.
   * @retval None
   */
-#define __HAL_AFIO_REMAP_SPI3_DISABLE() AFIO_REMAP_DISABLE(AFIO_MAPR_SPI3_REMAP)
+#define __HAL_AFIO_REMAP_SPI3_DISABLE() CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_SPI3_REMAP)
 #endif
 
 #if defined(AFIO_MAPR_TIM2ITR1_IREMAP)
@@ -534,7 +575,7 @@ extern "C" {
   * @note  This bit is available only in connectivity line devices and is reserved otherwise.
   * @retval None
   */
-#define __HAL_AFIO_TIM2ITR1_TO_USB() AFIO_REMAP_ENABLE(AFIO_MAPR_TIM2ITR1_IREMAP)
+#define __HAL_AFIO_TIM2ITR1_TO_USB() SET_BIT(AFIO->MAPR, AFIO_MAPR_TIM2ITR1_IREMAP)
 
 /**
   * @brief Control of TIM2_ITR1 internal mapping.
@@ -542,7 +583,7 @@ extern "C" {
   * @note  This bit is available only in connectivity line devices and is reserved otherwise.
   * @retval None
   */
-#define __HAL_AFIO_TIM2ITR1_TO_ETH() AFIO_REMAP_DISABLE(AFIO_MAPR_TIM2ITR1_IREMAP)
+#define __HAL_AFIO_TIM2ITR1_TO_ETH() CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_TIM2ITR1_IREMAP)
 #endif
 
 #if defined(AFIO_MAPR_PTP_PPS_REMAP)
@@ -553,7 +594,7 @@ extern "C" {
   * @note  This bit is available only in connectivity line devices and is reserved otherwise.
   * @retval None
   */
-#define __HAL_AFIO_ETH_PTP_PPS_ENABLE()  AFIO_REMAP_ENABLE(AFIO_MAPR_PTP_PPS_REMAP)
+#define __HAL_AFIO_ETH_PTP_PPS_ENABLE()  SET_BIT(AFIO->MAPR, AFIO_MAPR_PTP_PPS_REMAP)
 
 /**
   * @brief Disable the remapping of ADC2_ETRGREG (ADC 2 External trigger regular conversion).
@@ -561,7 +602,7 @@ extern "C" {
   * @note  This bit is available only in connectivity line devices and is reserved otherwise.
   * @retval None
   */
-#define __HAL_AFIO_ETH_PTP_PPS_DISABLE() AFIO_REMAP_DISABLE(AFIO_MAPR_PTP_PPS_REMAP)
+#define __HAL_AFIO_ETH_PTP_PPS_DISABLE() CLEAR_BIT(AFIO->MAPR, AFIO_MAPR_PTP_PPS_REMAP)
 #endif
 
 #if defined(AFIO_MAPR2_TIM9_REMAP)
@@ -815,12 +856,12 @@ extern "C" {
 
 /**
   * @}
-  */
-
+  */ 
+  
 /**
   * @}
   */
-
+  
 /** @defgroup GPIOEx_Private_Macros GPIOEx Private Macros
   * @{
   */
@@ -842,31 +883,6 @@ extern "C" {
                                    ((__GPIOx__) == (GPIOF))? 5U :6U)
 #endif
 
-#define AFIO_REMAP_ENABLE(REMAP_PIN)       do{ uint32_t tmpreg = AFIO->MAPR; \
-                                               tmpreg |= AFIO_MAPR_SWJ_CFG;  \
-                                               tmpreg |= REMAP_PIN;          \
-                                               AFIO->MAPR = tmpreg;          \
-                                               }while(0U)
-
-#define AFIO_REMAP_DISABLE(REMAP_PIN)      do{ uint32_t tmpreg = AFIO->MAPR;  \
-                                               tmpreg |= AFIO_MAPR_SWJ_CFG;   \
-                                               tmpreg &= ~REMAP_PIN;          \
-                                               AFIO->MAPR = tmpreg;           \
-                                               }while(0U)
-
-#define AFIO_REMAP_PARTIAL(REMAP_PIN, REMAP_PIN_MASK) do{ uint32_t tmpreg = AFIO->MAPR; \
-                                                          tmpreg &= ~REMAP_PIN_MASK;    \
-                                                          tmpreg |= AFIO_MAPR_SWJ_CFG;  \
-                                                          tmpreg |= REMAP_PIN;          \
-                                                          AFIO->MAPR = tmpreg;          \
-                                                          }while(0U)
-
-#define AFIO_DBGAFR_CONFIG(DBGAFR_SWJCFG)  do{ uint32_t tmpreg = AFIO->MAPR;     \
-                                               tmpreg &= ~AFIO_MAPR_SWJ_CFG_Msk; \
-                                               tmpreg |= DBGAFR_SWJCFG;          \
-                                               AFIO->MAPR = tmpreg;              \
-                                               }while(0U)
-
 /**
   * @}
   */
@@ -887,20 +903,20 @@ void HAL_GPIOEx_DisableEventout(void);
 
 /**
   * @}
-  */
+  */ 
 
 /**
   * @}
-  */
+  */ 
 
 /**
   * @}
-  */
+  */ 
 
 /**
   * @}
-  */
-
+  */ 
+  
 #ifdef __cplusplus
 }
 #endif

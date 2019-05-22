@@ -1,0 +1,23 @@
+#ifndef __BSP_UPDATE_H__
+#define __BSP_UPDATE_H__
+
+#include "stm32f1xx_hal.h"
+
+typedef enum
+{
+  write_succeed = 0U,
+  write_fail
+} Write_State;
+
+
+
+
+
+
+
+
+
+
+
+
+#endif 

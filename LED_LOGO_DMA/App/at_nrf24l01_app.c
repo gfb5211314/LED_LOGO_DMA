@@ -212,7 +212,7 @@ uint8_t set_crc(uint16_t crc_bit)
 
 }
 /*********************************************************
-       *app  function
+           app  function
 **********************************************************/
 
 void nrf24l01_init(uint32_t baud,uint16_t rate,uint8_t* recaddr,uint8_t* sentaddr,uint8_t* freq,uint16_t wait_time)

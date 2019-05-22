@@ -75,6 +75,10 @@
 #define U3_TX_GPIO_Port GPIOB
 #define U3_RX_Pin GPIO_PIN_11
 #define U3_RX_GPIO_Port GPIOB
+#define E61_M0_Pin GPIO_PIN_12
+#define E61_M0_GPIO_Port GPIOB
+#define E61_M1_Pin GPIO_PIN_13
+#define E61_M1_GPIO_Port GPIOB
 #define Debug_tx_Pin GPIO_PIN_9
 #define Debug_tx_GPIO_Port GPIOA
 #define Debug_rx_Pin GPIO_PIN_10

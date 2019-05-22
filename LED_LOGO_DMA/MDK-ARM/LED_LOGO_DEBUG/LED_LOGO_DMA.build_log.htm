@@ -3,52 +3,220 @@
 <pre>
 <h1>礦ision Build Log</h1>
 <h2>Tool Versions:</h2>
-IDE-Version: μVision V5.26.2.0
-Copyright (C) 2018 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: rfdg sdgfv, rdfg, LIC=W96Z9-4C024-22ZL4-FZ5TW-NA0NW-EZD2P
+IDE-Version: μVision V5.27.1.0
+Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: 3243 3432, 34534, LIC=YA39U-SP4HF-X7XRZ-JMINQ-WTZ5J-RP36X
  
 Tool Versions:
-Toolchain:       MDK-ARM Professional  Version: 5.26.2.0
-Toolchain Path:  D:\ARM\ARMCC\Bin
+Toolchain:       MDK-ARM Plus  Version: 5.27.1.0
+Toolchain Path:  D:\Keil_v5\ARM\ARMCC\Bin
 C Compiler:      Armcc.exe V5.06 update 6 (build 750)
 Assembler:       Armasm.exe V5.06 update 6 (build 750)
 Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
 Library Manager: ArmAr.exe V5.06 update 6 (build 750)
 Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
-CPU DLL:         SARMCM3.DLL V5.26.2.0
+CPU DLL:         SARMCM3.DLL V5.27.1.0
 Dialog DLL:      DCM.DLL V1.17.2.0
-Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.5.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.6.0
 Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
-C:\Users\Fubiao.Guo\Desktop\BESTBEW\LED_LOGO - DMA\MDK-ARM\LED_LOGO_DMA.uvprojx
-Project File Date:  04/28/2019
+C:\Users\Fubiao.Guo\Desktop\BESTBEW\LED_LOGO_DMA\LED_LOGO_DMA\MDK-ARM\LED_LOGO_DMA.uvprojx
+Project File Date:  05/14/2019
 
 <h2>Output:</h2>
-*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\ARM\ARMCC\Bin'
-Build target 'LED_LOGO_DMA'
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'LED_LOGO_DMA'
+assembling startup_stm32f103xb.s...
+compiling stm32f1xx_hal_flash.c...
+compiling stm32f1xx_hal_rcc.c...
+compiling stm32f1xx_it.c...
+compiling stm32f1xx_hal_msp.c...
+compiling system_stm32f1xx.c...
 compiling freertos.c...
-..\BSP\bsp_commun.h(11): warning:  #1-D: last line of file ends without a newline
+../Src/freertos.c(234): warning:  #188-D: enumerated type mixed with another type
+  	DMA_WS2812_Ramp(LED_MAX, 255, 1);
+../Src/freertos.c(235): warning:  #188-D: enumerated type mixed with another type
+    DMA_WS2812_Ramp(LED_MAX, 255, 2);
+../Src/freertos.c(236): warning:  #188-D: enumerated type mixed with another type
+    DMA_WS2812_Ramp(LED_MAX, 255, 3);
+../Src/freertos.c(237): warning:  #188-D: enumerated type mixed with another type
+  	DMA_WS2812_Rampping(LED_MAX, 255, 2);				   
+../Src/freertos.c(238): warning:  #188-D: enumerated type mixed with another type
+  	DMA_WS2812_Rampping_1(LED_MAX, 255, 1);
+../Src/freertos.c(246): warning:  #223-D: function "DMA_WS2812_circulation" declared implicitly
+    DMA_WS2812_circulation(LED_MAX);
+../Src/freertos.c(247): warning:  #223-D: function "DMA_WS2812_circulation_more" declared implicitly
+  	DMA_WS2812_circulation_more(LED_MAX,0);
+../Src/freertos.c: 7 warnings, 0 errors
+compiling main.c...
+..\BSP\bsp_tim.h(12): warning:  #1-D: last line of file ends without a newline
   #endif
-..\BSP\bsp_ws2812.h(51): warning:  #1295-D: Deprecated declaration reset_led_light - give arg types
-  extern void reset_led_light();
-..\BSP\bsp_dma.h(17): warning:  #1-D: last line of file ends without a newline
+..\BSP\bsp_led.h(15): warning:  #1-D: last line of file ends without a newline
   #endif
-../Src/freertos.c(198): warning:  #223-D: function "DMA_WS2812_circulation_more" declared implicitly
-   DMA_WS2812_circulation_more(229,0);
-../Src/freertos.c: 4 warnings, 0 errors
+..\BSP\bsp_nrf24l01.h(102): warning:  #1-D: last line of file ends without a newline
+  #endif
+../Src/main.c: 3 warnings, 0 errors
+compiling stm32f1xx_hal_pwr.c...
+compiling stm32f1xx_hal.c...
+compiling stm32f1xx_hal_flash_ex.c...
+compiling stm32f1xx_hal_dma.c...
+compiling stm32f1xx_hal_adc_ex.c...
+compiling stm32f1xx_hal_cortex.c...
+compiling stm32f1xx_hal_tim.c...
+compiling stm32f1xx_hal_adc.c...
+compiling stm32f1xx_hal_rcc_ex.c...
+compiling stm32f1xx_hal_gpio_ex.c...
+compiling stm32f1xx_hal_spi.c...
+compiling stm32f1xx_hal_gpio.c...
+compiling stm32f1xx_hal_tim_ex.c...
+compiling stm32f1xx_hal_uart.c...
+compiling arm_cfft_f32.c...
+compiling bsp_tim.c...
+..\BSP\bsp_tim.h(12): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\BSP\bsp_tim.c: 1 warning, 0 errors
+compiling bsp_gpio.c...
+..\BSP\bsp_gpio.h(11): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\BSP\bsp_gpio.c: 1 warning, 0 errors
+compiling stm32f1xx_hal_spi_ex.c...
+compiling bsp_dma.c...
+..\BSP\bsp_dma.c(22): warning:  #1-D: last line of file ends without a newline
+  }
+..\BSP\bsp_dma.c: 1 warning, 0 errors
+compiling bsp_fft.c...
+..\BSP\bsp_fft.c(339): warning:  #188-D: enumerated type mixed with another type
+              one_y_dspaly(i+1, 1,180,led_x[i],8);
+..\BSP\bsp_fft.c(340): warning:  #188-D: enumerated type mixed with another type
+              one_y_dspaly(i+2, 1,180,led_x[i],8);
+..\BSP\bsp_fft.c(341): warning:  #188-D: enumerated type mixed with another type
+              one_y_dspaly(i+3,4,180,0,8);    //第三列为灭
+..\BSP\bsp_fft.c(345): warning:  #188-D: enumerated type mixed with another type
+              one_y_dspaly(i+1, 2,180,led_x[i],8);
+..\BSP\bsp_fft.c(346): warning:  #188-D: enumerated type mixed with another type
+              one_y_dspaly(i+2, 2,180,led_x[i],8);
+..\BSP\bsp_fft.c(347): warning:  #188-D: enumerated type mixed with another type
+              one_y_dspaly(i+3,4,180,0,8);  //第三列为灭
+..\BSP\bsp_fft.c(357): warning:  #188-D: enumerated type mixed with another type
+      one_y_dspaly(1, 1,2,2,8);
+..\BSP\bsp_fft.c(358): warning:  #188-D: enumerated type mixed with another type
+      one_y_dspaly(2,1,2,2,8);
+..\BSP\bsp_fft.c(359): warning:  #188-D: enumerated type mixed with another type
+      one_y_dspaly(3,3,2,2,8);
+..\BSP\bsp_fft.c(360): warning:  #188-D: enumerated type mixed with another type
+      one_y_dspaly(4,3,2,2,8);
+..\BSP\bsp_fft.c(361): warning:  #188-D: enumerated type mixed with another type
+      one_y_dspaly(5,3,2,2,8);
+..\BSP\bsp_fft.c(378): warning:  #1-D: last line of file ends without a newline
+  }
+..\BSP\bsp_fft.c: 12 warnings, 0 errors
+compiling bsp_led.c...
+..\BSP\bsp_led.h(15): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\BSP\bsp_led.c: 1 warning, 0 errors
+compiling bsp_ws2812.c...
+..\BSP\bsp_ws2812.c(1089): warning:  #223-D: function "osDelay" declared implicitly
+      osDelay(1);
+..\BSP\bsp_ws2812.c(1092): warning:  #1-D: last line of file ends without a newline
+  }
+..\BSP\bsp_ws2812.c: 2 warnings, 0 errors
+compiling crc.c...
+compiling bsp_esp32.c...
+..\BSP\bsp_esp32.h(14): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\App\esp32_app.h(5): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\BSP\bsp_esp32.c(93): warning:  #940-D: missing return statement at end of non-void function "esp32_set_rst_command" 
+  }
+..\BSP\bsp_esp32.c: 3 warnings, 0 errors
+compiling bsp_adc.c...
+..\BSP\bsp_adc.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\BSP\bsp_adc.c(43): warning:  #1-D: last line of file ends without a newline
+  }
+..\BSP\bsp_adc.c: 2 warnings, 0 errors
+compiling stm_flash.c...
+compiling bsp_usart.c...
+..\BSP\bsp_usart.c(101): warning:  #1-D: last line of file ends without a newline
+  }
+..\BSP\bsp_usart.c: 1 warning, 0 errors
+compiling bsp_nrf24l01.c...
+..\BSP\bsp_nrf24l01.h(102): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\BSP\bsp_nrf24l01.c: 1 warning, 0 errors
+compiling bsp_update.c...
+..\BSP\bsp_update.c(261): warning:  #188-D: enumerated type mixed with another type
+          return 0;
+..\BSP\bsp_update.c(265): warning:  #188-D: enumerated type mixed with another type
+          return 1;
+..\BSP\bsp_update.c(267): warning:  #1-D: last line of file ends without a newline
+  }
+..\BSP\bsp_update.c: 3 warnings, 0 errors
+compiling timers.c...
+compiling tasks.c...
+compiling croutine.c...
+compiling esp32_app.c...
+..\App\esp32_app.h(5): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\App\esp32_app.c(15): warning:  #1-D: last line of file ends without a newline
+  	
+..\App\esp32_app.c: 2 warnings, 0 errors
+compiling bsp_e61.c...
+..\BSP\bsp_e61.h(12): warning:  #1-D: last line of file ends without a newline
+  #endif    
+..\BSP\bsp_e61.c: 1 warning, 0 errors
+compiling cmsis_os.c...
+compiling port.c...
+compiling event_groups.c...
+compiling bsp_commun.c...
+compiling fft_app.c...
+..\App\fft_app.h(9): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\App\fft_app.c(104): warning:  #1-D: last line of file ends without a newline
+  }
+..\App\fft_app.c(23): warning:  #177-D: variable "testInput_f32_10khz"  was declared but never referenced
+  static float32_t testInput_f32_10khz[TEST_LENGTH_SAMPLES];
+..\App\fft_app.c(24): warning:  #177-D: variable "testOutput"  was declared but never referenced
+  static float32_t testOutput[TEST_LENGTH_SAMPLES / 2];
+..\App\fft_app.c(28): warning:  #177-D: variable "fftSize"  was declared but never referenced
+  static uint32_t fftSize = TEST_LENGTH_SAMPLES / 2;
+..\App\fft_app.c: 5 warnings, 0 errors
+compiling at_nrf24l01_app.c...
+..\App\at_nrf24l01_app.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\BSP\bsp_nrf24l01.h(102): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\App\at_nrf24l01_app.c(213): warning:  #940-D: missing return statement at end of non-void function "set_crc" 
+  }
+..\App\at_nrf24l01_app.c: 3 warnings, 0 errors
+compiling heap_4.c...
+compiling list.c...
+compiling ws2812_app.c...
+..\App\ws2812_app.c(37): warning:  #550-D: variable "rand_data"  was set but never used
+      uint16_t rand_data = 0, rand_color = 0;
+..\App\ws2812_app.c(37): warning:  #177-D: variable "rand_color"  was declared but never referenced
+      uint16_t rand_data = 0, rand_color = 0;
+..\App\ws2812_app.c(323): warning:  #223-D: function "DMA_WS2812_one_light" declared implicitly
+  	 DMA_WS2812_one_light(amount,color);
+..\App\ws2812_app.c(366): warning:  #186-D: pointless comparison of unsigned integer with zero
+  	   if((led_location>=0)&&(led_location<4))
+..\App\ws2812_app.c: 4 warnings, 0 errors
+compiling queue.c...
 linking...
-Program Size: Code=15124 RO-data=388 RW-data=236 ZI-data=20204  
-".\LED_LOGO_DEBUG\LED_LOGO_DMA.axf" - 0 Error(s), 4 Warning(s).
+Program Size: Code=26648 RO-data=676 RW-data=756 ZI-data=18028  
+FromELF: creating hex file...
+After Build - User command #1: fromelf --bin --output .\LED_LOGO_DEBUG\LED_LOGO_DMA.BIN    .\LED_LOGO_DEBUG\LED_LOGO_DMA.AXF
+".\LED_LOGO_DEBUG\LED_LOGO_DMA.axf" - 0 Error(s), 53 Warning(s).
 
 <h2>Software Packages used:</h2>
 
 Package Vendor: ARM
-                http://www.keil.com/pack/ARM.CMSIS.5.4.0.pack
-                ARM.CMSIS.5.4.0
+                http://www.keil.com/pack/ARM.CMSIS.5.5.1.pack
+                ARM.CMSIS.5.5.1
                 CMSIS (Cortex Microcontroller Software Interface Standard)
-   * Component: CORE Version: 5.1.2
-   * Component: DSP Version: 1.5.2
+   * Component: CORE Version: 5.2.0
+   * Component: DSP Variant: Library Version: 1.6.0
 
 Package Vendor: Keil
                 http://www.keil.com/pack/Keil.STM32F1xx_DFP.2.3.0.pack
@@ -57,18 +225,18 @@ Package Vendor: Keil
 
 <h2>Collection of Component include folders:</h2>
   .\RTE\_LED_LOGO_DMA
-  D:\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include
-  D:\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\DSP\Include
-  D:\ARM\PACK\Keil\STM32F1xx_DFP\2.3.0\Device\Include
+  D:\Users\Fubiao.Guo\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\Core\Include
+  D:\Users\Fubiao.Guo\AppData\Local\Arm\Packs\ARM\CMSIS\5.5.1\CMSIS\DSP\Include
+  D:\Users\Fubiao.Guo\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include
 
 <h2>Collection of Component Files used:</h2>
 
-   * Component: ARM::CMSIS:CORE:5.1.2
+   * Component: ARM::CMSIS:CORE:5.2.0
 
-   * Component: ARM::CMSIS:DSP:1.5.2
-      Library file:  CMSIS\Lib\ARM\arm_cortexM3l_math.lib
+   * Component: ARM::CMSIS:DSP:Library:1.6.0
       Include file:  CMSIS\DSP\Include\arm_math.h
-Build Time Elapsed:  00:00:02
+      Library file:  CMSIS\DSP\Lib\ARM\arm_cortexM3l_math.lib
+Build Time Elapsed:  00:00:13
 </pre>
 </body>
 </html>

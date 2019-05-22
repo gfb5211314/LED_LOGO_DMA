@@ -46,57 +46,61 @@ void  light_control_ack(uint16_t data_lenght)
 }
 void usart3_data_process()
 {
-	 uint16_t crc_data=0;
-		
-	 if(UsartType3.RX_flag==1)
-	 {    
+    uint16_t crc_data=0;
+
+    if(UsartType3.RX_flag==1)
+    {
 //		 	  printf("haha");
 //		   for(uint8_t i=0;i<UsartType3.RX_Size;i++)
 //		 {
 //			 printf("i=%d-0x%x\r\n",i,UsartType3.RX_pData[i]);
-//			 
+//
 //		 }
-		    if((UsartType3.RX_pData[0]==baotou1)&&(UsartType3.RX_pData[1]==baotou2)&&
-					(UsartType3.RX_pData[UsartType3.RX_Size-3]==baowei2)&&(UsartType3.RX_pData[UsartType3.RX_Size-4]==baowei1)&&
-					(UsartType3.RX_pData[2]==dev_addr))
-				{
-            crc_data=Calc_CRC16(UsartType3.RX_pData,UsartType3.RX_Size-2); 	
-					  printf("crc_data=%d\r\n",crc_data);
-					  printf("crc_data1=%d\r\n",UsartType3.RX_pData[UsartType3.RX_Size-1]+UsartType3.RX_pData[UsartType3.RX_Size-2]*256);
-              if(crc_data==(UsartType3.RX_pData[UsartType3.RX_Size-1]+(UsartType3.RX_pData[UsartType3.RX_Size-2]*256)))
-		               {            
-							        	switch( UsartType3.RX_pData[3])
-							      	{           
-													case  functioncode_light_control :  
-					                       if(UsartType3.RX_pData[7]==1)
-																 {
-																	   vTaskSuspend(WS12TASKHandle);//挂起任务
-																	   DMA_WS2812_Mie(190) ; 
-																	 	 memset(ws28128_color_buf, 0, sizeof(ws28128_color_buf));
-												     light_control_auto=1;
-																 }
-																 else if(UsartType3.RX_pData[7]==2)
-																 {
-																	 light_control_auto=0;
-																	   vTaskResume(WS12TASKHandle);	//恢复任务1
-																 }
-                                     break;
-													case  shade_light_effects   :          break;
-													case random_light_effects   :          break;
-												  case	brightness_light_effects :   break;
-													default :             break;
-													
-												
-								}
-							}
-									 					
-	 
-		  }
-	   UsartType3.RX_flag=0;
-		 UsartType3.RX_Size=0;
- memset(UsartType3.RX_pData, 0, sizeof(UsartType3.RX_pData));
-	 }
-	
+        if((UsartType3.RX_pData[0]==baotou1)&&(UsartType3.RX_pData[1]==baotou2)&&
+                (UsartType3.RX_pData[UsartType3.RX_Size-3]==baowei2)&&(UsartType3.RX_pData[UsartType3.RX_Size-4]==baowei1)&&
+                (UsartType3.RX_pData[2]==dev_addr))
+        {
+            crc_data=Calc_CRC16(UsartType3.RX_pData,UsartType3.RX_Size-2);
+            printf("crc_data=%d\r\n",crc_data);
+            printf("crc_data1=%d\r\n",UsartType3.RX_pData[UsartType3.RX_Size-1]+UsartType3.RX_pData[UsartType3.RX_Size-2]*256);
+            if(crc_data==(UsartType3.RX_pData[UsartType3.RX_Size-1]+(UsartType3.RX_pData[UsartType3.RX_Size-2]*256)))
+            {
+                switch( UsartType3.RX_pData[3])
+                {
+                case  functioncode_light_control :
+                    if(UsartType3.RX_pData[7]==1)
+                    {
+                        vTaskSuspend(WS12TASKHandle);//挂起任务
+                        DMA_WS2812_Mie(190) ;
+                        memset(ws28128_color_buf, 0, sizeof(ws28128_color_buf));
+                        light_control_auto=1;
+                    }
+                    else if(UsartType3.RX_pData[7]==2)
+                    {
+                        light_control_auto=0;
+                        vTaskResume(WS12TASKHandle);	//恢复任务1
+                    }
+                    break;
+                case  shade_light_effects   :
+                    break;
+                case random_light_effects   :
+                    break;
+                case	brightness_light_effects :
+                    break;
+                default :
+                    break;
+
+
+                }
+            }
+
+
+        }
+        UsartType3.RX_flag=0;
+        UsartType3.RX_Size=0;
+        memset(UsartType3.RX_pData, 0, sizeof(UsartType3.RX_pData));
+    }
+
 }
 
 

@@ -10,25 +10,25 @@
 #define NRF24L01_SPIx_RCC_CLK_ENABLE()                __HAL_RCC_SPI1_CLK_ENABLE()
 #define NRF24L01_SPIx_RCC_CLK_DISABLE()               __HAL_RCC_SPI1_CLK_DISABLE()
 
-#define NRF24L01_SPI_GPIO_ClK_ENABLE()                __HAL_RCC_GPIOA_CLK_ENABLE() 
+#define NRF24L01_SPI_GPIO_ClK_ENABLE()                __HAL_RCC_GPIOA_CLK_ENABLE()
 #define NRF24L01_SPI_GPIO_PORT                        GPIOA
 #define NRF24L01_SPI_SCK_PIN                          GPIO_PIN_5
 #define NRF24L01_SPI_MISO_PIN                         GPIO_PIN_6
 #define NRF24L01_SPI_MOSI_PIN                         GPIO_PIN_7
 
-#define NRF24L01_SPI_CS_CLK_ENABLE()                  __HAL_RCC_GPIOA_CLK_ENABLE()    
+#define NRF24L01_SPI_CS_CLK_ENABLE()                  __HAL_RCC_GPIOA_CLK_ENABLE()
 #define NRF24L01_SPI_CS_PORT                          GPIOA
 #define NRF24L01_SPI_CS_PIN                           GPIO_PIN_4
 #define NRF24L01_SPI_CS_ENABLE()                      HAL_GPIO_WritePin(NRF24L01_SPI_CS_PORT, NRF24L01_SPI_CS_PIN, GPIO_PIN_RESET)
 #define NRF24L01_SPI_CS_DISABLE()                     HAL_GPIO_WritePin(NRF24L01_SPI_CS_PORT, NRF24L01_SPI_CS_PIN, GPIO_PIN_SET)
 
-#define NRF24L01_CE_CLK_ENABLE()                      __HAL_RCC_GPIOA_CLK_ENABLE()    
+#define NRF24L01_CE_CLK_ENABLE()                      __HAL_RCC_GPIOA_CLK_ENABLE()
 #define NRF24L01_CE_PORT                              GPIOA
 #define NRF24L01_CE_PIN                               GPIO_PIN_3
 #define NRF24L01_CE_LOW()                             HAL_GPIO_WritePin(NRF24L01_CE_PORT, NRF24L01_CE_PIN, GPIO_PIN_RESET)
 #define NRF24L01_CE_HIGH()                            HAL_GPIO_WritePin(NRF24L01_CE_PORT, NRF24L01_CE_PIN, GPIO_PIN_SET)
 
-#define NRF24L01_IRQ_CLK_ENABLE()                     __HAL_RCC_GPIOB_CLK_ENABLE()    
+#define NRF24L01_IRQ_CLK_ENABLE()                     __HAL_RCC_GPIOB_CLK_ENABLE()
 #define NRF24L01_IRQ_PORT                             GPIOB
 #define NRF24L01_IRQ_PIN                              GPIO_PIN_0
 #define NRF24L01_IRQ_PIN_READ()                       HAL_GPIO_ReadPin(NRF24L01_IRQ_PORT,NRF24L01_IRQ_PIN)
@@ -50,7 +50,7 @@
 #define NOP             0xFF  //空操作,可以用来读状态寄存器	 
 //SPI(NRF24L01)寄存器地址
 #define CONFIG          0x00  //配置寄存器地址;bit0:1接收模式,0发射模式;bit1:电选择;bit2:CRC模式;bit3:CRC使能;
-                              //bit4:中断MAX_RT(达到最大重发次数中断)使能;bit5:中断TX_DS使能;bit6:中断RX_DR使能
+//bit4:中断MAX_RT(达到最大重发次数中断)使能;bit5:中断TX_DS使能;bit6:中断RX_DR使能
 #define EN_AA           0x01  //使能自动应答功能  bit0~5,对应通道0~5
 #define EN_RXADDR       0x02  //接收地址允许,bit0~5,对应通道0~5
 #define SETUP_AW        0x03  //设置地址宽度(所有数据通道):bit1,0:00,3字节;01,4字节;02,5字节;
@@ -58,7 +58,7 @@
 #define RF_CH           0x05  //RF通道,bit6:0,工作通道频率;
 #define RF_SETUP        0x06  //RF寄存器;bit3:传输速率(0:1Mbps,1:2Mbps);bit2:1,发射功率;bit0:低噪声放大器增益
 #define STATUS          0x07  //状态寄存器;bit0:TX FIFO满标志;bit3:1,接收数据通道号(最大:6);bit4,达到最多次重发
-                              //bit5:数据发送完成中断;bit6:接收数据中断;
+//bit5:数据发送完成中断;bit6:接收数据中断;
 #define MAX_TX  		    0x10  //达到最大发送次数中断
 #define TX_OK   		    0x20  //TX发送完成中断
 #define RX_OK   		    0x40  //接收到数据中断
@@ -79,8 +79,8 @@
 #define RX_PW_P4        0x15  //接收数据通道4有效数据宽度(1~32字节),设置为0则非法
 #define RX_PW_P5        0x16  //接收数据通道5有效数据宽度(1~32字节),设置为0则非法
 #define NRF_FIFO_STATUS 0x17  //FIFO状态寄存器;bit0,RX FIFO寄存器空标志;bit1,RX FIFO满标志;bit2,3,保留
-                              //bit4,TX FIFO空标志;bit5,TX FIFO满标志;bit6,1,循环发送上一数据包.0,不循环;
-                              
+//bit4,TX FIFO空标志;bit5,TX FIFO满标志;bit6,1,循环发送上一数据包.0,不循环;
+
 /* 扩展变量 ------------------------------------------------------------------*/
 extern SPI_HandleTypeDef hspi_NRF24L01;
 
@@ -90,7 +90,7 @@ void NRF24L01_SPI_Init(void);
 void NRF24L01_RX_Mode(SPI_HandleTypeDef* hspi);					//配置为接收模式
 void NRF24L01_TX_Mode(SPI_HandleTypeDef* hspi);					//配置为发送模式
 uint8_t NRF24L01_Write_Buf(SPI_HandleTypeDef* hspi,uint8_t reg, uint8_t *pBuf, uint8_t uint8_ts);//写数据区
-uint8_t NRF24L01_Read_Buf(SPI_HandleTypeDef* hspi,uint8_t reg, uint8_t *pBuf, uint8_t uint8_ts);	//读数据区		  
+uint8_t NRF24L01_Read_Buf(SPI_HandleTypeDef* hspi,uint8_t reg, uint8_t *pBuf, uint8_t uint8_ts);	//读数据区
 uint8_t NRF24L01_Read_Reg(SPI_HandleTypeDef* hspi,uint8_t reg);					//读寄存器
 uint8_t NRF24L01_Write_Reg(SPI_HandleTypeDef* hspi,uint8_t reg, uint8_t value);		//写寄存器
 uint8_t NRF24L01_Check(SPI_HandleTypeDef* hspi);						//检查24L01是否存在

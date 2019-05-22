@@ -1,7 +1,7 @@
 .\led_logo_debug\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/port.c
 .\led_logo_debug\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
-.\led_logo_debug\port.o: D:\ARM\ARMCC\Bin\..\include\stddef.h
-.\led_logo_debug\port.o: D:\ARM\ARMCC\Bin\..\include\stdint.h
+.\led_logo_debug\port.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\led_logo_debug\port.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 .\led_logo_debug\port.o: ../Inc/FreeRTOSConfig.h
 .\led_logo_debug\port.o: ../Inc/main.h
 .\led_logo_debug\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
