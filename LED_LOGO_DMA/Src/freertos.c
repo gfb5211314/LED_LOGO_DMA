@@ -289,6 +289,7 @@ ws28128_one_color_circulation_run(LED_MAX,onecolor_buf_1);
 ws28128_one_color_circulation_run(LED_MAX,onecolor_buf_2);
 ws28128_one_color_circulation_run(LED_MAX,onecolor_buf_3);
 ws28128_one_color_circulation_run(LED_MAX,onecolor_buf_4);
+
 				}     
 			
 	 osDelay(1);//只能间隔>50ms才能发送
