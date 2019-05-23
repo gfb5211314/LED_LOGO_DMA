@@ -50,6 +50,6 @@ extern void DMA_WS2812_shade_logo(uint8_t group_num,uint8_t (*start_buf)[3],uint
 extern void DMA_WS2812_shade_light(uint16_t amount);
 extern void DMA_WS2812_data_refresh(uint8_t (*sta)[3],uint8_t *pbuf,uint16_t lendata);
 extern void DMA_WS2812_shade_logo_one(uint8_t group_num,uint8_t (*def_buf)[6]);
-
+extern void DMA_WS2812_shade_60_run(uint16_t amount,uint8_t *def_buf);
 #endif
 

@@ -30,20 +30,27 @@ uint8_t APP1.local_version                      0X800FC30             2
 uint16_t APP1.NOW_blocks                        0X800FC40
 uint16_t APP1.flash_blocks                      0X800FC60
 
+
+
+
 *****************************************************/
 #define             App2_Start_Addr            0x8008c00
-
+/*************************************************************
+                    ws28128 参数地址分配
+										
+										code here
+***************************************************************/
 /***************************************************************************
                              Function
 ***************************************************************************/
-#define             set_mode_command_function         0x00   //设置mode命令   SET command
+#define             set_mode_command_function         0x00       //设置mode命令   SET mode command
 #define             set_command_function              0x01       //设置命令   SET command
 #define             send_data_command_function        0x02       //发送数据命令
 #define             set_dir_command_function          0x03       //设置方向命令
 #define             set_finsih_command_function       0x04       //设置完成命令
 #define             set_data_now_command_function     0x05       //在线发送数据
 #define             set_dir_now_command_function      0x06       //在线设置方向数据
-#define             set_data_all_now_command_function  0x07       //在线设置方向数据
+#define             set_data_all_now_command_function 0x07       //在线设置方向数据
 /***************************************************************************
                            Lighting effects
 ***************************************************************************/
@@ -71,14 +78,6 @@ typedef struct
     uint8_t  index;
 } Ws2818_Led_Type;
 Ws2818_Led_Type   Ws2818_Led;
-
-typedef struct
-{
-    uint8_t defat;    //默认模式，运行系统ws2812数据包
-   	uint8_t set_shade;    //设置模式 1. 灯灭  2.发送数据  3.设置完成 
-	  uint8_t oneline_shade; //在线调试每段渐变效果
-	  uint8_t oneline_all; //在线调试229个灯效果
-} system_mode_type;
 system_mode_type system_mode;
 
 /**************************************************************************
@@ -139,64 +138,112 @@ void  Usart_Logo_data_(uint8_t * p_buf,uint8_t * tep_buf,uint16_t r_buf_lenght)
 //			}
                 switch(p_buf[3]) //功能码
                 {
-								
-									
-								case set_mode_command_function :   
-									
-								           if(p_buf[9]==0x01)
-													 {
-														 
-														 
-													 }
-													 else if(p_buf[9]==0x02)
-													 {
-														 
-													 }
-													 else if(p_buf[9]==0x03)
-													 {
-													 }
-													 else if (p_buf[9]==0x04)
-													 {
-														 
-													 }
-													 break;
+
+
+                case set_mode_command_function :
+                /********模式一*********/
+                    if(p_buf[9]==0x01)
+                    {
+										
+									 vTaskResume(WS12TASKHandle);	//恢复任务1
+                      system_mode.pattern_flay=1;   
+                    			reset_led_light();									
+                       printf("moshi1");
+                    }
+										/********模式二*************/
+                    else if(p_buf[9]==0x02)
+                    {
+											 
+											 vTaskSuspend(WS12TASKHandle);//挂起任务
+                      system_mode.pattern_flay=2;    
+											printf("moshi2");
+											 reset_led_light(); 
+                    }
+										/**********模式三***********/
+                    else if(p_buf[9]==0x03)
+                    {
+											 
+											 vTaskSuspend(WS12TASKHandle);//挂起任务
+											system_mode.pattern_flay=3;
+											printf("moshi3");
+											 reset_led_light(); 
+                    }
+										/*********模式四**************/
+                    else if (p_buf[9]==0x04)
+                    {
+											 
+											 vTaskSuspend(WS12TASKHandle);//挂起任务
+                       system_mode.pattern_flay=4;
+											printf("moshi4");
+											 reset_led_light(); 
+                    }
+                    break;
                 /**设置模块***/
-                case set_command_function :  
-
+                case set_command_function :
+                  if(system_mode.pattern_flay==2)
+									{
                     /*第一步：停掉所有灯*/
-//						 HAL_UART_Transmit_DMA(&huart3, p_buf,r_buf_lenght);
-
-                    vTaskSuspend(WS12TASKHandle);//挂起任务
+						 HAL_UART_Transmit_DMA(&huart3, p_buf,r_buf_lenght);
+system_mode.set_shade=0;
+                   
                     DMA_WS2812_Mie(LED_MAX);
+									}
 ////                memset(ws28128_color_buf, 0, sizeof(ws28128_color_buf));
 //						   Ws2818_Led.index=0;//Clear led munber 0
                     /*第二步：发送ACK*/
-                    HAL_UART_Transmit(&huart3,p_buf,r_buf_lenght,0xffffffff);
+//                    HAL_UART_Transmit(&huart3,p_buf,r_buf_lenght,0xffffffff);
                     break;
                 /**数据处理模块**/
                 case send_data_command_function :
-
-                    sta_logo_data[0][0]=p_buf[8];
-                    sta_logo_data[0][1]=p_buf[9];
-                    sta_logo_data[0][2]=p_buf[10];
-                    ter_logo_data[0][0]=p_buf[11];
-                    ter_logo_data[0][1]=p_buf[12];
-                    ter_logo_data[0][2]=p_buf[13];
-                    DMA_WS2812_shade_logo(p_buf[6],sta_logo_data,ter_logo_data);
+               if(system_mode.pattern_flay==2)
+									{
+										system_mode.set_shade=0;
+                    sta_logo_data[0][0]=p_buf[9];
+                    sta_logo_data[0][1]=p_buf[10];
+                    sta_logo_data[0][2]=p_buf[11];
+                    ter_logo_data[0][0]=p_buf[12];
+                    ter_logo_data[0][1]=p_buf[13];
+                    ter_logo_data[0][2]=p_buf[14];
+                    DMA_WS2812_shade_logo(p_buf[7],sta_logo_data,ter_logo_data);
                     HAL_UART_Transmit_DMA(&huart3, p_buf,r_buf_lenght);
+									}
                     break;
                 /**设置灯运动方向**/
                 case set_dir_command_function :
+										 if(system_mode.pattern_flay==2)
+									{
                     HAL_UART_Transmit_DMA(&huart3, p_buf,18);
+									}
                     break;
                 /**设置完成****/
                 case set_finsih_command_function :
-                    printf("123");
+                     if(system_mode.pattern_flay==2)
+									{
+										system_mode.set_shade=1;
                     HAL_UART_Transmit_DMA(&huart3, p_buf,r_buf_lenght);
-                    vTaskResume(WS12TASKHandle);	//恢复任务1
+                  
+									}
                     break;
+							  case set_data_now_command_function :
+										    if(system_mode.pattern_flay==3)
+									{
+										  
+										sta_logo_data[0][0]=p_buf[9];
+                    sta_logo_data[0][1]=p_buf[10];
+                    sta_logo_data[0][2]=p_buf[11];
+                    ter_logo_data[0][0]=p_buf[12];
+                    ter_logo_data[0][1]=p_buf[13];
+                    ter_logo_data[0][2]=p_buf[14];
+                    DMA_WS2812_shade_logo(p_buf[7],sta_logo_data,ter_logo_data);
+                    HAL_UART_Transmit_DMA(&huart3, p_buf,r_buf_lenght);
+									}
+									  break;
                 case set_data_all_now_command_function :
-                    DMA_WS2812_data_refresh(ws28128_color_buf,p_buf+8,r_buf_lenght-12);
+									    if(system_mode.pattern_flay==4)
+									{
+										 
+                    DMA_WS2812_data_refresh(ws28128_color_buf,p_buf+9,r_buf_lenght-13);
+									}
                     break;
                 }
             }

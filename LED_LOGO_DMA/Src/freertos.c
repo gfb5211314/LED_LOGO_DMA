@@ -113,7 +113,26 @@ extern system_mode_type system_mode;
 /* USER CODE END FunctionPrototypes */
 
 /* Hook prototypes */
-
+const uint8_t default_buf1[17][6]={
+   {255,00,00,255,255,0},//1
+  {123,224,110,110,224,123},//2
+  {255,210,132,132,20,255},//3
+  {255,210,132,132,20,255},//4
+  {255,210,132,132,20,255},//5
+  {255,210,132,132,20,255},//6
+  {255,210,132,132,20,255},//7
+  {255,210,132,132,20,255},//8
+  {255,210,132,132,20,255},//9
+  {255,210,132,132,20,255},//10
+  {255,210,132,132,20,255},//11
+  {255,210,132,132,20,255},//12
+  {255,210,132,132,20,255},//13
+  {0,0,0,0,0,0},//14
+  {255,210,132,132,20,255},//15
+	{255,210,132,132,20,255},//16
+	{255,210,132,132,20,25}//17
+};
+uint8_t abc[102];
 /* USER CODE BEGIN Application */
     /* APP_TASK function */
 void APP_TASK(void const * argument)
@@ -127,10 +146,17 @@ void APP_TASK(void const * argument)
    	#endif
 //	 for(uint16_t i=0;i<229;i++)
 //	{
-//		printf("00 00 ff");
+//		printf("00 ff 00");
 //		printf(" ");
 //	}
 //nrf24l01_init(115200,2000,"AT+RXA=0xb0,0x43,0x10,0x10,0x01","AT+TXA=0xb0,0x43,0x10,0x10,0x01","AT+FREQ=2.440",50);
+	
+	DMA_WS2812_data_flash(default_buf1,abc,102);
+ for(uint16_t i=0;i<102;i++)
+	{
+		printf("%d ",abc[i]);
+	
+	}
   /* Infinite loop */
   for(;;)
   {  
@@ -151,11 +177,19 @@ uint8_t  a_5[1][3]={249,5,86};
 uint8_t  a_6[1][3]={104,160,247};	
 uint8_t  a_7[1][3]={241,216,128};
 uint8_t  a_8[1][3]={52,204,204};	
+ uint8_t shade_60_buf_1[6]={52,204,204,241,216,128};
+ uint8_t shade_60_buf_2[6]={59,93,170,52,204,204};
+ uint8_t shade_60_buf_3[6]={249,5,86,59,93,170};
+ uint8_t shade_60_buf_4[6]={241,216,128,249,5,86};
+ uint8_t onecolor_buf_1[3]={52,204,204};
+ uint8_t onecolor_buf_2[3]={59,93,170};
+ uint8_t onecolor_buf_3[3]={249,5,86};
+ uint8_t onecolor_buf_4[3]={241,216,128};
 /* WS128_TASK function */
 void WS128_TASK(void const * argument)
 {
   /* USER CODE BEGIN WS128_TASK */
-	
+	system_mode.pattern_flay=1;
 			reset_led_light(); 
 //	 xSemaphore = xSemaphoreCreateBinary();
   /* Infinite loop */
@@ -231,22 +265,30 @@ void WS128_TASK(void const * argument)
 //	   DMA_WS2812_shade_light(LED_MAX);
         if(system_mode.pattern_flay==1)
 				{
-	DMA_WS2812_Ramp(LED_MAX, 255, 1);
-  DMA_WS2812_Ramp(LED_MAX, 255, 2);
-  DMA_WS2812_Ramp(LED_MAX, 255, 3);
-	DMA_WS2812_Rampping(LED_MAX, 255, 2);				   
-	DMA_WS2812_Rampping_1(LED_MAX, 255, 1);
-//	DMA_WS2812_one_light_run(2, 2);	
-  DMA_WS2812_Run(LED_MAX );	
-	DMA_WS2812_Running(LED_MAX);
-  DMA_WS2812_Running_more(LED_MAX, 720);		
-  arrange_display(LED_MAX);	
- 	arrange_display_two(LED_MAX);
-	ws2812_rand_light(LED_MAX);
-  DMA_WS2812_circulation(LED_MAX);
-	DMA_WS2812_circulation_more(LED_MAX,0);
-  DMA_WS2812_circulation_more(LED_MAX,1);
-	DMA_WS2812_circulation_more(LED_MAX,2);				
+//	DMA_WS2812_Ramp(LED_MAX, 255, 1);
+//  DMA_WS2812_Ramp(LED_MAX, 255, 2);
+//  DMA_WS2812_Ramp(LED_MAX, 255, 3);
+//	DMA_WS2812_Rampping(LED_MAX, 255, 2);				   
+//	DMA_WS2812_Rampping_1(LED_MAX, 255, 1);
+////	DMA_WS2812_one_light_run(2, 2);	
+//  DMA_WS2812_Run(LED_MAX );	
+//	DMA_WS2812_Running(LED_MAX);
+//  DMA_WS2812_Running_more(LED_MAX, 720);		
+//  arrange_display(LED_MAX);	
+// 	arrange_display_two(LED_MAX);
+//	ws2812_rand_light(LED_MAX);
+//  DMA_WS2812_circulation(LED_MAX);
+//	DMA_WS2812_circulation_more(LED_MAX,0);
+//  DMA_WS2812_circulation_more(LED_MAX,1);
+//	DMA_WS2812_circulation_more(LED_MAX,2);			
+  DMA_WS2812_shade_60_run(LED_MAX,shade_60_buf_1);	
+  DMA_WS2812_shade_60_run(LED_MAX,shade_60_buf_2);
+  DMA_WS2812_shade_60_run(LED_MAX,shade_60_buf_3);
+	DMA_WS2812_shade_60_run(LED_MAX,shade_60_buf_4);	
+ws28128_one_color_circulation_run(LED_MAX,onecolor_buf_1);
+ws28128_one_color_circulation_run(LED_MAX,onecolor_buf_2);
+ws28128_one_color_circulation_run(LED_MAX,onecolor_buf_3);
+ws28128_one_color_circulation_run(LED_MAX,onecolor_buf_4);
 				}     
 			
 	 osDelay(1);//只能间隔>50ms才能发送

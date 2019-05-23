@@ -30,20 +30,61 @@ uint8_t APP1.local_version                      0X800FC30             2
 uint16_t APP1.NOW_blocks                        0X800FC40
 uint16_t APP1.flash_blocks                      0X800FC60
 
+
+
+
 *****************************************************/
 #define             App2_Start_Addr            0x8008c00
+/*************************************************************
+                    ws28128 参数地址分配
+0x800f000-0x800f200	 60K-60.5     轨迹1        渐变102    5个渐变颜色    102*5=510 <512个字节
+0x800f200-0x800f400 60.5k-61      轨迹2        渐变102    5个渐变颜色    102*5=510 <512个字节
+0x800f400-0x800f600   61K-61.5    轨迹3        渐变102    5个渐变颜色    102*5=510 <512个字节
+0x800f600-0x800f800   61.5k-62k   轨迹4        渐变102    5个渐变颜色    102*5=510 <512个字节
+0x800f800-0x800fa00   62k-62.5k   轨迹5        渐变102    5个渐变颜色    102*5=510 <512个字节
+0x800fa00-0x800fc00   62.5k-63k   轨迹6        渐变102    5个渐变颜色    102*5=510 <512个字节 				
+***************************************************************/
+/*****************************************************/
+uint8_t  track_1_color_1[102];
+uint8_t  track_1_color_2[102]; 
+uint8_t  track_1_color_3[102]; 
+uint8_t  track_1_color_4[102]; 
+uint8_t  track_1_color_5[102]; 
 
+uint8_t  track_2_color_1[102];
+uint8_t  track_2_color_2[102]; 
+uint8_t  track_2_color_3[102]; 
+uint8_t  track_2_color_4[102]; 
+uint8_t  track_2_color_5[102]; 
+
+uint8_t  track_3_color_1[102];
+uint8_t  track_3_color_2[102]; 
+uint8_t  track_3_color_3[102]; 
+uint8_t  track_3_color_4[102]; 
+uint8_t  track_3_color_5[102];
+
+uint8_t  track_4_color_1[102];
+uint8_t  track_4_color_2[102]; 
+uint8_t  track_4_color_3[102]; 
+uint8_t  track_4_color_4[102]; 
+uint8_t  track_4_color_5[102];
+
+uint8_t  track_5_color_1[102];
+uint8_t  track_5_color_2[102]; 
+uint8_t  track_5_color_3[102]; 
+uint8_t  track_5_color_4[102]; 
+uint8_t  track_5_color_5[102];
 /***************************************************************************
                              Function
 ***************************************************************************/
-#define             set_mode_command_function         0x00   //设置mode命令   SET command
+#define             set_mode_command_function         0x00       //设置mode命令   SET mode command
 #define             set_command_function              0x01       //设置命令   SET command
 #define             send_data_command_function        0x02       //发送数据命令
 #define             set_dir_command_function          0x03       //设置方向命令
 #define             set_finsih_command_function       0x04       //设置完成命令
 #define             set_data_now_command_function     0x05       //在线发送数据
 #define             set_dir_now_command_function      0x06       //在线设置方向数据
-#define             set_data_all_now_command_function  0x07       //在线设置方向数据
+#define             set_data_all_now_command_function 0x07       //在线设置方向数据
 /***************************************************************************
                            Lighting effects
 ***************************************************************************/
@@ -77,7 +118,7 @@ system_mode_type system_mode;
                     协议切换
 **************************************************************************/
 #define  esp32_wifi_on         0
-#define  e61_433_on         1
+#define  e61_433_on            1
 /*******************************************************
       第一步   编写接收数据函数处理函数
 ********************************************************/
@@ -137,7 +178,7 @@ void  Usart_Logo_data_(uint8_t * p_buf,uint8_t * tep_buf,uint16_t r_buf_lenght)
                 /********模式一*********/
                     if(p_buf[9]==0x01)
                     {
-										
+								HAL_UART_Transmit_DMA(&huart3, p_buf,r_buf_lenght);
 									 vTaskResume(WS12TASKHandle);	//恢复任务1
                       system_mode.pattern_flay=1;   
                     			reset_led_light();									
@@ -146,7 +187,7 @@ void  Usart_Logo_data_(uint8_t * p_buf,uint8_t * tep_buf,uint16_t r_buf_lenght)
 										/********模式二*************/
                     else if(p_buf[9]==0x02)
                     {
-											 
+											   HAL_UART_Transmit_DMA(&huart3, p_buf,r_buf_lenght);
 											 vTaskSuspend(WS12TASKHandle);//挂起任务
                       system_mode.pattern_flay=2;    
 											printf("moshi2");
@@ -155,16 +196,16 @@ void  Usart_Logo_data_(uint8_t * p_buf,uint8_t * tep_buf,uint16_t r_buf_lenght)
 										/**********模式三***********/
                     else if(p_buf[9]==0x03)
                     {
-											 
+											   HAL_UART_Transmit_DMA(&huart3, p_buf,r_buf_lenght);
 											 vTaskSuspend(WS12TASKHandle);//挂起任务
 											system_mode.pattern_flay=3;
 											printf("moshi3");
-											 reset_led_light(); 
+											reset_led_light(); 
                     }
 										/*********模式四**************/
                     else if (p_buf[9]==0x04)
                     {
-											 
+											   HAL_UART_Transmit_DMA(&huart3, p_buf,r_buf_lenght);
 											 vTaskSuspend(WS12TASKHandle);//挂起任务
                        system_mode.pattern_flay=4;
 											printf("moshi4");

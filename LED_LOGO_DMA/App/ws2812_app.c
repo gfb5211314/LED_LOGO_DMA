@@ -1193,6 +1193,7 @@ const uint8_t default_buf[17][6]={
 	{255,210,132,132,20,255},//16
 	{255,210,132,132,20,25}//17
 };
+
 /************固定赋值函数渐变***************/
 void DMA_WS2812_shade_logo_one(uint8_t group_num,uint8_t (*def_buf)[6])
 {
@@ -1422,421 +1423,471 @@ void DMA_WS2812_shade_logo_one(uint8_t group_num,uint8_t (*def_buf)[6])
 }
 /***********60度 运动赋值*********************/
 //需求确认  1.渐变赋值       2.全数组赋值
-void DMA_WS2812_60_shade_buf(uint8_t group_num,uint8_t (*start_buf)[3],uint8_t (*terminus_buf)[3])
+void DMA_WS2812_60_shade_buf(uint8_t group_num, uint8_t *def_buf,uint8_t color_ty)
 {
  //Gradient = A + (B-A) / Step * N
 // memset(ws28128_color_buf, 0, sizeof(ws28128_color_buf));
  
-//	   if(group_num==0)
-//		 {
-//			  for(uint8_t t=0;t<28;t++)
-//			 {
-//     ws28128_color_buf[t+25][color_ty] = 255; //g
-//			 }
-//		 ws28128_color_buf[66][color_ty] = 255; //g
-//	   ws28128_color_buf[65][color_ty] = 255; //g
-//		 }
-//    if(led_location==1)
-//		 {
-//	          		 ws28128_color_buf[24][color_ty] = 255; //g
-//			 		       ws28128_color_buf[23][color_ty] = 255; //g
-//			           ws28128_color_buf[22][color_ty] = 255; //g
-//			           ws28128_color_buf[64][color_ty] = 255; //g
-//			 
-//		 }
-//		if(led_location==2)
-//		 {
-//	          		 ws28128_color_buf[63][color_ty] = 255; //g
-//			 	         ws28128_color_buf[62][color_ty] = 255; //g
-//			 	         ws28128_color_buf[61][color_ty] = 255; //g
-//			 		       ws28128_color_buf[21][color_ty] = 255; //g
-//			           ws28128_color_buf[20][color_ty] = 255; //g
-//			           ws28128_color_buf[19][color_ty] = 255; //g
-//			 
-//		 }
-//		 		if(led_location==3)
-//		 {
-//	          		 ws28128_color_buf[63][color_ty] = 255; //g
-//			 	         ws28128_color_buf[62][color_ty] = 255; //g
-//			 	         ws28128_color_buf[61][color_ty] = 255; //g
-//			 		       ws28128_color_buf[21][color_ty] = 255; //g
-//			           ws28128_color_buf[20][color_ty] = 255; //g
-//			           ws28128_color_buf[19][color_ty] = 255; //g
-//			 
-//		 }
-//		 	 		if(led_location==4)
-//		 {
-//			           ws28128_color_buf[0][color_ty] = 255; //g
-//	          		 ws28128_color_buf[1][color_ty] = 255; //g
-//			 	         ws28128_color_buf[2][color_ty] = 255; //g
-//			 	         ws28128_color_buf[3][color_ty] = 255; //g
-//			 		       ws28128_color_buf[4][color_ty] = 255; //g
-//			           ws28128_color_buf[18][color_ty] = 255; //g
-//			           ws28128_color_buf[53][color_ty] = 255; //g
-//			 
-//		 }
-//		 	 	 		if(led_location==5)
-//		 {
-//			           ws28128_color_buf[67][color_ty] = 255; //g
-//	          		 ws28128_color_buf[54][color_ty] = 255; //g
-//			 	         ws28128_color_buf[55][color_ty] = 255; //g
-//			 	         ws28128_color_buf[56][color_ty] = 255; //g
-//			 		       ws28128_color_buf[57][color_ty] = 255; //g
-//			           ws28128_color_buf[17][color_ty] = 255; //g
-//			           ws28128_color_buf[16][color_ty] = 255; //g
-//			           ws28128_color_buf[15][color_ty] = 255; //g
-//			           ws28128_color_buf[14][color_ty] = 255; //g
-//			 
-//		 }
-//		 	 	 	 		if(led_location==6)
-//		 {
-//			           ws28128_color_buf[58][color_ty] = 255; //g
-//	          		 ws28128_color_buf[59][color_ty] = 255; //g
-//			 	         ws28128_color_buf[60][color_ty] = 255; //g
-//			 	         ws28128_color_buf[68][color_ty] = 255; //g
-//			           ws28128_color_buf[69][color_ty] = 255; //g
-//			           ws28128_color_buf[70][color_ty] = 255; //g
-//			           ws28128_color_buf[71][color_ty] = 255; //g
-//			           ws28128_color_buf[5][color_ty] = 255; //g
-//	          		 ws28128_color_buf[6][color_ty] = 255; //g
-//			 	         ws28128_color_buf[7][color_ty] = 255; //g
-//			 	         ws28128_color_buf[8][color_ty] = 255; //g
-//			 		       ws28128_color_buf[9][color_ty] = 255; //g
-//			           ws28128_color_buf[10][color_ty] = 255; //g
-//			           ws28128_color_buf[13][color_ty] = 255; //g
-//			           ws28128_color_buf[12][color_ty] = 255; //g
-//			           ws28128_color_buf[11][color_ty] = 255; //g
-//			 
-//		 }
-//		 		 	 	 	 		if(led_location==7)
-//		 {
-//			           ws28128_color_buf[72][color_ty] = 255; //g
-//	          		 ws28128_color_buf[73][color_ty] = 255; //g
-//			 	         ws28128_color_buf[74][color_ty] = 255; //g
-//			 	         ws28128_color_buf[75][color_ty] = 255; //g
-//			           ws28128_color_buf[76][color_ty] = 255; //g
-//			      
-//		 }
-//		 		 		 	 	 	 		if(led_location==8)
-//		 {
-//			           ws28128_color_buf[77][color_ty] = 255; //g
-//	          		 ws28128_color_buf[78][color_ty] = 255; //g
-//			 	         ws28128_color_buf[79][color_ty] = 255; //g
-//			 	         ws28128_color_buf[80][color_ty] = 255; //g
-//			           ws28128_color_buf[81][color_ty] = 255; //g
-//			           ws28128_color_buf[146][color_ty] = 255; //g
-//	          		 ws28128_color_buf[147][color_ty] = 255; //g
-//			 	         ws28128_color_buf[148][color_ty] = 255; //g
-//			 	         ws28128_color_buf[149][color_ty] = 255; //g
-//			           ws28128_color_buf[150][color_ty] = 255; //g
-//			           ws28128_color_buf[151][color_ty] = 255; //g
-//			           ws28128_color_buf[152][color_ty] = 255; //g
-//			      
-//		 }
-//		 		           if(led_location==9)
-//		 {
-//			           ws28128_color_buf[82][color_ty] = 255; //g
-//	          		 ws28128_color_buf[83][color_ty] = 255; //g
-//			 	         ws28128_color_buf[84][color_ty] = 255; //g
-//			 	         ws28128_color_buf[85][color_ty] = 255; //g
-//			 
-//			           ws28128_color_buf[145][color_ty] = 255; //g
-//			           ws28128_color_buf[144][color_ty] = 255; //g
-//	          		 ws28128_color_buf[143][color_ty] = 255; //g
-//			 	         ws28128_color_buf[142][color_ty] = 255; //g
-//			 
-//			 	         ws28128_color_buf[153][color_ty] = 255; //g
-//			           ws28128_color_buf[154][color_ty] = 255; //g
-//			           ws28128_color_buf[155][color_ty] = 255; //g
-//			           ws28128_color_buf[156][color_ty] = 255; //g
-//			           ws28128_color_buf[157][color_ty] = 255; //g
-//			           ws28128_color_buf[158][color_ty] = 255; //g
-//			      
-//		 }
-//		 		 		           if(led_location==10)
-//		 {
-//			           ws28128_color_buf[86][color_ty] = 255; //g
-//	          		 ws28128_color_buf[87][color_ty] = 255; //g
-//			 	         ws28128_color_buf[88][color_ty] = 255; //g
-//			 	         ws28128_color_buf[89][color_ty] = 255; //g
-//			 
-//			           ws28128_color_buf[141][color_ty] = 255; //g
-//			           ws28128_color_buf[140][color_ty] = 255; //g
-//	          		 ws28128_color_buf[139][color_ty] = 255; //g
-//			 	         ws28128_color_buf[138][color_ty] = 255; //g
-//			 
-//			 
-//			           ws28128_color_buf[159][color_ty] = 255; //g
-//			           ws28128_color_buf[160][color_ty] = 255; //g
-//			           ws28128_color_buf[161][color_ty] = 255; //g
-//			           ws28128_color_buf[162][color_ty] = 255; //g
-//			           ws28128_color_buf[163][color_ty] = 255; //g
-//			 
-//			 
-//			           ws28128_color_buf[183][color_ty] = 255; //g
-//			           ws28128_color_buf[184][color_ty] = 255; //g
-//			           ws28128_color_buf[185][color_ty] = 255; //g
-//			           ws28128_color_buf[186][color_ty] = 255; //g
-//			 
-//			 
-//			 	        
-//			         
-//			      
-//		 }
-//		 	 		 		           if(led_location==11)
-//		 {
-//			           ws28128_color_buf[90][color_ty] = 255; //g
-//	          		 ws28128_color_buf[91][color_ty] = 255; //g
-//			 	         ws28128_color_buf[92][color_ty] = 255; //g
-//			 	  
-//			 
-//			           ws28128_color_buf[137][color_ty] = 255; //g
-//			           ws28128_color_buf[136][color_ty] = 255; //g
-//			          
-//	          	
-//			           ws28128_color_buf[164][color_ty] = 255; //g
-//			           ws28128_color_buf[165][color_ty] = 255; //g
-//			           ws28128_color_buf[166][color_ty] = 255; //g
-//			 
-//			           ws28128_color_buf[182][color_ty] = 255; //g
-//			           ws28128_color_buf[181][color_ty] = 255; //g
-//			  			             
-//		 }
-//		 		 	 		 		    if(led_location==12)
-//		 {
-//			           ws28128_color_buf[93][color_ty] = 255; //g
-//	          		 ws28128_color_buf[94][color_ty] = 255; //g
-//			 	         ws28128_color_buf[95][color_ty] = 255; //g
-//			 	  
-//	          		 ws28128_color_buf[135][color_ty] = 255; //g
-//			 	         ws28128_color_buf[134][color_ty] = 255; //g
-//			           ws28128_color_buf[133][color_ty] = 255; //g 
-//			           ws28128_color_buf[132][color_ty] = 255; //g 
-//			           ws28128_color_buf[131][color_ty] = 255; //g
-//			       
-//			 
-//			           ws28128_color_buf[167][color_ty] = 255; //g
-//			           ws28128_color_buf[168][color_ty] = 255; //g
-//			           ws28128_color_buf[169][color_ty] = 255; //g
-//		          	 ws28128_color_buf[170][color_ty] = 255; //g
-//			 
-//			  			   ws28128_color_buf[180][color_ty] = 255; //g
-//			           ws28128_color_buf[179][color_ty] = 255; //g
-//			 
-//			         
-//			 
-//			          
-//		
-//		 }		 		
-//		 if(led_location==13)
-//		 {
-//			           ws28128_color_buf[96][color_ty] = 255; //g
-//	          		 ws28128_color_buf[97][color_ty] = 255; //g
-//			 	         ws28128_color_buf[98][color_ty] = 255; //g
-//			           ws28128_color_buf[99][color_ty] = 255; //g
-//			  	  
-//	         
-//			           ws28128_color_buf[130][color_ty] = 255; //g
-//			 	         ws28128_color_buf[129][color_ty] = 255; //g
-//			           ws28128_color_buf[128][color_ty] = 255; //g
-//			 	  
-//			       
-//			 
-//			           ws28128_color_buf[171][color_ty] = 255; //g
-//			           ws28128_color_buf[172][color_ty] = 255; //g
-//			  			   ws28128_color_buf[173][color_ty] = 255; //g
-//			 
-//			       
-//		
-//		 } 		 
-//		 if(led_location==14)
-//		 {
-//			           ws28128_color_buf[100][color_ty] = 255; //g
-//	          		 ws28128_color_buf[101][color_ty] = 255; //g
-//			 	         ws28128_color_buf[102][color_ty] = 255; //g
-//			           ws28128_color_buf[103][color_ty] = 255; //g
-//			  	  
-//	         
-//			           ws28128_color_buf[127][color_ty] = 255; //g
-//			 	         ws28128_color_buf[126][color_ty] = 255; //g
-//			           ws28128_color_buf[125][color_ty] = 255; //g
-//			 	  
-//			       
-//			 
-//			           ws28128_color_buf[174][color_ty] = 255; //g
-//			           ws28128_color_buf[175][color_ty] = 255; //g
-//			  			   ws28128_color_buf[176][color_ty] = 255; //g
-//			 
-//			       
-//		
-//		 }
-//		 		 	 		 		    if(led_location==15)
-//		 {
-//			           ws28128_color_buf[104][color_ty] = 255; //g
-//	          		 ws28128_color_buf[105][color_ty] = 255; //g
-//			 	         ws28128_color_buf[106][color_ty] = 255; //g
-//			           ws28128_color_buf[107][color_ty] = 255; //g
-//			  	  
-//	         
-//			           ws28128_color_buf[124][color_ty] = 255; //g
-//			 	      
-//			 	  
-//			       
-//			 
-//			           ws28128_color_buf[177][color_ty] = 255; //g
-//			           ws28128_color_buf[178][color_ty] = 255; //g
-//			 
-//			           ws28128_color_buf[187][color_ty] = 255; //g
-//			           ws28128_color_buf[188][color_ty] = 255; //g
-//			           ws28128_color_buf[189][color_ty] = 255; //g
-//			           ws28128_color_buf[190][color_ty] = 255; //g
-//			 
-//			  			 
-//			 
-//			       
-//		
-//		 }
-//		 	 	 		 		    if(led_location==16)
-//		 {
-//			           ws28128_color_buf[108][color_ty] = 255; //g
-//	          		 ws28128_color_buf[109][color_ty] = 255; //g
-//			 	         ws28128_color_buf[110][color_ty] = 255; //g
-//			           ws28128_color_buf[111][color_ty] = 255; //g
-//			  	  
-//	         
-//			           ws28128_color_buf[123][color_ty] = 255; //g
-//			 	          ws28128_color_buf[122][color_ty] = 255; //g
-//			            ws28128_color_buf[121][color_ty] = 255; //g
-//			           ws28128_color_buf[120][color_ty] = 255; //g
-//			 	          ws28128_color_buf[119][color_ty] = 255; //g
-//			            ws28128_color_buf[118][color_ty] = 255; //g
-//			 	  
-//			     
-//			 
-//			           ws28128_color_buf[191][color_ty] = 255; //g
-//			           ws28128_color_buf[192][color_ty] = 255; //g
-//			           ws28128_color_buf[193][color_ty] = 255; //g
-//			           ws28128_color_buf[194][color_ty] = 255; //g
-//			 
-//			           ws28128_color_buf[228][color_ty] = 255; //g
-//								 ws28128_color_buf[229][color_ty] = 255; //g
-//			 
-//			  			 
-//			 
-//			       
-//		
-//		 }
-//		 
-//		 		 	 	 		 		    if(led_location==17)
-//		 {
-//			           ws28128_color_buf[112][color_ty] = 255; //g
-//	          		 ws28128_color_buf[113][color_ty] = 255; //g
-//			 	        
-//	         
-//			           ws28128_color_buf[117][color_ty] = 255; //g
-//			 	         ws28128_color_buf[116][color_ty] = 255; //g
-//			          
-//			 	  
-//			     
-//			 
-//			           ws28128_color_buf[195][color_ty] = 255; //g
-//			           ws28128_color_buf[196][color_ty] = 255; //g
-//			           ws28128_color_buf[197][color_ty] = 255; //g
-//			           
-//			 
-//			           ws28128_color_buf[227][color_ty] = 255; //g
-//								 ws28128_color_buf[226][color_ty] = 255; //g
-//			           ws28128_color_buf[225][color_ty] = 255; //g
-//			           ws28128_color_buf[224][color_ty] = 255; //g
-//			 
-//			  			 
-//			 
-//			       
-//		
-//		 }
-//		 		 	 	 		 		    if(led_location==18)
-//		 {
-//			          
-//	         
-//			           ws28128_color_buf[115][color_ty] = 255; //g
-//			 	         ws28128_color_buf[114][color_ty] = 255; //g
-//			          
-//			 	  
-//			     
-//			 
-//			           ws28128_color_buf[198][color_ty] = 255; //g
-//			           ws28128_color_buf[199][color_ty] = 255; //g
-//			           ws28128_color_buf[200][color_ty] = 255; //g
-//			           
-//			 
-//			           ws28128_color_buf[223][color_ty] = 255; //g
-//								 ws28128_color_buf[222][color_ty] = 255; //g
-//			           ws28128_color_buf[221][color_ty] = 255; //g
-//			           ws28128_color_buf[220][color_ty] = 255; //g
-//			 
-//			  			 
-//			 
-//			       
-//		
-//		 }
-//		  	 	 		 		    if(led_location==19)
-//		 {
-//			          
-//	         
-//			          
-//			          
-//			 	  
-//			     
-//			         
-//			           ws28128_color_buf[201][color_ty] = 255; //g
-//			           ws28128_color_buf[202][color_ty] = 255; //g
-//			           ws28128_color_buf[203][color_ty] = 255; //g
-//			           ws28128_color_buf[204][color_ty] = 255; //g
-//			           ws28128_color_buf[205][color_ty] = 255; //g
-//			           ws28128_color_buf[206][color_ty] = 255; //g
-//			           ws28128_color_buf[207][color_ty] = 255; //g
-//			           ws28128_color_buf[208][color_ty] = 255; //g
-//			           ws28128_color_buf[209][color_ty] = 255; //g
-//			           ws28128_color_buf[210][color_ty] = 255; //g
-//			           ws28128_color_buf[211][color_ty] = 255; //g
-//			           ws28128_color_buf[212][color_ty] = 255; //g
-//			           ws28128_color_buf[213][color_ty] = 255; //g
-//			           ws28128_color_buf[214][color_ty] = 255; //g
-//			         
-//			           ws28128_color_buf[219][color_ty] = 255; //g
-//								 ws28128_color_buf[218][color_ty] = 255; //g
-//			           ws28128_color_buf[217][color_ty] = 255; //g
-//			           ws28128_color_buf[216][color_ty] = 255; //g
-//			 
-//			  			 
-//			 
-//			       
-//		
-//		 }
-//		 	 	 		 		    if(led_location==19)
-//		 {
-//			          
-//	         
-//			          
-//			          
-//			 	  
-//			     
-//			       
-//			         
-//			           ws28128_color_buf[215][color_ty] = 255; //g
-//			 
-//			  			 
-//			 
-//			       
-//		
-//		 }
-//	 
-//	 
+	   if(group_num==0)
+		 {
+			  for(uint8_t t=0;t<28;t++)
+			 {
+     ws28128_color_buf[t+25][color_ty] =def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 }
+		 ws28128_color_buf[66][color_ty] =def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+	   ws28128_color_buf[65][color_ty] =def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+		 }
+    if(group_num==1)
+		 {
+	          		 ws28128_color_buf[24][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 		       ws28128_color_buf[23][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			           ws28128_color_buf[22][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			           ws28128_color_buf[64][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 
+		 }
+		if(group_num==2)
+		 {
+	          		 ws28128_color_buf[63][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 	         ws28128_color_buf[62][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 	         ws28128_color_buf[61][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 		       ws28128_color_buf[21][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			           ws28128_color_buf[20][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			           ws28128_color_buf[19][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 
+		 }
+		 		if(group_num==3)
+		 {
+	          		 ws28128_color_buf[63][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 	         ws28128_color_buf[62][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 	         ws28128_color_buf[61][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 		       ws28128_color_buf[21][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			           ws28128_color_buf[20][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			           ws28128_color_buf[19][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 
+		 }
+		 	 		if(group_num==4)
+		 {
+			           ws28128_color_buf[0][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+	          		 ws28128_color_buf[1][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 	         ws28128_color_buf[2][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 	         ws28128_color_buf[3][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 		       ws28128_color_buf[4][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			           ws28128_color_buf[18][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			           ws28128_color_buf[53][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 
+		 }
+		 	 	 		if(group_num==5)
+		 {
+			           ws28128_color_buf[67][color_ty] =def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+	          		 ws28128_color_buf[54][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 	         ws28128_color_buf[55][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 	         ws28128_color_buf[56][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 		       ws28128_color_buf[57][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			           ws28128_color_buf[17][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			           ws28128_color_buf[16][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			           ws28128_color_buf[15][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			           ws28128_color_buf[14][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 
+		 }
+		 	 	 	 		if(group_num==6)
+		 {
+			           ws28128_color_buf[58][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+	          		 ws28128_color_buf[59][color_ty] =def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 	         ws28128_color_buf[60][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			 	         ws28128_color_buf[68][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20;
+			           ws28128_color_buf[69][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[70][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[71][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[5][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+	          		 ws28128_color_buf[6][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[7][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[8][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 		       ws28128_color_buf[9][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[10][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[13][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[12][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[11][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+		 }
+		 		 	 	 	 		if(group_num==7)
+		 {
+			           ws28128_color_buf[72][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+	          		 ws28128_color_buf[73][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[74][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[75][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[76][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			      
+		 }
+		 		 		 	 	 	 		if(group_num==8)
+		 {
+			           ws28128_color_buf[77][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+	          		 ws28128_color_buf[78][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[79][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[80][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[81][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[146][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+	          		 ws28128_color_buf[147][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[148][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[149][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[150][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[151][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[152][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			      
+		 }
+		 		           if(group_num==9)
+		 {
+			           ws28128_color_buf[82][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+	          		 ws28128_color_buf[83][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[84][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[85][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			           ws28128_color_buf[145][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[144][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+	          		 ws28128_color_buf[143][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[142][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			 	         ws28128_color_buf[153][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[154][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[155][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[156][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[157][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[158][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			      
+		 }
+		 		 		           if(group_num==10)
+		 {
+			           ws28128_color_buf[86][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+	          		 ws28128_color_buf[87][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[88][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[89][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			           ws28128_color_buf[141][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[140][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+	          		 ws28128_color_buf[139][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[138][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			 
+			           ws28128_color_buf[159][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[160][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[161][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[162][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[163][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			 
+			           ws28128_color_buf[183][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[184][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[185][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[186][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			 
+			 	        
+			         
+			      
+		 }
+		 	 		 		           if(group_num==11)
+		 {
+			           ws28128_color_buf[90][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+	          		 ws28128_color_buf[91][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[92][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	  
+			 
+			           ws28128_color_buf[137][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[136][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			          
+	          	
+			           ws28128_color_buf[164][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[165][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[166][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			           ws28128_color_buf[182][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[181][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			  			             
+		 }
+		 		 	 		 		    if(group_num==12)
+		 {
+			           ws28128_color_buf[93][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+	          		 ws28128_color_buf[94][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[95][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	  
+	          		 ws28128_color_buf[135][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[134][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[133][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g 
+			           ws28128_color_buf[132][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g 
+			           ws28128_color_buf[131][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			       
+			 
+			           ws28128_color_buf[167][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[168][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[169][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+		          	 ws28128_color_buf[170][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			  			   ws28128_color_buf[180][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[179][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			         
+			 
+			          
+		
+		 }		 		
+		 if(group_num==13)
+		 {
+			           ws28128_color_buf[96][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+	          		 ws28128_color_buf[97][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[98][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[99][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			  	  
+	         
+			           ws28128_color_buf[130][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[129][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[128][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	  
+			       
+			 
+			           ws28128_color_buf[171][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[172][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			  			   ws28128_color_buf[173][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			       
+		
+		 } 		 
+		 if(group_num==14)
+		 {
+			           ws28128_color_buf[100][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+	          		 ws28128_color_buf[101][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[102][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[103][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			  	  
+	         
+			           ws28128_color_buf[127][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[126][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[125][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	  
+			       
+			 
+			           ws28128_color_buf[174][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[175][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			  			   ws28128_color_buf[176][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			       
+		
+		 }
+		 		 	 		 		    if(group_num==15)
+		 {
+			           ws28128_color_buf[104][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+	          		 ws28128_color_buf[105][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[106][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[107][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			  	  
+	         
+			           ws28128_color_buf[124][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	      
+			 	  
+			       
+			 
+			           ws28128_color_buf[177][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[178][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			           ws28128_color_buf[187][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[188][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[189][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[190][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			  			 
+			 
+			       
+		
+		 }
+		 	 	 		 		    if(group_num==16)
+		 {
+			           ws28128_color_buf[108][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+	          		 ws28128_color_buf[109][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[110][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[111][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			  	  
+	         
+			           ws28128_color_buf[123][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	          ws28128_color_buf[122][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			            ws28128_color_buf[121][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[120][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	          ws28128_color_buf[119][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			            ws28128_color_buf[118][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	  
+			     
+			 
+			           ws28128_color_buf[191][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[192][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[193][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[194][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			           ws28128_color_buf[228][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+								 ws28128_color_buf[229][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			  			 
+			 
+			       
+		
+		 }
+		 
+		 		 	 	 		 		    if(group_num==17)
+		 {
+			           ws28128_color_buf[112][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+	          		 ws28128_color_buf[113][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	        
+	         
+			           ws28128_color_buf[117][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[116][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			          
+			 	  
+			     
+			 
+			           ws28128_color_buf[195][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[196][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[197][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           
+			 
+			           ws28128_color_buf[227][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+								 ws28128_color_buf[226][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[225][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[224][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			  			 
+			 
+			       
+		
+		 }
+		 		 	 	 		 		    if(group_num==18)
+		 {
+			          
+	         
+			           ws28128_color_buf[115][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 	         ws28128_color_buf[114][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			          
+			 	  
+			     
+			 
+			           ws28128_color_buf[198][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[199][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[200][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           
+			 
+			           ws28128_color_buf[223][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+								 ws28128_color_buf[222][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[221][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[220][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			  			 
+			 
+			       
+		
+		 }
+		  	 	 		 		    if(group_num==19)
+		 {
+			          
+	         
+			          
+			          
+			 	  
+			     
+			         
+			           ws28128_color_buf[201][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[202][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[203][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[204][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[205][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[206][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[207][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[208][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[209][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[210][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[211][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[212][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[213][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[214][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			         
+			           ws28128_color_buf[219][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+								 ws28128_color_buf[218][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[217][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			           ws28128_color_buf[216][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			  			 
+			 
+			       
+		
+		 }
+		 	 	 		 		    if(group_num==19)
+		 {
+			          
+	         
+			          
+			          
+			 	  
+			     
+			       
+			         
+			           ws28128_color_buf[215][color_ty] = def_buf[color_ty]+(def_buf[color_ty+3]-def_buf[color_ty])*(group_num+1)/20; //g
+			 
+			  			 
+			 
+			       
+		
+		 }
+	 
+	 
 
 
 
 
 }
+void DMA_WS2812_shade_60_buf(uint8_t group_num,uint8_t *def_buf)
+{
+	for(uint16_t i=0;i<3;i++)
+	{
+	
+	DMA_WS2812_60_shade_buf(group_num,def_buf,i);
+	}
+}
+/***************************************
+    60°颜色渐变 左下到右上
+***************************************/
+void DMA_WS2812_shade_60_run(uint16_t amount,uint8_t *def_buf)
+{
+	
+	memset(ws28128_color_buf, 0, sizeof(ws28128_color_buf));
+	 
+	 for(uint16_t m = 0; m < 20; m++)
+    {
+
+  
+       DMA_WS2812_shade_60_buf(m,def_buf);
+        DMA_WS2812_Reset();
+      	   osDelay(1);
+        DMA_WS2812_light(amount);
+         osDelay((uint32_t)(amount*30/1000)+1);
+	         osDelay(30);
+			
+		}
+	
+}
+/***********************************************
+   单色循环
+***********************************************/
+void ws28128_one_color_circulation_run(uint16_t amount,uint8_t *def_buf)
+{
+	    for(uint16_t i=0;i<amount;i++)
+	 {
+		    ws28128_color_buf[i][0]=def_buf[0];
+        ws28128_color_buf[i][1]=def_buf[1];
+        ws28128_color_buf[i][2]=def_buf[2];		 
+	 }
+	          DMA_WS2812_Reset();
+              osDelay(1); 
+        DMA_WS2812_light(amount);
+       osDelay((uint32_t)(amount*30/1000)+1);
+	
+}
+/********************************************
+条状色带按轨迹运动
+**********************************************/
 /*********************************************
 **********************************************/
 void DMA_WS2812_shade_logo_rgb(uint16_t amount,uint8_t (*sta)[3],uint8_t (*ter)[3])
@@ -1880,6 +1931,9 @@ memcpy(sta,pbuf,lendata);
 }
 /*****************************************************************************
 ******************************************************************************/
-
+void DMA_WS2812_data_flash(uint8_t (*sta)[6],uint8_t *pbuf,uint16_t lendata)
+{         
+memcpy(pbuf,sta,lendata);
+}
 
 
