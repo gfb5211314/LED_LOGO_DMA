@@ -40,7 +40,7 @@ void MX_USART3_UART_Init(void)
 {
 
     huart3.Instance = USART3;
-    huart3.Init.BaudRate = 57600;
+    huart3.Init.BaudRate = 460800;
     huart3.Init.WordLength = UART_WORDLENGTH_8B;
     huart3.Init.StopBits = UART_STOPBITS_1;
     huart3.Init.Parity = UART_PARITY_NONE;
@@ -65,7 +65,7 @@ void  DMA_START(USART_RECEIVETYPE  *Usart,UART_HandleTypeDef *huart)
 /*********receive data*******************/
 void UsartReceive_IDLE(UART_HandleTypeDef *huart,USART_RECEIVETYPE   *Usart)
 {
-    uint32_t temp;
+    uint32_t temp=0;
 
     if((__HAL_UART_GET_FLAG(huart,UART_FLAG_IDLE) != RESET))
     {

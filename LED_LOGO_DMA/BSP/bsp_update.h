@@ -3,11 +3,6 @@
 
 #include "stm32f1xx_hal.h"
 
-typedef enum
-{
-    write_succeed = 0U,
-    write_fail
-} Write_State;
 
 
 
@@ -23,10 +18,10 @@ typedef struct
 
 
 
-extern void  Usart_Logo_data_(uint8_t * p_buf,uint8_t * tep_buf,uint16_t r_buf_lenght);
+extern void  Usart_Logo_data(uint8_t * p_buf,uint8_t * tep_buf,uint16_t r_buf_lenght);
 
 
-
+extern void flash_data_to_color_data();
 
 
 #endif

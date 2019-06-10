@@ -22,22 +22,26 @@ Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
 C:\Users\Fubiao.Guo\Desktop\BESTBEW\LED_LOGO_DMA\LED_LOGO_DMA\MDK-ARM\LED_LOGO_DMA.uvprojx
-Project File Date:  05/14/2019
+Project File Date:  06/03/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'LED_LOGO_DMA'
-compiling freertos.c...
-../Src/freertos.c(154): warning:  #223-D: function "DMA_WS2812_data_flash" declared implicitly
-  	DMA_WS2812_data_flash(default_buf1,abc,102);
-../Src/freertos.c(288): warning:  #223-D: function "ws28128_one_color_circulation_run" declared implicitly
-  ws28128_one_color_circulation_run(LED_MAX,onecolor_buf_1);
-../Src/freertos.c: 2 warnings, 0 errors
+compiling main.c...
+..\BSP\bsp_tim.h(12): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\BSP\bsp_led.h(15): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\BSP\bsp_nrf24l01.h(102): warning:  #1-D: last line of file ends without a newline
+  #endif
+..\BSP\bsp_update.h(24): warning:  #1295-D: Deprecated declaration flash_data_to_color_data - give arg types
+  extern void flash_data_to_color_data();
+../Src/main.c: 4 warnings, 0 errors
 linking...
-Program Size: Code=23188 RO-data=492 RW-data=784 ZI-data=18128  
+Program Size: Code=39724 RO-data=680 RW-data=796 ZI-data=14756  
 FromELF: creating hex file...
 After Build - User command #1: fromelf --bin --output .\LED_LOGO_DEBUG\LED_LOGO_DMA.BIN    .\LED_LOGO_DEBUG\LED_LOGO_DMA.AXF
-".\LED_LOGO_DEBUG\LED_LOGO_DMA.axf" - 0 Error(s), 2 Warning(s).
+".\LED_LOGO_DEBUG\LED_LOGO_DMA.axf" - 0 Error(s), 4 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -64,9 +68,9 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:CORE:5.2.0
 
    * Component: ARM::CMSIS:DSP:Library:1.6.0
-      Library file:  CMSIS\DSP\Lib\ARM\arm_cortexM3l_math.lib
       Include file:  CMSIS\DSP\Include\arm_math.h
-Build Time Elapsed:  00:00:02
+      Library file:  CMSIS\DSP\Lib\ARM\arm_cortexM3l_math.lib
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

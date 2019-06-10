@@ -43,6 +43,7 @@ void ws2812_rand_light(volatile uint16_t  amount)
         HAL_Delay(1);
         DMA_WS2812_light(amount);
        HAL_Delay((uint32_t)(amount*30/1000)+1);
+			   osDelay(50);
     }
 }
 
@@ -481,7 +482,7 @@ void DMA_WS2812_circulation_buf(uint16_t led_location, uint16_t run_number)
 void DMA_WS2812_circulation(volatile uint16_t  amount)
 {
 	
-	
+	memset(ws28128_color_buf, 0, sizeof(ws28128_color_buf));
 	 for(uint16_t m = 0; m < amount; m++)
     {
 
@@ -928,11 +929,11 @@ void DMA_WS2812_circulation_more(volatile uint16_t  amount,colors_kind color)
 			
 		}
 			memset(ws28128_color_buf, 0, sizeof(ws28128_color_buf));
-			 for(uint16_t m = 19; m >0; m--)
+			 for(uint16_t m = 20; m >0; m--)
     {
 
   
-        DMA_WS2812_circulation_buf_more(m, color);  //M代表数组第一例
+        DMA_WS2812_circulation_buf_more(m-1, color);  //M代表数组第一例
         DMA_WS2812_Reset();
       	   osDelay(1);
         DMA_WS2812_light(amount);
@@ -1214,7 +1215,6 @@ void DMA_WS2812_shade_logo_one(uint8_t group_num,uint8_t (*def_buf)[6])
 					                   //code 
 					 /**************************************************/
 		     }
-	   	  
 		  //***2-----1***/
 				 	   if(group_num==2)
 				 {
@@ -1420,6 +1420,14 @@ void DMA_WS2812_shade_logo_one(uint8_t group_num,uint8_t (*def_buf)[6])
 	
 
 
+}
+/*************************固定全部渐变赋值*************************/
+void  DMA_WS2812_shade_logo_all(uint8_t (*def_buf)[6])
+{
+	   for(uint16_t i=1;i<18;i++)
+	{
+DMA_WS2812_shade_logo_one(i,def_buf);
+	}
 }
 /***********60度 运动赋值*********************/
 //需求确认  1.渐变赋值       2.全数组赋值
@@ -1852,13 +1860,27 @@ void DMA_WS2812_shade_60_buf(uint8_t group_num,uint8_t *def_buf)
 void DMA_WS2812_shade_60_run(uint16_t amount,uint8_t *def_buf)
 {
 	
-	memset(ws28128_color_buf, 0, sizeof(ws28128_color_buf));
+	    memset(ws28128_color_buf, 0, sizeof(ws28128_color_buf));
 	 
 	 for(uint16_t m = 0; m < 20; m++)
     {
 
   
        DMA_WS2812_shade_60_buf(m,def_buf);
+        DMA_WS2812_Reset();
+      	   osDelay(1);
+        DMA_WS2812_light(amount);
+           osDelay((uint32_t)(amount*30/1000)+1);
+	         osDelay(30);
+			
+		}
+			memset(ws28128_color_buf, 0, sizeof(ws28128_color_buf));
+	 
+	 for(uint16_t m = 20; m >0; m--)
+    {
+
+  
+       DMA_WS2812_shade_60_buf(m-1,def_buf);
         DMA_WS2812_Reset();
       	   osDelay(1);
         DMA_WS2812_light(amount);
@@ -1926,14 +1948,31 @@ void DMA_WS2812_shade_light(uint16_t amount)
 //uint8_t a_hha[3][3];
 //uint8_t  bxixi[9]={0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09};
 void DMA_WS2812_data_refresh(uint8_t (*sta)[3],uint8_t *pbuf,uint16_t lendata)
-{         
+{      
+/*******Pbuf copy to sta******************/	
 memcpy(sta,pbuf,lendata);
 }
 /*****************************************************************************
+
 ******************************************************************************/
+
 void DMA_WS2812_data_flash(uint8_t (*sta)[6],uint8_t *pbuf,uint16_t lendata)
-{         
+{ 
+/******sta copy to pbuf**********/	
 memcpy(pbuf,sta,lendata);
+//	for(uint8_t i=0;i<102;i++)
+//	{
+//	      printf("%d=%02x ",i,pbuf[i]);
+//	}
 }
+void DMA_WS2812_data_flash_1(uint8_t *pbuf,uint8_t (*sta)[6],uint16_t lendata)
+{ 
+/******pbuf copy to sta**********/	
+         memcpy(sta,pbuf,lendata);
+}
+void DMA_WS2812_data_flash_2(uint8_t (*sta1)[6],uint8_t (*sta)[6],uint16_t lendata)
+{ 
+/******sta copy to sta1**********/	
+         memcpy(sta1,sta,lendata);
 
-
+}

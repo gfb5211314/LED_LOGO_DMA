@@ -62,6 +62,7 @@
 #include <stdlib.h>
 #include "ws2812_app.h"
 #include "bsp_nrf24l01.h"
+#include "bsp_update.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -96,7 +97,7 @@ osThreadId myTask03Handle;
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-
+extern system_mode_type system_mode;
 void MX_TIM3_Init(void);
 void SystemClock_Config(void);
 void MX_GPIO_Init(void);
@@ -107,7 +108,7 @@ void MX_TIM2_Init(void);
 void MX_NVIC_Init(void);
 void MX_SPI1_Init(void);
 void HAL_TIM_MspPostInit(TIM_HandleTypeDef* htim);
- void MX_USART3_UART_Init(void);
+void MX_USART3_UART_Init(void);
 void APP_TASK(void const * argument);
 void WS128_TASK(void const * argument);
 void FFT_TASK(void const * argument);
@@ -124,6 +125,7 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 //	 SCB->VTOR = 0x8000000 | (0x1800 & (uint32_t)0x1FFFFF80);
+
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -139,7 +141,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+ 
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -156,6 +158,8 @@ int main(void)
   MX_NVIC_Init();
 
   /* USER CODE BEGIN 2 */
+
+//	
 
 //  HAL_TIM_Base_Start(&htim3);
 //HAL_ADC_Start_DMA(&hadc1, (uint32_t*)uhADCxConvertedValue1, (TEST_LENGTH_SAMPLES/2));
@@ -190,15 +194,15 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, APP_TASK, osPriorityNormal, 0, 512);
+  osThreadDef(defaultTask, APP_TASK, osPriorityHigh, 0, 256);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of WS12TASK */
-  osThreadDef(WS12TASK, WS128_TASK, osPriorityIdle, 0, 128);
+  osThreadDef(WS12TASK, WS128_TASK, osPriorityBelowNormal, 0, 256);
   WS12TASKHandle = osThreadCreate(osThread(WS12TASK), NULL);
 
   /* definition and creation of myTask03 */
-  osThreadDef(myTask03, FFT_TASK, osPriorityIdle, 0, 128);
+  osThreadDef(myTask03, FFT_TASK, osPriorityBelowNormal, 0, 256);
   myTask03Handle = osThreadCreate(osThread(myTask03), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -332,7 +336,7 @@ static void MX_NVIC_Init(void)
   HAL_NVIC_SetPriority(TIM3_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(TIM3_IRQn);
   /* USART3_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(USART3_IRQn, 5, 0);
+  HAL_NVIC_SetPriority(USART3_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(USART3_IRQn);
 }
 

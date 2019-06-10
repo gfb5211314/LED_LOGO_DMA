@@ -338,7 +338,7 @@
               <MiscControls>--C99</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F103xB,ARM_MATH_CM3</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;        ../Drivers/STM32F1xx_HAL_Driver/Inc;        ../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;        ../Drivers/CMSIS/Device/ST/STM32F1xx/Include;        ../Drivers/CMSIS/Include;        ..\BSP;        ..\App;   ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;   ../Middlewares/Third_Party/FreeRTOS/Source/include;   ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS</IncludePath>
+              <IncludePath>../Inc;../Drivers/STM32F1xx_HAL_Driver/Inc;../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F1xx/Include;../Drivers/CMSIS/Include;..\BSP;..\App;../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;../Middlewares/Third_Party/FreeRTOS/Source/include;../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;..\BSP</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -602,6 +602,11 @@
               <FileType>1</FileType>
               <FilePath>..\BSP\bsp_e61.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_upgrade.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\bsp_upgrade.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -626,6 +631,11 @@
               <FileName>fft_app.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\App\fft_app.c</FilePath>
+            </File>
+            <File>
+              <FileName>esp8266.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\App\esp8266.c</FilePath>
             </File>
           </Files>
         </Group>

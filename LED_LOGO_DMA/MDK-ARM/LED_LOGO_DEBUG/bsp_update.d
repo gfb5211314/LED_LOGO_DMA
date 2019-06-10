@@ -52,3 +52,5 @@
 .\led_logo_debug\bsp_update.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\led_logo_debug\bsp_update.o: ..\App\ws2812_app.h
 .\led_logo_debug\bsp_update.o: ..\BSP\bsp_usart.h
+.\led_logo_debug\bsp_update.o: ..\App\esp8266.h
+.\led_logo_debug\bsp_update.o: ..\BSP\bsp_upgrade.h

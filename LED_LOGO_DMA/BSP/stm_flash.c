@@ -75,7 +75,7 @@ void STMFLASH_Write ( uint32_t WriteAddr, uint16_t * pBuffer, uint16_t NumToWrit
 
     offaddr=WriteAddr-FLASH_BASE;		//实际偏移地址.
     secpos=offaddr/STM_SECTOR_SIZE;			//扇区地址  0~127 for STM32F103RBT6
-    secoff=(offaddr%STM_SECTOR_SIZE)/2;		//在扇区内的偏移(2个字节为基本单位.)
+    secoff=(offaddr%STM_SECTOR_SIZE)/2;		//在扇区内的偏移(2个字节为基本单位.) ///
     secremain=STM_SECTOR_SIZE/2-secoff;		//扇区剩余空间大小
     if(NumToWrite<=secremain)secremain=NumToWrite;//不大于该扇区范围
 
@@ -137,8 +137,30 @@ void STMFLASH_Read ( uint32_t ReadAddr, uint16_t *pBuffer, uint16_t NumToRead )
     for(i=0; i<NumToRead; i++)
     {
         pBuffer[i]=STMFLASH_ReadHalfWord(ReadAddr);//读取2个字节.
-        ReadAddr+=2;//偏移2个字节.
+			 
+        ReadAddr+=2;//偏移2个字节.    
     }
 }
 
-/******************* (C) COPYRIGHT 2015-2020 硬石嵌入式开发团队 *****END OF FILE****/
+/************************************************************
+                 验证数据是否写入SUCCEED
+************************************************************/
+Write_State  write_read_flash_jiaoyan(uint32_t WriteAddr,uint8_t * p_buf,uint16_t r_buf_lenght)
+{
+
+    uint8_t  t_p_buf[512];
+    STMFLASH_Write (WriteAddr, (uint16_t *)p_buf,r_buf_lenght); 
+
+    STMFLASH_Read  (WriteAddr, (uint16_t *)t_p_buf,r_buf_lenght); 
+
+    if(strcmp((const char *) p_buf,(const char *)t_p_buf)==0)
+    {
+        return 1;
+    }
+    else
+    {
+
+        return 0;
+    }
+}
+/************************END OF FILE****/

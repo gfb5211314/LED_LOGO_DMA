@@ -14,11 +14,11 @@ set wifi  ap
 ********************/
 const uint8_t at_rst_command[]="AT+RST\r\n";    //reset valid
 const uint8_t at_command[]="AT\r\n";          //check module  normal
-const uint8_t at_cwmode_command[]="AT+CWMODE=3\r\n";  //AP  server  open wifi  hot pints
-const uint8_t at_start_wifi_command[]="AT+CWSAP=\"ESP32ap\",\"1234567890\",5,3,5\r\n";
+const uint8_t at_cwmode_command[]="AT+CWMODE=2\r\n";  //AP  server  open wifi  hot pints
+const uint8_t at_start_wifi_command[]="AT+CWSAP=\"ESP8266\",\"123456789\",5,3,5\r\n";
 const uint8_t at_cipmux[]="AT+CIPMUX=1\r\n";            //0 : one connection  1: multi connection
 //const uint8_t at_cipservermaxconn[]="AT+CIPSERVERMAXCONN=2\r\n";   //set the maximum number of connections   ,allow two  join in
-const uint8_t at_cipserver[]="AT+CIPSERVER=1,8080\r\n";   // build TCP SERVER  PORT :8080
+const uint8_t at_cipserver[]="AT+CIPSERVER=1,80\r\n";   // build TCP SERVER  PORT :8080
 // const uint8_t at_cipserver[]="AT+CIPSERVER=1,433,SSL,1";   // build ssL SERVER  PORT :8080
 
 const uint8_t at_cipsend[]="AT+CIPSEND=0,5\r\n"; //send data ti client
@@ -70,11 +70,19 @@ uint8_t esp32_set_rst_command(const uint8_t *prst, uint16_t wait_time)
 
     HAL_UART_Transmit_DMA(&huart3, (uint8_t*)prst, strlen((char *)prst));
     HAL_Delay(wait_time);
+//		    for(uint8_t i=0;i<UsartType3.RX_Size;i++)
+//	{
+//		printf("%c",UsartType3.RX_pData[i]);
+//	}
     if(strstr((const char*)UsartType3.RX_pData, "OK") != NULL)
     {
         UsartType3.RX_flag = 0;
         memset(UsartType3.RX_pData, 0, sizeof(UsartType3.RX_pData));
-			  HAL_Delay(1000);
+			  HAL_Delay(500);
+//					    for(uint16_t i=0;i<UsartType3.RX_Size;i++)
+//	{
+//		printf("%c",UsartType3.RX_pData[i]);
+//	}
 			 if(strstr((const char*)UsartType3.RX_pData, "ready") != NULL)
 			 {
 				  UsartType3.RX_flag = 0;
@@ -100,6 +108,11 @@ uint8_t esp32_set_WIFI_MODE_command(const uint8_t *pmode, uint16_t wait_time)
     HAL_UART_Transmit_DMA(&huart3, (uint8_t*)pmode,strlen((char *)pmode));
     HAL_Delay(wait_time);
 	 
+
+	//					    for(uint16_t i=0;i<UsartType3.RX_Size;i++)
+//	{
+//		printf("%c",UsartType3.RX_pData[i]);
+//	}
     if(strstr((const char*)UsartType3.RX_pData, "OK") != NULL)
     {
         UsartType3.RX_flag = 0;
@@ -127,6 +140,7 @@ uint8_t esp32_set_WIFI_start_command(const uint8_t *pstart, uint16_t wait_time)
 
     if(strstr((const char*)UsartType3.RX_pData, "OK") != NULL)
     {
+		
         UsartType3.RX_flag = 0;
         memset(UsartType3.RX_pData, 0, sizeof(UsartType3.RX_pData));
         return 1;
@@ -151,6 +165,7 @@ uint8_t esp32_set_WIFI_cipmux_command(const uint8_t *pcipmux, uint16_t wait_time
 
     if(strstr((const char*)UsartType3.RX_pData, "OK") != NULL)
     {
+		
         UsartType3.RX_flag = 0;
         memset(UsartType3.RX_pData, 0, sizeof(UsartType3.RX_pData));
         return 1;
@@ -175,6 +190,7 @@ uint8_t esp32_set_WIFI_server_command(const uint8_t *pserver, uint16_t wait_time
 
     if(strstr((const char*)UsartType3.RX_pData, "OK") != NULL)
     {
+	
         UsartType3.RX_flag = 0;
         memset(UsartType3.RX_pData, 0, sizeof(UsartType3.RX_pData));
         return 1;
@@ -221,7 +237,7 @@ void esp32_wifi_init(uint8_t mode,uint16_t wait_time  )
         {
             printf("multilink_fail\r\n");
         }
-        if(esp32_set_WIFI_cipmux_command(at_cipserver, wait_time))
+        if(esp32_set_WIFI_server_command(at_cipserver, wait_time))
         {
             printf("server_success\r\n");
         } else
@@ -231,6 +247,42 @@ void esp32_wifi_init(uint8_t mode,uint16_t wait_time  )
     }
 }
 
+void esp8266_wifi_init(uint8_t mode,uint16_t wait_time  )
+{
+    if(mode==1)
+    {
+     
+        if(esp32_set_WIFI_MODE_command(at_cwmode_command, wait_time))
+        {
+            printf("mode_success\r\n");
+        } else
+        {
+            printf("mode_fail\r\n");
+        }
+		
+        if(esp32_set_WIFI_start_command(at_start_wifi_command, wait_time))
+        {
+            printf("start_success\r\n");
+        } else
+        {
+            printf("start_fail\r\n");
+        }
+        if(esp32_set_WIFI_cipmux_command(at_cipmux, wait_time))
+        {
+            printf("multilink_success\r\n");
+        } else
+        {
+            printf("multilink_fail\r\n");
+        }
+        if(esp32_set_WIFI_server_command(at_cipserver, wait_time))
+        {
+            printf("server_success\r\n");
+        } else
+        {
+            printf("server_fail\r\n");
+        }
+    }
+}
 
 void esp_check_state(uint16_t wait_time)
 {

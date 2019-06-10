@@ -57,3 +57,4 @@
 .\led_logo_debug\main.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
 .\led_logo_debug\main.o: ..\App\ws2812_app.h
 .\led_logo_debug\main.o: ..\BSP\bsp_nrf24l01.h
+.\led_logo_debug\main.o: ..\BSP\bsp_update.h

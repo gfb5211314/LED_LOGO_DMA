@@ -37,9 +37,108 @@ uint16_t APP1.flash_blocks                      0X800FC60
 #define             App2_Start_Addr            0x8008c00
 /*************************************************************
                     ws28128 参数地址分配
-										
-										code here
-***************************************************************/
+0x800f000-0x800f200	 60K-60.5     轨迹1        渐变102    5个渐变颜色    102*5=510 <512个字节
+0x800f200-0x800f400 60.5k-61      轨迹2        渐变102    5个渐变颜色    102*5=510 <512个字节
+0x800f400-0x800f600   61K-61.5    轨迹3        渐变102    5个渐变颜色    102*5=510 <512个字节
+0x800f600-0x800f800   61.5k-62k   轨迹4        渐变102    5个渐变颜色    102*5=510 <512个字节
+0x800f800-0x800fa00   62k-62.5k   轨迹5        渐变102    5个渐变颜色    102*5=510 <512个字节
+0x800fa00-0x800fc00   62.5k-63k   轨迹6        渐变102    5个渐变颜色    102*5=510 <512个字节 	
+0x800ec00-0x800f000     59K-60K
+0x800ec00     mode1   1  2  3 4            
+*******************************************************************/
+/*******************************
+              轨迹1
+		//60K-60.5k
+ 
+0x800f000  track_1_color_1     102
+0x800f066  track_1_color_2     102
+0x800f0cc  track_1_color_3     102
+0x800f132  track_1_color_4     102
+0x800f198  track_1_color_5     102
+0x800f1fe  write_flash_1        1
+
+*********************************/
+/*******************************
+              轨迹2
+		//60.5K-61k
+ 
+0x800f200  track_2_color_1     102
+0x800f266  track_2_color_2     102
+0x800f2cc  track_2_color_3     102
+0x800f332  track_2_color_4     102
+0x800f398  track_2_color_5     102
+0x800f3fe  write_flash_2        1
+*********************************/
+/*******************************
+              轨迹3
+		//60K-60.5k
+ 
+0x800f400  track_3_color_1     102
+0x800f466  track_3_color_2     102
+0x800f4cc  track_3_color_3     102
+0x800f532  track_3_color_4     102
+0x800f598  track_3_color_5     102
+0x800f5fe  write_flash_3        1
+*********************************/
+/*******************************
+              轨迹4
+		//60K-60.5k
+ 
+0x800f600  track_4_color_1     102
+0x800f666  track_4_color_2     102
+0x800f6cc  track_4_color_3     102
+0x800f732  track_4_color_4     102
+0x800f798  track_4_color_5     102
+0x800f7fe  write_flash_4        1
+*********************************/
+/*******************************
+              轨迹5
+		//60K-60.5k
+ 
+0x800f800  track_5_color_1     102
+0x800f866  track_5_color_2     102
+0x800f8cc  track_5_color_3     102
+0x800f932  track_5_color_4     102
+0x800f998  track_5_color_5     102
+0x800f9fe  write_flash_5        1
+*********************************/
+
+/*****************************************************/
+uint8_t  track_1_color_1[17][6];
+uint8_t  track_1_color_2[17][6]; 
+uint8_t  track_1_color_3[17][6];
+uint8_t  track_1_color_4[17][6];
+uint8_t  track_1_color_5[17][6]; 
+
+uint8_t  track_2_color_1[17][6];
+uint8_t  track_2_color_2[17][6];
+uint8_t  track_2_color_3[17][6];
+uint8_t  track_2_color_4[17][6];
+uint8_t  track_2_color_5[17][6];
+
+uint8_t  track_3_color_1[17][6];
+uint8_t  track_3_color_2[17][6];
+uint8_t  track_3_color_3[17][6];
+uint8_t  track_3_color_4[17][6]; 
+uint8_t  track_3_color_5[17][6];
+
+uint8_t  track_4_color_1[17][6];
+uint8_t  track_4_color_2[17][6];
+uint8_t  track_4_color_3[17][6];
+uint8_t  track_4_color_4[17][6];
+uint8_t  track_4_color_5[17][6];
+
+uint8_t  track_5_color_1[17][6];
+uint8_t  track_5_color_2[17][6];
+uint8_t  track_5_color_3[17][6];
+uint8_t  track_5_color_4[17][6];
+uint8_t  track_5_color_5[17][6];
+uint8_t  write_flash_1;
+uint8_t  write_flash_2;
+uint8_t  write_flash_3;
+uint8_t  write_flash_4;
+uint8_t  write_flash_5;
+uint8_t  temp_color_data[102];
 /***************************************************************************
                              Function
 ***************************************************************************/
@@ -79,12 +178,40 @@ typedef struct
 } Ws2818_Led_Type;
 Ws2818_Led_Type   Ws2818_Led;
 system_mode_type system_mode;
+Write_State  write_read_flash_jiaoyan(uint32_t WriteAddr,uint8_t * p_buf,uint16_t r_buf_lenght);
 
+/************************************************************
+                 验证数据是否写入SUCCEED
+************************************************************/
+Write_State  write_read_flash_jiaoyan(uint32_t WriteAddr,uint8_t * p_buf,uint16_t r_buf_lenght)
+{
+
+    uint8_t  t_p_buf[200];
+    STMFLASH_Write (WriteAddr, (uint16_t *)p_buf,r_buf_lenght); //版本升级总块数
+
+    STMFLASH_Read  (WriteAddr, (uint16_t *)t_p_buf,r_buf_lenght); //版本升级总块数
+	
+	
+//		  for(uint8_t i=0;i<102;i++)
+//	{
+//		printf("%d=%02x ",i,t_p_buf[i]);
+//		
+//	}
+    if(strcmp((const char *) p_buf,(const char *)t_p_buf)==0)
+    {
+      return 1;
+    }
+    else
+    {
+        
+			  return 0;
+    }
+}
 /**************************************************************************
                     协议切换
 **************************************************************************/
 #define  esp32_wifi_on         0
-#define  e61_433_on         1
+#define  e61_433_on            1
 /*******************************************************
       第一步   编写接收数据函数处理函数
 ********************************************************/
@@ -144,37 +271,66 @@ void  Usart_Logo_data_(uint8_t * p_buf,uint8_t * tep_buf,uint16_t r_buf_lenght)
                 /********模式一*********/
                     if(p_buf[9]==0x01)
                     {
-										
+								HAL_UART_Transmit_DMA(&huart3, p_buf,r_buf_lenght);
 									 vTaskResume(WS12TASKHandle);	//恢复任务1
-                      system_mode.pattern_flay=1;   
+                      system_mode.pattern_flay=1; 
+         if(write_read_flash_jiaoyan(0x800ec00,&system_mode.pattern_flay,1))
+				 {
+					 printf("write mode1 sucess");
+				 }		
+        else		
+				 {
+	     printf("write mode1 fail");
+				 }					
                     			reset_led_light();									
-                       printf("moshi1");
+//                       printf("moshi1");
                     }
 										/********模式二*************/
                     else if(p_buf[9]==0x02)
                     {
-											 
+											   HAL_UART_Transmit_DMA(&huart3, p_buf,r_buf_lenght);
 											 vTaskSuspend(WS12TASKHandle);//挂起任务
                       system_mode.pattern_flay=2;    
-											printf("moshi2");
+									     if(write_read_flash_jiaoyan(0x800ec00,&system_mode.pattern_flay,1))
+				 {
+					 printf("write mode2 sucess");
+				 }		
+        else		
+				 {
+	     printf("write mode2 fail");
+				 }	
 											 reset_led_light(); 
                     }
 										/**********模式三***********/
                     else if(p_buf[9]==0x03)
                     {
-											 
+											   HAL_UART_Transmit_DMA(&huart3, p_buf,r_buf_lenght);
 											 vTaskSuspend(WS12TASKHandle);//挂起任务
 											system_mode.pattern_flay=3;
-											printf("moshi3");
-											 reset_led_light(); 
+																	     if(write_read_flash_jiaoyan(0x800ec00,&system_mode.pattern_flay,1))
+				 {
+					 printf("write mode3 sucess");
+				 }		
+        else		
+				 {
+	     printf("write mode3 fail");
+				 }	
+											reset_led_light(); 
                     }
 										/*********模式四**************/
                     else if (p_buf[9]==0x04)
                     {
-											 
+											   HAL_UART_Transmit_DMA(&huart3, p_buf,r_buf_lenght);
 											 vTaskSuspend(WS12TASKHandle);//挂起任务
                        system_mode.pattern_flay=4;
-											printf("moshi4");
+																		     if(write_read_flash_jiaoyan(0x800ec00,&system_mode.pattern_flay,1))
+				 {
+					 printf("write mode4 sucess");
+				 }		
+        else		
+				 {
+	     printf("write mode4 fail");
+				 }	
 											 reset_led_light(); 
                     }
                     break;
@@ -184,7 +340,7 @@ void  Usart_Logo_data_(uint8_t * p_buf,uint8_t * tep_buf,uint16_t r_buf_lenght)
 									{
                     /*第一步：停掉所有灯*/
 						 HAL_UART_Transmit_DMA(&huart3, p_buf,r_buf_lenght);
-system_mode.set_shade=0;
+                 system_mode.set_shade=0;
                    
                     DMA_WS2812_Mie(LED_MAX);
 									}
@@ -196,7 +352,360 @@ system_mode.set_shade=0;
                 /**数据处理模块**/
                 case send_data_command_function :
                if(system_mode.pattern_flay==2)
-									{
+									{  
+										
+									
+										HAL_UART_Transmit(&huart3,p_buf,r_buf_lenght,0xffffffff);
+										//clear track1 buf data 
+										memset(track_1_color_1, 0, sizeof(track_1_color_1));
+										memset(track_1_color_2, 0, sizeof(track_1_color_2));
+										memset(track_1_color_3, 0, sizeof(track_1_color_3));
+										memset(track_1_color_4, 0, sizeof(track_1_color_4));
+										memset(track_1_color_5, 0, sizeof(track_1_color_5));
+										//clear track2 buf data 
+										memset(track_2_color_1, 0, sizeof(track_2_color_1));
+										memset(track_2_color_2, 0, sizeof(track_2_color_2));
+										memset(track_2_color_3, 0, sizeof(track_2_color_3));
+										memset(track_2_color_4, 0, sizeof(track_2_color_4));
+										memset(track_2_color_5, 0, sizeof(track_2_color_5));
+										//clear track3 buf data
+										memset(track_3_color_1, 0, sizeof(track_3_color_1));
+										memset(track_3_color_2, 0, sizeof(track_3_color_2));
+										memset(track_3_color_3, 0, sizeof(track_3_color_3));
+										memset(track_3_color_4, 0, sizeof(track_3_color_4));
+										memset(track_3_color_5, 0, sizeof(track_3_color_5));
+										//clear track4 buf data
+										memset(track_4_color_1, 0, sizeof(track_4_color_1));
+										memset(track_4_color_2, 0, sizeof(track_4_color_2));
+										memset(track_4_color_3, 0, sizeof(track_4_color_3));
+										memset(track_4_color_4, 0, sizeof(track_4_color_4));
+										memset(track_4_color_5, 0, sizeof(track_4_color_5));
+										//clear track5 buf data
+										memset(track_5_color_1, 0, sizeof(track_5_color_1));
+										memset(track_5_color_2, 0, sizeof(track_5_color_2));
+										memset(track_5_color_3, 0, sizeof(track_5_color_3));
+										memset(track_5_color_4, 0, sizeof(track_5_color_4));
+										memset(track_5_color_5, 0, sizeof(track_5_color_5));
+										 p_buf[7]=p_buf[7]-1;
+										  /******轨迹1**************/
+										 if(p_buf[4]==effects_one)
+										 {
+											       
+											     /**********1区是否被写入**************/
+											    if(write_flash_1==1)
+													{ 
+														track_1_color_2[p_buf[7]][0]=p_buf[9];
+                            track_1_color_2[p_buf[7]][1]=p_buf[10];
+                            track_1_color_2[p_buf[7]][2]=p_buf[11];
+                            track_1_color_2[p_buf[7]][3]=p_buf[12];
+                            track_1_color_2[p_buf[7]][4]=p_buf[13];
+                            track_1_color_2[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********2区是否被写入**************/
+													else if(write_flash_1==3)
+													{
+														track_1_color_3[p_buf[7]][0]=p_buf[9];
+                            track_1_color_3[p_buf[7]][1]=p_buf[10];
+                            track_1_color_3[p_buf[7]][2]=p_buf[11];
+                            track_1_color_3[p_buf[7]][3]=p_buf[12];
+                            track_1_color_3[p_buf[7]][4]=p_buf[13];
+                            track_1_color_3[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********3区是否被写入**************/
+												  else if(write_flash_1==7)
+													{
+														track_1_color_4[p_buf[7]][0]=p_buf[9];
+                            track_1_color_4[p_buf[7]][1]=p_buf[10];
+                            track_1_color_4[p_buf[7]][2]=p_buf[11];
+                            track_1_color_4[p_buf[7]][3]=p_buf[12];
+                            track_1_color_4[p_buf[7]][4]=p_buf[13];
+                            track_1_color_4[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********4区是否被写入**************/
+													else if(write_flash_1==15)
+													{
+														track_1_color_5[p_buf[7]][0]=p_buf[9];
+                            track_1_color_5[p_buf[7]][1]=p_buf[10];
+                            track_1_color_5[p_buf[7]][2]=p_buf[11];
+                            track_1_color_5[p_buf[7]][3]=p_buf[12];
+                            track_1_color_5[p_buf[7]][4]=p_buf[13];
+                            track_1_color_5[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********5区是否被写入**************/
+													else if(write_flash_1==31)
+													{
+														track_1_color_1[p_buf[7]][0]=p_buf[9];
+                            track_1_color_1[p_buf[7]][1]=p_buf[10];
+                            track_1_color_1[p_buf[7]][2]=p_buf[11];
+                            track_1_color_1[p_buf[7]][3]=p_buf[12];
+                            track_1_color_1[p_buf[7]][4]=p_buf[13];
+                            track_1_color_1[p_buf[7]][5]=p_buf[14];
+													}
+													/*****12345都没有写  初始化写1区*************/
+													else{
+														track_1_color_1[p_buf[7]][0]=p_buf[9];
+                            track_1_color_1[p_buf[7]][1]=p_buf[10];
+                            track_1_color_1[p_buf[7]][2]=p_buf[11];
+                            track_1_color_1[p_buf[7]][3]=p_buf[12];
+                            track_1_color_1[p_buf[7]][4]=p_buf[13];
+                            track_1_color_1[p_buf[7]][5]=p_buf[14];
+													}
+										 }
+										 	/******轨迹2**************/
+										 else if(p_buf[4]==effects_two)
+										 {
+											  /**********1区是否被写入**************/
+											    if(write_flash_2==1)
+													{ 
+														track_2_color_2[p_buf[7]][0]=p_buf[9];
+                            track_2_color_2[p_buf[7]][1]=p_buf[10];
+                            track_2_color_2[p_buf[7]][2]=p_buf[11];
+                            track_2_color_2[p_buf[7]][3]=p_buf[12];
+                            track_2_color_2[p_buf[7]][4]=p_buf[13];
+                            track_2_color_2[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********2区是否被写入**************/
+													else if(write_flash_2==3)
+													{
+														track_2_color_3[p_buf[7]][0]=p_buf[9];
+                            track_2_color_3[p_buf[7]][1]=p_buf[10];
+                            track_2_color_3[p_buf[7]][2]=p_buf[11];
+                            track_2_color_3[p_buf[7]][3]=p_buf[12];
+                            track_2_color_3[p_buf[7]][4]=p_buf[13];
+                            track_2_color_3[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********3区是否被写入**************/
+												  else if(write_flash_2==7)
+													{
+														track_2_color_4[p_buf[7]][0]=p_buf[9];
+                            track_2_color_4[p_buf[7]][1]=p_buf[10];
+                            track_2_color_4[p_buf[7]][2]=p_buf[11];
+                            track_2_color_4[p_buf[7]][3]=p_buf[12];
+                            track_2_color_4[p_buf[7]][4]=p_buf[13];
+                            track_2_color_4[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********4区是否被写入**************/
+													else if(write_flash_2==15)
+													{
+														track_2_color_5[p_buf[7]][0]=p_buf[9];
+                            track_2_color_5[p_buf[7]][1]=p_buf[10];
+                            track_2_color_5[p_buf[7]][2]=p_buf[11];
+                            track_2_color_5[p_buf[7]][3]=p_buf[12];
+                            track_2_color_5[p_buf[7]][4]=p_buf[13];
+                            track_2_color_5[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********5区是否被写入**************/
+													else if(write_flash_2==31)
+													{
+														track_2_color_1[p_buf[7]][0]=p_buf[9];
+                            track_2_color_1[p_buf[7]][1]=p_buf[10];
+                            track_2_color_1[p_buf[7]][2]=p_buf[11];
+                            track_2_color_1[p_buf[7]][3]=p_buf[12];
+                            track_2_color_1[p_buf[7]][4]=p_buf[13];
+                            track_2_color_1[p_buf[7]][5]=p_buf[14];
+													}
+													/*****12345都没有写  初始化写1区*************/
+													else{
+														track_2_color_1[p_buf[7]][0]=p_buf[9];
+                            track_2_color_1[p_buf[7]][1]=p_buf[10];
+                            track_2_color_1[p_buf[7]][2]=p_buf[11];
+                            track_2_color_1[p_buf[7]][3]=p_buf[12];
+                            track_2_color_1[p_buf[7]][4]=p_buf[13];
+                            track_2_color_1[p_buf[7]][5]=p_buf[14];
+													}
+											    
+											 
+										 }
+										 	/******轨迹3**************/
+										  else if(p_buf[4]==effects_three)
+										 {
+											   /**********1区是否被写入**************/
+											    if(write_flash_3==1)
+													{ 
+														track_3_color_2[p_buf[7]][0]=p_buf[9];
+                            track_3_color_2[p_buf[7]][1]=p_buf[10];
+                            track_3_color_2[p_buf[7]][2]=p_buf[11];
+                            track_3_color_2[p_buf[7]][3]=p_buf[12];
+                            track_3_color_2[p_buf[7]][4]=p_buf[13];
+                            track_3_color_2[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********2区是否被写入**************/
+													else if(write_flash_3==3)
+													{
+														track_3_color_3[p_buf[7]][0]=p_buf[9];
+                            track_3_color_3[p_buf[7]][1]=p_buf[10];
+                            track_3_color_3[p_buf[7]][2]=p_buf[11];
+                            track_3_color_3[p_buf[7]][3]=p_buf[12];
+                            track_3_color_3[p_buf[7]][4]=p_buf[13];
+                            track_3_color_3[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********3区是否被写入**************/
+												  else if(write_flash_3==7)
+													{
+														track_3_color_4[p_buf[7]][0]=p_buf[9];
+                            track_3_color_4[p_buf[7]][1]=p_buf[10];
+                            track_3_color_4[p_buf[7]][2]=p_buf[11];
+                            track_3_color_4[p_buf[7]][3]=p_buf[12];
+                            track_3_color_4[p_buf[7]][4]=p_buf[13];
+                            track_3_color_4[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********4区是否被写入**************/
+													else if(write_flash_3==15)
+													{
+														track_3_color_5[p_buf[7]][0]=p_buf[9];
+                            track_3_color_5[p_buf[7]][1]=p_buf[10];
+                            track_3_color_5[p_buf[7]][2]=p_buf[11];
+                            track_3_color_5[p_buf[7]][3]=p_buf[12];
+                            track_3_color_5[p_buf[7]][4]=p_buf[13];
+                            track_3_color_5[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********5区是否被写入**************/
+													else if(write_flash_3==31)
+													{
+														track_3_color_1[p_buf[7]][0]=p_buf[9];
+                            track_3_color_1[p_buf[7]][1]=p_buf[10];
+                            track_3_color_1[p_buf[7]][2]=p_buf[11];
+                            track_3_color_1[p_buf[7]][3]=p_buf[12];
+                            track_3_color_1[p_buf[7]][4]=p_buf[13];
+                            track_3_color_1[p_buf[7]][5]=p_buf[14];
+													}
+													/*****12345都没有写  初始化写1区*************/
+													else{
+														track_3_color_1[p_buf[7]][0]=p_buf[9];
+                            track_3_color_1[p_buf[7]][1]=p_buf[10];
+                            track_3_color_1[p_buf[7]][2]=p_buf[11];
+                            track_3_color_1[p_buf[7]][3]=p_buf[12];
+                            track_3_color_1[p_buf[7]][4]=p_buf[13];
+                            track_3_color_1[p_buf[7]][5]=p_buf[14];
+													}
+											 
+										 }
+										 	/******轨迹4**************/
+										  else if(p_buf[4]==effects_four)
+										 {
+											 			   /**********1区是否被写入**************/
+											    if(write_flash_4==1)
+													{ 
+														track_4_color_2[p_buf[7]][0]=p_buf[9];
+                            track_4_color_2[p_buf[7]][1]=p_buf[10];
+                            track_4_color_2[p_buf[7]][2]=p_buf[11];
+                            track_4_color_2[p_buf[7]][3]=p_buf[12];
+                            track_4_color_2[p_buf[7]][4]=p_buf[13];
+                            track_4_color_2[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********2区是否被写入**************/
+													else if(write_flash_4==3)
+													{
+														track_4_color_3[p_buf[7]][0]=p_buf[9];
+                            track_4_color_3[p_buf[7]][1]=p_buf[10];
+                            track_4_color_3[p_buf[7]][2]=p_buf[11];
+                            track_4_color_3[p_buf[7]][3]=p_buf[12];
+                            track_4_color_3[p_buf[7]][4]=p_buf[13];
+                            track_4_color_3[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********3区是否被写入**************/
+												  else if(write_flash_4==7)
+													{
+														track_4_color_4[p_buf[7]][0]=p_buf[9];
+                            track_4_color_4[p_buf[7]][1]=p_buf[10];
+                            track_4_color_4[p_buf[7]][2]=p_buf[11];
+                            track_4_color_4[p_buf[7]][3]=p_buf[12];
+                            track_4_color_4[p_buf[7]][4]=p_buf[13];
+                            track_4_color_4[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********4区是否被写入**************/
+													else if(write_flash_4==15)
+													{
+														track_4_color_5[p_buf[7]][0]=p_buf[9];
+                            track_4_color_5[p_buf[7]][1]=p_buf[10];
+                            track_4_color_5[p_buf[7]][2]=p_buf[11];
+                            track_4_color_5[p_buf[7]][3]=p_buf[12];
+                            track_4_color_5[p_buf[7]][4]=p_buf[13];
+                            track_4_color_5[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********5区是否被写入**************/
+													else if(write_flash_4==31)
+													{
+														track_4_color_1[p_buf[7]][0]=p_buf[9];
+                            track_4_color_1[p_buf[7]][1]=p_buf[10];
+                            track_4_color_1[p_buf[7]][2]=p_buf[11];
+                            track_4_color_1[p_buf[7]][3]=p_buf[12];
+                            track_4_color_1[p_buf[7]][4]=p_buf[13];
+                            track_4_color_1[p_buf[7]][5]=p_buf[14];
+													}
+													/*****12345都没有写  初始化写1区*************/
+													else{
+														track_4_color_1[p_buf[7]][0]=p_buf[9];
+                            track_4_color_1[p_buf[7]][1]=p_buf[10];
+                            track_4_color_1[p_buf[7]][2]=p_buf[11];
+                            track_4_color_1[p_buf[7]][3]=p_buf[12];
+                            track_4_color_1[p_buf[7]][4]=p_buf[13];
+                            track_4_color_1[p_buf[7]][5]=p_buf[14];
+													}
+										 }
+										 	/******轨迹5**************/
+										  else if(p_buf[4]==effects_five)
+										 {
+											   			   /**********1区是否被写入**************/
+											    if(write_flash_5==1)
+													{ 
+														track_5_color_2[p_buf[7]][0]=p_buf[9];
+                            track_5_color_2[p_buf[7]][1]=p_buf[10];
+                            track_5_color_2[p_buf[7]][2]=p_buf[11];
+                            track_5_color_2[p_buf[7]][3]=p_buf[12];
+                            track_5_color_2[p_buf[7]][4]=p_buf[13];
+                            track_5_color_2[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********2区是否被写入**************/
+													else if(write_flash_5==3)
+													{
+														track_5_color_3[p_buf[7]][0]=p_buf[9];
+                            track_5_color_3[p_buf[7]][1]=p_buf[10];
+                            track_5_color_3[p_buf[7]][2]=p_buf[11];
+                            track_5_color_3[p_buf[7]][3]=p_buf[12];
+                            track_5_color_3[p_buf[7]][4]=p_buf[13];
+                            track_5_color_3[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********3区是否被写入**************/
+												  else if(write_flash_5==7)
+													{
+														track_5_color_4[p_buf[7]][0]=p_buf[9];
+                            track_5_color_4[p_buf[7]][1]=p_buf[10];
+                            track_5_color_4[p_buf[7]][2]=p_buf[11];
+                            track_5_color_4[p_buf[7]][3]=p_buf[12];
+                            track_5_color_4[p_buf[7]][4]=p_buf[13];
+                            track_5_color_4[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********4区是否被写入**************/
+													else if(write_flash_5==15)
+													{
+														track_5_color_5[p_buf[7]][0]=p_buf[9];
+                            track_5_color_5[p_buf[7]][1]=p_buf[10];
+                            track_5_color_5[p_buf[7]][2]=p_buf[11];
+                            track_5_color_5[p_buf[7]][3]=p_buf[12];
+                            track_5_color_5[p_buf[7]][4]=p_buf[13];
+                            track_5_color_5[p_buf[7]][5]=p_buf[14];
+													}
+													 /**********5区是否被写入**************/
+													else if(write_flash_5==31)
+													{
+														track_5_color_1[p_buf[7]][0]=p_buf[9];
+                            track_5_color_1[p_buf[7]][1]=p_buf[10];
+                            track_5_color_1[p_buf[7]][2]=p_buf[11];
+                            track_5_color_1[p_buf[7]][3]=p_buf[12];
+                            track_5_color_1[p_buf[7]][4]=p_buf[13];
+                            track_5_color_1[p_buf[7]][5]=p_buf[14];
+													}
+													/*****12345都没有写  初始化写1区*************/
+													else{
+														track_5_color_1[p_buf[7]][0]=p_buf[9];
+                            track_5_color_1[p_buf[7]][1]=p_buf[10];
+                            track_5_color_1[p_buf[7]][2]=p_buf[11];
+                            track_5_color_1[p_buf[7]][3]=p_buf[12];
+                            track_5_color_1[p_buf[7]][4]=p_buf[13];
+                            track_5_color_1[p_buf[7]][5]=p_buf[14];
+													}
+										 }
 										system_mode.set_shade=0;
                     sta_logo_data[0][0]=p_buf[9];
                     sta_logo_data[0][1]=p_buf[10];
@@ -204,8 +713,8 @@ system_mode.set_shade=0;
                     ter_logo_data[0][0]=p_buf[12];
                     ter_logo_data[0][1]=p_buf[13];
                     ter_logo_data[0][2]=p_buf[14];
-                    DMA_WS2812_shade_logo(p_buf[7],sta_logo_data,ter_logo_data);
-                    HAL_UART_Transmit_DMA(&huart3, p_buf,r_buf_lenght);
+                    DMA_WS2812_shade_logo(p_buf[7]+1,sta_logo_data,ter_logo_data);
+                   
 									}
                     break;
                 /**设置灯运动方向**/
@@ -219,6 +728,426 @@ system_mode.set_shade=0;
                 case set_finsih_command_function :
                      if(system_mode.pattern_flay==2)
 									{
+										  /******轨迹1**************/
+										 if(p_buf[4]==effects_one)
+										  {
+											     /**********1区是否被写入**************/
+											    if(write_flash_1==1)
+													{ 
+														printf("1区已经写入,写第二区");
+
+														  	DMA_WS2812_data_flash(track_1_color_2,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f066,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_1=3;
+															  if( write_read_flash_jiaoyan(0x800f1fe,&write_flash_1,1))
+																{
+																	  printf("2区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+											  	}
+													 /**********2区是否被写入**************/
+													else if(write_flash_1==3)
+													{ 
+														printf("2区已经写入,写入第三区");
+
+														  	DMA_WS2812_data_flash(track_1_color_3,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f0cc,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_1=7;
+															  if( write_read_flash_jiaoyan(0x800f1fe,&write_flash_1,1))
+																{
+																	  printf("3区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+										
+													}
+													 /**********3区是否被写入**************/
+												  else if(write_flash_1==7)
+													{
+														printf("3区已经写入,写入第四区");
+
+														  	DMA_WS2812_data_flash(track_1_color_4,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f132,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_1=15;
+															  if( write_read_flash_jiaoyan(0x800f1fe,&write_flash_1,1))
+																{
+																	  printf("4区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+													}
+													 /**********4区是否被写入**************/
+													else if(write_flash_1==15)
+													{
+															printf("4区已经写入,写入第5区");
+
+														  	DMA_WS2812_data_flash(track_1_color_5,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f198,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_1=31;
+															  if( write_read_flash_jiaoyan(0x800f1fe,&write_flash_1,1))
+																{
+																	  printf("5区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+													}
+													 /**********5区是否被写入**************/
+													else if(write_flash_1==31)
+													{
+															printf("5区已经写入,写入第1区");
+
+														  	DMA_WS2812_data_flash(track_1_color_1,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f000,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_1=1;
+															  if( write_read_flash_jiaoyan(0x800f1fe,&write_flash_1,1))
+																{
+																	  printf("1区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+													}
+													/*****12345都没有写  初始化写1区*************/
+													else{
+														   	DMA_WS2812_data_flash(track_1_color_1,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f000,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_1=1;
+															  if( write_read_flash_jiaoyan(0x800f1fe,&write_flash_1,1))
+																{
+																	  printf("1区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+													}
+									}
+										 /******轨迹2**************/
+									         	 if(p_buf[4]==effects_two)
+										       {
+											     /**********1区是否被写入**************/
+											    if(write_flash_2==1)
+													{ 
+														printf("1区已经写入,写第二区");
+
+														  	DMA_WS2812_data_flash(track_2_color_2,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f266,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_2=3;
+															  if( write_read_flash_jiaoyan(0x800f3fe,&write_flash_2,1))
+																{
+																	  printf("2区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+											  	}
+													 /**********2区是否被写入**************/
+													else if(write_flash_2==3)
+													{ 
+														printf("2区已经写入,写入第三区");
+
+														  	DMA_WS2812_data_flash(track_2_color_3,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f2cc,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_2=7;
+															  if( write_read_flash_jiaoyan(0x800f3fe,&write_flash_2,1))
+																{
+																	  printf("3区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+										
+													}
+													 /**********3区是否被写入**************/
+												  else if(write_flash_2==7)
+													{
+														printf("3区已经写入,写入第四区");
+
+														  	DMA_WS2812_data_flash(track_2_color_4,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f332,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_2=15;
+															  if( write_read_flash_jiaoyan(0x800f3fe,&write_flash_2,1))
+																{
+																	  printf("4区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+													}
+													 /**********4区是否被写入**************/
+													else if(write_flash_2==15)
+													{
+															printf("4区已经写入,写入第5区");
+
+														  	DMA_WS2812_data_flash(track_2_color_5,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f398,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_2=31;
+															  if( write_read_flash_jiaoyan(0x800f3fe,&write_flash_2,1))
+																{
+																	  printf("5区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+													}
+													 /**********5区是否被写入**************/
+													else if(write_flash_2==31)
+													{
+															printf("5区已经写入,写入第1区");
+
+														  	DMA_WS2812_data_flash(track_2_color_1,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f200,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_2=1;
+															  if( write_read_flash_jiaoyan(0x800f3fe,&write_flash_2,1))
+																{
+																	  printf("1区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+													}
+													/*****12345都没有写  初始化写1区*************/
+													else{
+														   	DMA_WS2812_data_flash(track_2_color_1,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f200,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_2=1;
+															  if( write_read_flash_jiaoyan(0x800f3fe,&write_flash_2,1))
+																{
+																	  printf("1区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+													}
+								        	}
+										 	 /******轨迹3**************/
+										 if(p_buf[4]==effects_three)
+										 {
+											     /**********1区是否被写入**************/
+											    if(write_flash_3==1)
+													{ 
+														printf("1区已经写入,写第二区");
+
+														  	DMA_WS2812_data_flash(track_3_color_2,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f466,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_3=3;
+															  if( write_read_flash_jiaoyan(0x800f5fe,&write_flash_3,1))
+																{
+																	  printf("2区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+											  	}
+													 /**********2区是否被写入**************/
+													else if(write_flash_3==3)
+													{ 
+														printf("2区已经写入,写入第三区");
+
+														  	DMA_WS2812_data_flash(track_2_color_3,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f2cc,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_2=7;
+															  if( write_read_flash_jiaoyan(0x800f3fe,&write_flash_2,1))
+																{
+																	  printf("3区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+										
+													}
+													 /**********3区是否被写入**************/
+												  else if(write_flash_2==7)
+													{
+														printf("3区已经写入,写入第四区");
+
+														  	DMA_WS2812_data_flash(track_2_color_4,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f332,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_2=15;
+															  if( write_read_flash_jiaoyan(0x800f3fe,&write_flash_2,1))
+																{
+																	  printf("4区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+													}
+													 /**********4区是否被写入**************/
+													else if(write_flash_2==15)
+													{
+															printf("4区已经写入,写入第5区");
+
+														  	DMA_WS2812_data_flash(track_2_color_5,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f398,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_2=31;
+															  if( write_read_flash_jiaoyan(0x800f3fe,&write_flash_2,1))
+																{
+																	  printf("5区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+													}
+													 /**********5区是否被写入**************/
+													else if(write_flash_2==31)
+													{
+															printf("5区已经写入,写入第1区");
+
+														  	DMA_WS2812_data_flash(track_2_color_1,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f200,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_2=1;
+															  if( write_read_flash_jiaoyan(0x800f3fe,&write_flash_2,1))
+																{
+																	  printf("1区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+													}
+													/*****12345都没有写  初始化写1区*************/
+													else{
+														   	DMA_WS2812_data_flash(track_2_color_1,temp_color_data,102);
+//														 STMFLASH_Write (0x8008c00, (uint16_t *)track_1_color_2,102); 
+
+//                             STMFLASH_Read  (0x8008c00, (uint16_t *)track_1_color_2,102); 
+														
+												    if(write_read_flash_jiaoyan(0x800f200,temp_color_data,102)==1)
+													  {
+														       printf("写入成功");
+															                write_flash_2=1;
+															  if( write_read_flash_jiaoyan(0x800f3fe,&write_flash_2,1))
+																{
+																	  printf("1区写入");
+																}
+													  }
+														else{
+															printf("写入失败");
+														}
+													}
+									}
 										system_mode.set_shade=1;
                     HAL_UART_Transmit_DMA(&huart3, p_buf,r_buf_lenght);
                   
@@ -253,22 +1182,70 @@ system_mode.set_shade=0;
         r_buf_lenght=0;
     }
 }
-/************************************************************
-                 验证数据是否写入SUCCEED
-************************************************************/
-Write_State  write_flash(uint16_t now_flash_blocks,uint8_t * p_buf,uint16_t r_buf_lenght)
+/*from flash read data to color buf*/
+void flash_data_to_color_data()
 {
+	  // from track1 flash read data to color buf
+    STMFLASH_Read  (0x800f000, (uint16_t *)temp_color_data,102); //
+	    HAL_Delay(10);
 
-    uint8_t  t_p_buf[200];
-    STMFLASH_Write (0x8008c00+128*now_flash_blocks, (uint16_t *)p_buf,r_buf_lenght); //版本升级总块数
+	  HAL_Delay(10);
+//	printf("\r\n");
+    DMA_WS2812_data_flash_1(temp_color_data,track_1_color_1,102);
 
-    STMFLASH_Read  (0x8008c00+128*now_flash_blocks, (uint16_t *)t_p_buf,r_buf_lenght); //版本升级总块数
-    if(strcmp((const char *) p_buf,(const char *)t_p_buf)==0)
-    {
-        return 0;
-    }
-    else
-    {
-        return 1;
-    }
+//		for(uint8_t i=0;i<17;i++)
+//{
+//	for(uint8_t j=0;j<6;j++)
+//	{
+//printf("track_1_color_1[%d][%d]=%02x ",i,j,track_1_color_1[i][j]);
+//	}
+//printf("\r\n");
+//}
+		
+	
+	     HAL_Delay(10);
+	  STMFLASH_Read  (0x800f066, (uint16_t *)temp_color_data,102); //
+//			  for(uint8_t i=0;i<102;i++)
+//	{
+//		printf("2:%d=%02x ",i,temp_color_data[i]);
+//		
+//	}
+	  HAL_Delay(10);
+	 DMA_WS2812_data_flash_1(temp_color_data,track_1_color_2,102);
+  HAL_Delay(10);
+//		printf("\r\n");
+	  STMFLASH_Read  (0x800f0cc, (uint16_t *)temp_color_data,102); //
+//			  for(uint8_t i=0;i<102;i++)
+//	{
+//		printf("3:%d=%02x ",i,temp_color_data[i]);
+//		
+//	}
+	  HAL_Delay(10);
+	 DMA_WS2812_data_flash_1(temp_color_data,track_1_color_3,102);
+  HAL_Delay(10);
+	  STMFLASH_Read  (0x800f132, (uint16_t *)temp_color_data,102); //
+//			  for(uint8_t i=0;i<102;i++)
+//	{
+//		printf("4:%d=%02x ",i,temp_color_data[i]);
+//		
+//	}
+	  HAL_Delay(10);
+	 DMA_WS2812_data_flash_1(temp_color_data,track_1_color_4,102);
+  HAL_Delay(10);
+//		printf("\r\n");
+	  STMFLASH_Read  (0x800f198, (uint16_t *)temp_color_data,102); //
+//			  for(uint8_t i=0;i<102;i++)
+//	{
+//		printf("5:%d=%02x ",i,temp_color_data[i]);
+//		
+//	}
+	  HAL_Delay(10);
+	 DMA_WS2812_data_flash_1(temp_color_data,track_1_color_5,102);
+  HAL_Delay(10);
+//		printf("\r\n");
+	  STMFLASH_Read  (0x800f1fe, (uint16_t *)&write_flash_1,1); //
+//	 printf("write_flash_1=%d\r\n",write_flash_1);
+		// from track2 flash read data to color buf
+		
+		
 }

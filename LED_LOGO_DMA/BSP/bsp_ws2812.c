@@ -20,8 +20,8 @@ extern DMA_HandleTypeDef hdma_tim2_ch1;
 #define LED_NUM                   24*200        //200
 
 /* Private variables ---------------------------------------------------------*/
-uint16_t ab[LED_NUM];
-uint16_t reset_buf[200];
+//uint16_t ab[LED_NUM];
+uint8_t reset_buf[50];
 color_type    color_buf[35] = { {0xff, 0x00, 0x00}, //ÂÌÉ«
     {0x00, 0xff, 0x00}, //ºìÉ«
     {0x00, 0x00, 0xff}, //À¶É«
@@ -220,7 +220,7 @@ void  RGBTOGRB(uint16_t count, uint8_t p[][3])
   */
 void shift_buf_to_data_one(uint16_t led_location)
 {
-    uint16_t gree_data, red_data, blue_data;
+    uint8_t gree_data, red_data, blue_data;
     /*Prevents the original data from being shifted to 0*/
     gree_data = ws28128_color_buf[led_location][1];
     red_data = ws28128_color_buf[led_location][0];
@@ -286,7 +286,7 @@ void shift_buf_to_data_one(uint16_t led_location)
   */
 void shift_buf_to_data_two(uint16_t led_location)
 {
-    uint16_t gree_data, red_data, blue_data;
+    uint8_t gree_data, red_data, blue_data;
     gree_data = ws28128_color_buf[led_location][1];
     red_data = ws28128_color_buf[led_location][0];
     blue_data = ws28128_color_buf[led_location][2];
@@ -882,7 +882,7 @@ void  	rand_buff_data(volatile uint16_t  amount, uint16_t color_type_n)
     for(uint16_t t = 0; t < 30; t++)
     {
 
-        srand(HAL_GetTick());
+        //srand(HAL_GetTick());
         rand_data = rand() % amount;
         rand_col = rand() % 100;
         rand_color = rand() % 360;
@@ -1086,7 +1086,7 @@ void reset_led_light()
 {
     memset(ws28128_color_buf, 0, sizeof(ws28128_color_buf));
     DMA_WS2812_Reset();
-    osDelay(1);
+    HAL_Delay(1);
     DMA_WS2812_light(LED_MAX);
-    osDelay((uint32_t)(LED_MAX*30/1000)+1);
+    HAL_Delay((uint32_t)(LED_MAX*30/1000)+1);
 }
