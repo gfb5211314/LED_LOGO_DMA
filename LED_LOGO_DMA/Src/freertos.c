@@ -226,7 +226,7 @@ void WS128_TASK(void const * argument)
 {
   /* USER CODE BEGIN WS128_TASK */
 //	system_mode.pattern_flay=1;
-	reset_led_light();
+	 reset_led_light();
 	 read_mode_start();
 	printf("system_mode.pattern_flay=%d\r\n",system_mode.pattern_flay);
 

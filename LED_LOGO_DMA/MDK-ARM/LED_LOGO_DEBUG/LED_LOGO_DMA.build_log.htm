@@ -22,26 +22,38 @@ Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
 C:\Users\Fubiao.Guo\Desktop\BESTBEW\LED_LOGO_DMA\LED_LOGO_DMA\MDK-ARM\LED_LOGO_DMA.uvprojx
-Project File Date:  06/03/2019
+Project File Date:  06/10/2019
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
 Build target 'LED_LOGO_DMA'
-compiling main.c...
-..\BSP\bsp_tim.h(12): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\BSP\bsp_led.h(15): warning:  #1-D: last line of file ends without a newline
-  #endif
-..\BSP\bsp_nrf24l01.h(102): warning:  #1-D: last line of file ends without a newline
-  #endif
+compiling freertos.c...
 ..\BSP\bsp_update.h(24): warning:  #1295-D: Deprecated declaration flash_data_to_color_data - give arg types
   extern void flash_data_to_color_data();
-../Src/main.c: 4 warnings, 0 errors
+../Src/freertos.c(179): warning:  #223-D: function "atk_8266_send_cmd" declared implicitly
+  	atk_8266_send_cmd("AT+CWMODE=2\r\n","OK",10);
+../Src/freertos.c(230): warning:  #223-D: function "read_mode_start" declared implicitly
+  	 read_mode_start();
+../Src/freertos.c(314): warning:  #188-D: enumerated type mixed with another type
+  	DMA_WS2812_Ramp(LED_MAX, 255, 1);
+../Src/freertos.c(315): warning:  #188-D: enumerated type mixed with another type
+    DMA_WS2812_Ramp(LED_MAX, 255, 2);
+../Src/freertos.c(316): warning:  #188-D: enumerated type mixed with another type
+    DMA_WS2812_Ramp(LED_MAX, 255, 3);
+../Src/freertos.c(317): warning:  #188-D: enumerated type mixed with another type
+  	DMA_WS2812_Rampping(LED_MAX, 255, 2);				   
+../Src/freertos.c(326): warning:  #223-D: function "DMA_WS2812_circulation" declared implicitly
+    DMA_WS2812_circulation(LED_MAX);
+../Src/freertos.c(327): warning:  #223-D: function "DMA_WS2812_circulation_more" declared implicitly
+  	DMA_WS2812_circulation_more(LED_MAX,0);
+../Src/freertos.c(338): warning:  #223-D: function "ws28128_one_color_circulation_run" declared implicitly
+    ws28128_one_color_circulation_run(LED_MAX,onecolor_buf_1);
+../Src/freertos.c: 10 warnings, 0 errors
 linking...
 Program Size: Code=39724 RO-data=680 RW-data=796 ZI-data=14756  
 FromELF: creating hex file...
 After Build - User command #1: fromelf --bin --output .\LED_LOGO_DEBUG\LED_LOGO_DMA.BIN    .\LED_LOGO_DEBUG\LED_LOGO_DMA.AXF
-".\LED_LOGO_DEBUG\LED_LOGO_DMA.axf" - 0 Error(s), 4 Warning(s).
+".\LED_LOGO_DEBUG\LED_LOGO_DMA.axf" - 0 Error(s), 10 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -70,7 +82,7 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:DSP:Library:1.6.0
       Include file:  CMSIS\DSP\Include\arm_math.h
       Library file:  CMSIS\DSP\Lib\ARM\arm_cortexM3l_math.lib
-Build Time Elapsed:  00:00:01
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>
